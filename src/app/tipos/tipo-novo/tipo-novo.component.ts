@@ -1,5 +1,8 @@
 import { TipoService } from './../tipo.service';
 import { Component, OnInit } from '@angular/core';
+
+import { ErrorHandlerService } from './../../core/error-handler.service';
+
 import { Tipo } from '../../model/Tipo';
 
 @Component({
@@ -13,6 +16,7 @@ export class TipoNovoComponent implements OnInit {
 
   constructor(
     private tipoService: TipoService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -24,7 +28,7 @@ export class TipoNovoComponent implements OnInit {
         console.log(response);
       })
       .catch(response => {
-        console.log(response.error[0].mensagemUsuario);
+        this.errorHandler.handle(response);
       });
     this.tipo = new Tipo;
   }
