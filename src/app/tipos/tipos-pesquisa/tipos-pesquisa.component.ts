@@ -12,9 +12,10 @@ export class TiposPesquisaComponent implements OnInit {
 
   tipos = [];
   filtro = new TipoFilter();
-  paginate;
   pages = [];
-  page;
+  ultimaPagina;
+  endPage;
+  currentPage;
 
   constructor(
     private tipoService: TipoService,
@@ -33,37 +34,28 @@ export class TiposPesquisaComponent implements OnInit {
     this.tipoService.pesquisar(this.filtro)
       .then(response => {
         this.tipos = response.content;
-
-        this.pages.push(0);
-        if (response.first) {
-          this.page = 0;
-          this.pages.push(1);
-          this.pages.push(2);
-          this.pages.push(3);
-          this.pages.push(4);
-        } else if (response.last) {
-          this.page = response.totalPages - 1;
-          this.pages.push(response.totalPages - 5);
-          this.pages.push(response.totalPages - 4);
-          this.pages.push(response.totalPages - 3);
-          this.pages.push(response.totalPages - 2);
-        }
-
-        if (response.number ) {
-
-        }
-
-
-        this.pages.push(response.totalPages - 1);
-        console.log(this.pages)
+        this.pages = this.gerarPages(response.totalPages, response.number, response.totalElements, response.size);
       })
       .catch(error => this.errorHandler.handle(error));
   }
 
-  gerarPages(totalPages) {
-    for (let x = 0; x < totalPages; x++) {
-      this.pages.push(x);
+  gerarPages(totalPages, number, totalElements, rows) {
+    let startPage = (number < 3) ? 1 : number - 2;
+    let endPage = 4 + startPage;
+    endPage = (totalPages < endPage) ? totalPages : endPage;
+    const diff = startPage - endPage + 4;
+    startPage -= (startPage - diff > 0) ? diff : 0;
+    const array = [];
+
+
+    for (let i = startPage ; i <= endPage; i++) {
+      array.push(i);
     }
+    this.ultimaPagina = Math.ceil(totalElements / rows);
+    this.endPage = endPage;
+    this.currentPage = number;
+
+    return array;
   }
 
 }

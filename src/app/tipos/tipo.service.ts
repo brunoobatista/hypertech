@@ -10,7 +10,7 @@ import { HttpParams } from '@angular/common/http';
 export class TipoFilter {
   tipo: string;
   pagina = 0;
-  itensPorPagina = 1;
+  itensPorPagina = 2;
 }
 
 @Injectable({
@@ -41,7 +41,8 @@ export class TipoService {
           totalPages: response.totalPages,
           first: response.first,
           last: response.last,
-          number: response.number
+          number: response.number,
+          size: response.size
         };
         return result;
       });

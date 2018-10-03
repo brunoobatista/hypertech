@@ -30,22 +30,26 @@
           </tr>
         </table>
       </div>
-      <!-- /.box-body -->
+
+      <!-- /pagination -->
       <div class="box-footer clearfix">
-        <ul class="pagination pagination-sm no-margin pull-right">
-          <li><a href="#">&laquo;</a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">...</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">...</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">&raquo;</a></li>
+        <ul *ngFor="let page of pages.slice().reverse()" class="pagination pagination-sm no-margin pull-right">
+          <li *ngIf="page === pages[0]" [ngClass]="{disabled: currentPage === 0}"><a (click)="pesquisar(currentPage - 1)">&laquo;</a></li>
+
+          <li *ngIf="page === pages[0]" [ngClass]="{active: currentPage === 0}"><a (click)="pesquisar(0)" >1</a></li>
+
+          <li *ngIf="page === pages[0] && pages[0] - 1 >= 1"><a >...</a></li>
+
+          <li *ngIf="page < (ultimaPagina - 1)" [ngClass]="{active: currentPage === page}"><a (click)="pesquisar(page)" >{{(page + 1)}}</a></li>
+
+          <li *ngIf="page === pages[4] && pages[4] < (ultimaPagina - 2)" [ngClass]="{active: currentPage === ultimaPagina}"><a >...</a></li>
+
+          <li *ngIf="page === pages[4] || (endPage === ultimaPagina && page === endPage)" [ngClass]="{active: currentPage === ultimaPagina - 1}"><a (click)="pesquisar(ultimaPagina - 1)">{{ultimaPagina}}</a></li>
+
+          <li *ngIf="page === pages[4] || (endPage === ultimaPagina && page === endPage)" [ngClass]="{disabled: currentPage === ultimaPagina - 1}"><a (click)="pesquisar(currentPage + 1)">&raquo;</a></li>
         </ul>
       </div>
+
     </div>
     </div>
     </div>
