@@ -5,6 +5,7 @@ import { TokenInterceptor } from './../seguranca/token.interceptor';
 import { FormsModule } from '@angular/forms';
 
 import { BoxModule, TabsModule, DropdownModule } from 'angular-admin-lte';
+import { ToastyModule } from 'ng2-toasty';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MasterHttp } from './../seguranca/master-http';
@@ -12,8 +13,9 @@ import { MasterHttp } from './../seguranca/master-http';
 import { AuthService } from './../seguranca/auth.service';
 import { TipoService } from './../tipos/tipo.service';
 
-import { ErrorHandlerService } from './error-handler.service';
+import { ModalService } from './modal.service';
 
+import { ErrorHandlerService } from './error-handler.service';
 
 import { HeaderInnerComponent } from './header-inner/header-inner.component';
 import { SidebarLeftInnerComponent } from './sidebar-left-inner/sidebar-left-inner.component';
@@ -24,6 +26,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
   imports: [
     CommonModule,
     FormsModule,
+    ToastyModule.forRoot(),
     DropdownModule,
     TabsModule,
     BoxModule,
@@ -32,7 +35,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
   ],
   declarations: [HeaderInnerComponent, SidebarLeftInnerComponent, SidebarRightInnerComponent, NaoAutorizadoComponent],
   exports: [
-    BoxModule, TabsModule, HeaderInnerComponent, SidebarLeftInnerComponent, SidebarRightInnerComponent
+    BoxModule, TabsModule, HeaderInnerComponent, SidebarLeftInnerComponent, SidebarRightInnerComponent, ToastyModule,
   ],
   providers: [
     ErrorHandlerService,
@@ -40,6 +43,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     MasterHttp,
     JwtHelperService,
     TipoService,
+    ModalService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

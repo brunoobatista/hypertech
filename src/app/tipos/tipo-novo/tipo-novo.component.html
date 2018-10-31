@@ -5,16 +5,26 @@
     <!-- general form elements -->
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Cadastro de tipo</h3>
+        <h3 class="box-title">{{titulo}} tipo</h3>
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form role="form" #f="ngForm" (ngSubmit)="adicionar()">
+      <form  (ngSubmit)="adicionar()"  [formGroup]="formulario">
         <div class="box-body">
-          <div class="form-group">
+          <div class="form-group" #tipoDiv>
+
             <label for="tipo">Tipo</label>
             <input type="text" class="form-control" id="tipo" placeholder="Tipo"
-            [(ngModel)]="tipo.tipo" name="tipo">
+              [(ngModel)]="tipo.tipo" name="tipo" formControlName="tipo">
+
+            <app-message [control]="formulario.get('tipo')" error="obrigatoriedade"
+                text="Informe o tipo" msg="Tipo é obrigatório"
+                ></app-message>
+
+            <app-message [control]="formulario.get('tipo')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('tipo').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Tipo é obrigatório"
+                ></app-message>
+
           </div>
         </div>
         <!-- /.box-body -->
@@ -28,4 +38,6 @@
   </div>
 
 </div>
+
+
 
