@@ -22,8 +22,16 @@ const routes: Routes = [
       roles: ['ROLE_CADASTRAR_TIPO']
     },
     canActivate: [AuthGuard],
+  },
+  {
+    path: ':id',
+    component: TipoNovoComponent,
+    data: {
+      title: 'Tipo',
+      roles: ['ROLE_CADASTRAR_TIPO']
+    },
+    canActivate: [AuthGuard],
   }
-
 ];
 
 @NgModule({

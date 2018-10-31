@@ -13,8 +13,9 @@ import { MasterHttp } from './../seguranca/master-http';
 import { AuthService } from './../seguranca/auth.service';
 import { TipoService } from './../tipos/tipo.service';
 
-import { ErrorHandlerService } from './error-handler.service';
+import { ModalService } from './modal.service';
 
+import { ErrorHandlerService } from './error-handler.service';
 
 import { HeaderInnerComponent } from './header-inner/header-inner.component';
 import { SidebarLeftInnerComponent } from './sidebar-left-inner/sidebar-left-inner.component';
@@ -42,6 +43,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     MasterHttp,
     JwtHelperService,
     TipoService,
+    ModalService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

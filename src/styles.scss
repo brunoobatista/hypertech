@@ -1,0 +1,86 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* MODAL STYLES
+-------------------------------*/
+app-modal {
+  /* modals are hidden by default */
+  display: none;
+
+  .app-modal {
+      /* modal container fixed across whole screen */
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      /* z-index must be higher than .modal-background */
+      z-index: 9999;
+
+      /* enables scrolling for tall modals */
+      overflow: auto;
+
+      .app-modal-body {
+          padding: 0px;
+          background: #fff;
+
+          /* margin exposes part of the modal background */
+          margin: 40px;
+      }
+  }
+
+  .app-modal-background {
+      /* modal background fixed across whole screen */
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      /* semi-transparent black  */
+      background-color: #000;
+      opacity: 0.75;
+
+      /* z-index must be below .modal and above everything else  */
+      z-index: 900;
+  }
+}
+
+body.app-modal-open {
+  /* body overflow is hidden to hide main scrollbar when modal window is open */
+  overflow: hidden;
+}
+
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border-color: #eae3e3;
+}
+
+.sidebar {
+  height: 682px;
+  overflow: auto;
+}
+
+/** ##  Classes de ajuste de tabela   ##*/
+.width-column-id {
+  width: 60px;
+  text-align: center;
+}
+
+.width-column-buttons {
+  width: 100px;
+  text-align: center;
+}
+
+.button-option {
+  margin-right: 10px;
+}
+
+.trash {
+  color: #E82C0C;
+}

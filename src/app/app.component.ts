@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LayoutService } from 'angular-admin-lte';
 import { ToastyConfig } from 'ng2-toasty';
 
@@ -7,6 +7,9 @@ import { ToastyConfig } from 'ng2-toasty';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+
+  @Output() modalRoot = new EventEmitter();
+
   public customLayout: boolean;
 
   constructor(

@@ -3,14 +3,17 @@
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Responsive Hover Table</h3>
+        <h3 class="box-title"></h3>
 
         <div class="box-tools">
-          <div class="input-group input-group-sm" style="width: 150px;">
+          <div class="input-group input-group-sm" style="width: 250px;">
             <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
             <div class="input-group-btn">
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              <a [routerLink]="['/tipos', '']"  class="btn btn-primary" style="margin-left: 5px;">
+                <i class="fa fa-plus"></i>  Adicionar
+              </a>
             </div>
           </div>
         </div>
@@ -19,38 +22,58 @@
       <div class="box-body table-responsive no-padding">
         <table class="table table-hover">
           <tr>
-            <th>#</th>
+            <th class="width-column-id">#</th>
             <th>Nome</th>
-            <th>...</th>
+            <th class="width-column-buttons"></th>
           </tr>
           <tr *ngFor="let tipo of tipos">
-            <td >{{tipo.id}}</td>
+            <td class="width-column--id">{{tipo.id}}</td>
             <td>{{tipo.tipo}}</td>
-            <td>...</td>
+            <td class="width-column-buttons">
+              <div class="text-center">
+
+                <a class="button-option"
+                  [routerLink]="['/tipos', tipo.id]">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+                <a class="button-option" id="{{tipo.id}}"  #botaoExcluir (click)="openModal('confirmacaoModal', botaoExcluir, tipo)">
+                  <i class="fa fa-trash trash" aria-hidden="true"></i>
+                </a>
+
+              </div>
+            </td>
           </tr>
         </table>
       </div>
 
-      <!-- /pagination -->
-      <div class="box-footer clearfix">
-        <ul *ngFor="let page of pages.slice().reverse()" class="pagination pagination-sm no-margin pull-right">
-          <li *ngIf="page === pages[0]" [ngClass]="{disabled: currentPage === 0}"><a (click)="pesquisar(currentPage - 1)">&laquo;</a></li>
-
-          <li *ngIf="page === pages[0]" [ngClass]="{active: currentPage === 0}"><a (click)="pesquisar(0)" >1</a></li>
-
-          <li *ngIf="page === pages[0] && pages[0] - 1 >= 1"><a >...</a></li>
-
-          <li *ngIf="page < (ultimaPagina - 1)" [ngClass]="{active: currentPage === page}"><a (click)="pesquisar(page)" >{{(page + 1)}}</a></li>
-
-          <li *ngIf="page === pages[4] && pages[4] < (ultimaPagina - 2)" [ngClass]="{active: currentPage === ultimaPagina}"><a >...</a></li>
-
-          <li *ngIf="page === pages[4] || (endPage === ultimaPagina && page === endPage)" [ngClass]="{active: currentPage === ultimaPagina - 1}"><a (click)="pesquisar(ultimaPagina - 1)">{{ultimaPagina}}</a></li>
-
-          <li *ngIf="page === pages[4] || (endPage === ultimaPagina && page === endPage)" [ngClass]="{disabled: currentPage === ultimaPagina - 1}"><a (click)="pesquisar(currentPage + 1)">&raquo;</a></li>
-        </ul>
-      </div>
+      <app-pagination [totalPages]="totalPages" [pageCurrent]="number" [(totalElements)]="totalElements"
+        [rows]="size" (page)="aoMudarPagina($event)"></app-pagination>
 
     </div>
     </div>
+
+
+
     </div>
     <!-- /.box -->
+<app-modal id="confirmacaoModal" style="z-index: 9999;">
+          <div class="app-modal modal-dialog">
+              <div class="app-modal-body modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Excluir</h4>
+                    </div>
+                  <div class="modal-body">
+                    <p *ngIf="tipoModal">
+                      Deseja excluir o tipo {{tipoModal.tipo}}?
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" (click)="closeModal('confirmacaoModal');" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" (click)="excluirTipo(tipoModal, 'confirmacaoModal')">Excluir</button>
+                  </div>
+
+              </div>
+          </div>
+          <div class="app-modal-background"></div>
+      </app-modal>
