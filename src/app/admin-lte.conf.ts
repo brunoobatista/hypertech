@@ -11,7 +11,15 @@ export const adminLteConf = {
   sidebarLeftMenu: [
     {label: 'Controle estoque', separator: true},
     {label: 'Tipos', route: 'tipos', iconClasses: 'fa fa-file'},
-    {label: 'Novo Tipo', route: 'tipos/novo', iconClasses: 'fa fa-file'},
+    {label: 'Novo Tipo', route: 'tipos/novo', iconClasses: 'fa fa-plus'},
+
+    {label: 'Fornecedores', separator: true},
+
+    {label: 'Fornecedores', route: 'fornecedores', iconClasses: 'fa fa-file'},
+    {label: 'Novo Fornecedor', route: 'fornecedores/novo', iconClasses: 'fa fa-plus'},
+
+    {label: 'Controle estoque', separator: true},
+
     {label: 'Produtos', route: 'produtos', iconClasses: 'fa fa-file'},
     {label: 'Novo Produto', route: 'produtos/novo', iconClasses: 'fa fa-plus'},
 

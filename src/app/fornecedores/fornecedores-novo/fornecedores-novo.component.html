@@ -1,0 +1,92 @@
+<div class="row">
+  <!-- left column -->
+<div class="col-md-12">
+
+  <!-- general form elements -->
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{titulo}} fornecedor</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form  (ngSubmit)="adicionar()"  [formGroup]="formulario">
+      <div class="box-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" placeholder=""
+              name="nome" formControlName="nome">
+
+            <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
+                text="Informe o nome" msg="Nome é obrigatório"
+                ></app-message>
+
+            <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Nome é obrigatório"
+                ></app-message>
+
+          </div>
+          <div class="form-group col-md-6">
+
+            <label for="nome">Nome Fantasia</label>
+            <input type="text" class="form-control" id="nome_fantasia" placeholder=""
+              name="nome_fantasia" formControlName="nome_fantasia">
+
+            <app-message [control]="formulario.get('nome_fantasia')" error="obrigatoriedade"
+                text="Informe o nome fantasia" msg="Nome fantasia é obrigatório"
+                ></app-message>
+
+            <app-message [control]="formulario.get('nome_fantasia')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('nome_fantasia').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Nome fantasia é obrigatório"
+                ></app-message>
+
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="nome">CPF/CNPJ</label>
+                <input type="text" class="form-control" id="cpf_cnpj" placeholder=""
+                  name="cpf_cnpj" formControlName="cpf_cnpj">
+
+                <app-message [control]="formulario.get('cpf_cnpj')" error="obrigatoriedade"
+                    text="Informe o CPF/CNPJ" msg="CPF/CNPJ é obrigatório"
+                    ></app-message>
+
+
+            </div>
+            <div class="form-group col-md-4">
+                <label for="nome">Telefone</label>
+                <input type="text" class="form-control" id="telefone" placeholder=""
+                  name="telefone" formControlName="telefone">
+
+            </div>
+            <div class="form-group col-md-4">
+                <label for="nome">Telefone Opcional</label>
+                <input type="text" class="form-control" id="telefone_op" placeholder=""
+                  name="telefone_op" formControlName="telefone_op">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+
+
+            </div>
+
+        </div>
+
+
+      </div>
+      <!-- /.box-body -->
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.box -->
+</div>
+
+</div>

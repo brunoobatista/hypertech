@@ -21,6 +21,13 @@ const routes: Routes = [
     },
   },
   {
+    path: 'fornecedores',
+    loadChildren: './fornecedores/fornecedores.module#FornecedoresModule',
+    data: {
+      title: 'Fornecedores',
+    },
+  },
+  {
   path: '',
   data: {
       title: 'Dashboard'

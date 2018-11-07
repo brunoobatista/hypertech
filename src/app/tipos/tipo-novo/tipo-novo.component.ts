@@ -1,13 +1,13 @@
-import { TipoService } from './../tipo.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastyService } from 'ng2-toasty';
 import { ErrorHandlerService } from './../../core/error-handler.service';
+import { TipoService } from './../tipo.service';
 
 import { Tipo } from '../../model/Tipo';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tipo-novo',
@@ -31,11 +31,9 @@ export class TipoNovoComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
     this.configurarFormulario();
     const idTipo = this.activateRoute.snapshot.params['id'];
-console.log(idTipo)
     if (idTipo) {
       this.carregarTipo(idTipo);
       this.titulo = 'Editar';
@@ -48,7 +46,6 @@ console.log(idTipo)
   carregarTipo(id: number) {
     this.tipoService.buscarPorCodigo(id)
       .then(response => {
-        console.log('carregar tipo', response);
         this.tipo = new Tipo();
         this.tipo.tipo = response.tipo;
         this.tipo.id = response.id;
