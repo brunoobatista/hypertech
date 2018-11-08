@@ -12,7 +12,8 @@ import { MasterHttp } from './../seguranca/master-http';
 
 import { AuthService } from './../seguranca/auth.service';
 import { TipoService } from './../tipos/tipo.service';
-
+import { FornecedorService } from './../fornecedores/fornecedor.service';
+import { CidadeService } from './../cidades/cidade.service';
 import { ModalService } from './modal.service';
 
 import { ErrorHandlerService } from './error-handler.service';
@@ -43,6 +44,8 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     MasterHttp,
     JwtHelperService,
     TipoService,
+    FornecedorService,
+    CidadeService,
     ModalService,
     {
       provide: HTTP_INTERCEPTORS,

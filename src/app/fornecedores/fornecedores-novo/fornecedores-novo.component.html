@@ -44,38 +44,59 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="nome">CPF/CNPJ</label>
-                <input type="text" class="form-control" id="cpf_cnpj" placeholder=""
-                  name="cpf_cnpj" formControlName="cpf_cnpj">
+                <input type="text" class="form-control" id="cpfOuCnpj" placeholder=""
+                  name="cpfOuCnpj" formControlName="cpfOuCnpj">
 
-                <app-message [control]="formulario.get('cpf_cnpj')" error="obrigatoriedade"
+                <app-message [control]="formulario.get('cpfOuCnpj')" error="obrigatoriedade"
                     text="Informe o CPF/CNPJ" msg="CPF/CNPJ é obrigatório"
                     ></app-message>
 
 
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="nome">Telefone</label>
                 <input type="text" class="form-control" id="telefone" placeholder=""
                   name="telefone" formControlName="telefone">
 
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="nome">Telefone Opcional</label>
                 <input type="text" class="form-control" id="telefone_op" placeholder=""
                   name="telefone_op" formControlName="telefone_op">
 
             </div>
-        </div>
 
-        <div class="row">
-            <div class="form-group col-md-4">
-
-
+            <div class="form-group col-md-3">
+                <label for="nome">Cidade</label>
+                <select type="text" class="form-control" id="telefone_op" placeholder=""
+                    name="telefone_op" formControlName="telefone_op">
+                </select>
             </div>
 
         </div>
+
+        <div class="row" formGroupName="endereco">
+          <div class="form-group col-md-3" >
+              <label for="nome">Endereço</label>
+              <input type="text" class="form-control" id="endereco" placeholder=""
+                name="endereco" formControlName="endereco">
+
+          </div>
+          <div class="form-group col-md-2">
+              <label for="nome">Número</label>
+              <input type="text" class="form-control" id="numero" placeholder=""
+                name="numero" formControlName="numero">
+
+          </div>
+          <div class="form-group col-md-4">
+              <label for="nome">Complemento</label>
+              <input type="text" class="form-control" id="complemento" placeholder=""
+                name="complemento" formControlName="complemento">
+
+          </div>
+      </div>
 
 
       </div>
