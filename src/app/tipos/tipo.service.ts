@@ -9,7 +9,7 @@ import { environment } from './../../environments/environment';
 export class TipoFilter {
   tipo: string;
   pagina = 0;
-  itensPorPagina = 2;
+  itensPorPagina = 10;
 }
 
 @Injectable({

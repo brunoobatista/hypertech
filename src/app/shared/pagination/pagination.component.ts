@@ -12,6 +12,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   private currentPageLocal: number;
   private pages = [];
 
+  private totalPagesGeral: number;
+
   @Input()  totalPages: number;
   totalPagesLocal: number;
   @Input()  pageCurrent: number;
@@ -67,7 +69,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       for (let i = startPage ; i <= endPage - 1 ; i++) {
         array.push(i);
       }
-
+      this.totalPagesGeral = totalPages;
       this.lastPageLocal = Math.ceil(totalElements / rows);
       this.endPageLocal = endPage;
       this.currentPageLocal = pageCurrent;

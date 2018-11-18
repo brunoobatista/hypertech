@@ -17,7 +17,6 @@ export class TiposPesquisaComponent implements OnInit {
 
   tipos = [];
   filtro = new TipoFilter();
-  pages = [];
 
   totalPages;
   number;

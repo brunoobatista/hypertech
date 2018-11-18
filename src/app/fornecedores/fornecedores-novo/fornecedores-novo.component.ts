@@ -21,6 +21,8 @@ export class FornecedoresNovoComponent implements OnInit {
   formBuilder = new FormBuilder();
   cidades: any;
 
+  fornecedor = new Fornecedor();
+
   constructor(
     private errorHandler: ErrorHandlerService,
     private router: Router,
@@ -32,13 +34,35 @@ export class FornecedoresNovoComponent implements OnInit {
 
   ngOnInit() {
     this.configurarFormulario();
-    this.cidades = this.cidadeService.listarCidades();
+    this.cidadeService.listarCidades()
+      .then(response => {
+        this.cidades = response;
+      });
+    const idFornecedor = this.activateRoute.snapshot.params['id'];
+    if (idFornecedor) {
+      this.carregarFornecedor(idFornecedor);
+      this.titulo = 'Editar';
+    } else {
+      this.titulo = 'Criar';
+    }
+  }
+
+  carregarFornecedor(id: number) {
+    this.fornecedorService.buscarPorCodigo(id)
+      .then(response => {
+        this.formulario.patchValue(response);
+      })
+      .catch(error => {
+        this.errorHandler.handle(error);
+      });
   }
 
   adicionar() {
+    console.log(this.formulario.value);
     this.fornecedorService.adicionar(this.formulario.value)
       .then(response => {
-        console.log(response);
+        this.toasty.success('Fornecedor adicionado!');
+        this.configurarFormulario();
       })
       .catch(error => this.errorHandler.handle(error));
   }
@@ -46,9 +70,9 @@ export class FornecedoresNovoComponent implements OnInit {
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      nome: ['', [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]],
-      nome_fantasia: ['', [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]],
-      cpfOuCnpj: ['', this.validarObrigatoriedade],
+      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]],
+      nomeFantasia: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]],
+      cpfOuCnpj: [null, this.validarObrigatoriedade],
       telefone: [''],
       telefone_op: [''],
       endereco: this.formBuilder.group({
@@ -57,7 +81,7 @@ export class FornecedoresNovoComponent implements OnInit {
         complemento: ['']
       }),
       cidade: this.formBuilder.group({
-        id: [1, [this.validarObrigatoriedade]],
+        id: [null, [this.validarObrigatoriedade]],
         nome: ['']
       }),
     });

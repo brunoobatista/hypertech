@@ -29,15 +29,15 @@
           <div class="form-group col-md-6">
 
             <label for="nome">Nome Fantasia</label>
-            <input type="text" class="form-control" id="nome_fantasia" placeholder=""
-              name="nome_fantasia" formControlName="nome_fantasia">
+            <input type="text" class="form-control" id="nomeFantasia" placeholder=""
+              name="nomeFantasia" formControlName="nomeFantasia">
 
-            <app-message [control]="formulario.get('nome_fantasia')" error="obrigatoriedade"
+            <app-message [control]="formulario.get('nomeFantasia')" error="obrigatoriedade"
                 text="Informe o nome fantasia" msg="Nome fantasia é obrigatório"
                 ></app-message>
 
-            <app-message [control]="formulario.get('nome_fantasia')" error="tamanhoMinimo"
-                text="Mínimo de {{ formulario.get('nome_fantasia').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Nome fantasia é obrigatório"
+            <app-message [control]="formulario.get('nomeFantasia')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('nomeFantasia').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Nome fantasia é obrigatório"
                 ></app-message>
 
           </div>
@@ -68,11 +68,19 @@
 
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3" formGroupName="cidade">
                 <label for="nome">Cidade</label>
-                <select type="text" class="form-control" id="telefone_op" placeholder=""
-                    name="telefone_op" formControlName="telefone_op">
+                <select type="text" class="form-control" id="id" placeholder=""
+                    name="id" formControlName="id">
+
+                  <option value="" selected="selected"></option>
+                  <option *ngFor="let cidade of cidades" value="{{ cidade.id }}">{{cidade.nome}}</option>
+
                 </select>
+
+                <app-message [control]="formulario.get('id')" error="obrigatoriedade"
+                  text="Informe a cidade" msg="Cidade é obrigatório"
+                  ></app-message>
             </div>
 
         </div>
