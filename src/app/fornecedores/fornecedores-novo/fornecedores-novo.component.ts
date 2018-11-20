@@ -58,14 +58,32 @@ export class FornecedoresNovoComponent implements OnInit {
   }
 
   adicionar() {
-    console.log(this.formulario.value);
+    if (this.formulario.value.id === null) {
+      this.adicionarFornecedor();
+    } else {
+      this.atualizarFornecedor();
+    }
+  }
+
+  adicionarFornecedor() {
     this.fornecedorService.adicionar(this.formulario.value)
       .then(response => {
         this.toasty.success('Fornecedor adicionado!');
-        this.configurarFormulario();
+        this.router.navigate(['/fornecedores']);
       })
       .catch(error => this.errorHandler.handle(error));
   }
+
+  atualizarFornecedor() {
+    this.fornecedorService.adicionar(this.formulario.value)
+      .then(response => {
+        this.formulario.patchValue(response);
+        this.toasty.success('Fornecedor atualizado!');
+        this.router.navigate(['/fornecedores', response.id]);
+      })
+      .catch(error => this.errorHandler.handle(error));
+  }
+
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({

@@ -55,16 +55,32 @@ export class TipoNovoComponent implements OnInit {
       });
   }
 
+
   adicionar() {
-    this.tipoService.adicionar(this.tipo)
+    if (this.formulario.value.id === null) {
+      this.adicionarTipo();
+    } else {
+      this.atualizarTipo();
+    }
+  }
+
+  adicionarTipo() {
+    this.tipoService.adicionar(this.formulario.value)
       .then(response => {
         this.toasty.success('Tipo adicionado!');
-        this.configurarFormulario();
+        this.router.navigate(['/fornecedores']);
       })
-      .catch(response => {
-        this.errorHandler.handle(response);
-      });
-    // this.tipo = new Tipo();
+      .catch(error => this.errorHandler.handle(error));
+  }
+
+  atualizarTipo() {
+    this.tipoService.adicionar(this.formulario.value)
+      .then(response => {
+        this.formulario.patchValue(response);
+        this.toasty.success('Tipo atualizado!');
+        this.router.navigate(['/fornecedores', response.id]);
+      })
+      .catch(error => this.errorHandler.handle(error));
   }
 
   configurarFormulario() {

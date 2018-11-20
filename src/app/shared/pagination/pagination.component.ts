@@ -66,7 +66,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       const array = [];
 
 
-      for (let i = startPage ; i <= endPage - 1 ; i++) {
+      for (let i = startPage ; i <= endPage ; i++) {
         array.push(i);
       }
       this.totalPagesGeral = totalPages;

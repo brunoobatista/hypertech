@@ -9,10 +9,10 @@
 
     <li *ngIf="page < lastPageLocal - 1" [ngClass]="{active: currentPageLocal === page}"><a (click)="changePage(page)" >{{(page + 1)}}</a></li>
 
-    <li *ngIf="page === pages[2] && pages[2] < (lastPageLocal - 2)" [ngClass]="{active: currentPageLocal === lastPageLocal}"><a >...</a></li>
+    <li *ngIf="page === pages[2] && pages[2] < (lastPageLocal - 2)" [ngClass]="{active: currentPageLocal === (lastPageLocal - 1)}"><a >...</a></li>
 
-    <li *ngIf="page === pages[2] || (pages.length > 1 && endPageLocal === lastPageLocal && page === endPageLocal) || (pages.length === 1 && endPageLocal === lastPageLocal)" [ngClass]="{active: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(lastPageLocal - 1)">{{lastPageLocal}}</a></li>
+    <li *ngIf="page === pages[2] || (pages.length > 1 && endPageLocal === (lastPageLocal - 2) && page === endPageLocal) || (pages.length === 1 && endPageLocal === lastPageLocal - 2)" [ngClass]="{active: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(lastPageLocal - 1)">{{lastPageLocal}}</a></li>
 
-    <li *ngIf="page === pages[2] || (endPageLocal === lastPageLocal && page === endPageLocal)" [ngClass]="{disabled: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
+    <li *ngIf="(totalPagesGeral > 4 && page === pages[2]) || (endPageLocal === (lastPageLocal - 2) && page === endPageLocal)" [ngClass]="{disabled: currentPageLocal === lastPageLocal - 2}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
   </ul>
 </div>

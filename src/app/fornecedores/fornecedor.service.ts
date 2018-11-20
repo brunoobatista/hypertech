@@ -13,7 +13,7 @@ export class FornecedorFilter {
   nome: string;
   nomeFantasia: string;
   pagina = 0;
-  itensPorPagina = 15;
+  itensPorPagina = 10;
 }
 
 @Injectable({
