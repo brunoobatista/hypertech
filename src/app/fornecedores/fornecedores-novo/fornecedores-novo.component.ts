@@ -21,8 +21,6 @@ export class FornecedoresNovoComponent implements OnInit {
   formBuilder = new FormBuilder();
   cidades: any;
 
-  fornecedor = new Fornecedor();
-
   constructor(
     private errorHandler: ErrorHandlerService,
     private router: Router,
