@@ -24,6 +24,15 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard],
   },
+  {
+    path: ':id',
+    component: FornecedoresNovoComponent,
+    data: {
+      title: 'Fornecedor',
+      roles: ['ROLE_CADASTRAR_TIPO']
+    },
+    canActivate: [AuthGuard],
+  }
 
 ];
 

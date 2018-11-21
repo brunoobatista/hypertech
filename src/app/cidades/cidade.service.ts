@@ -21,10 +21,6 @@ export class CidadeService {
 
   listarCidades(): Promise<any> {
     return this.http.get<any>(`${this.cidadeUrl}`)
-      .toPromise()
-      .then(response => {
-        console.log(response)
-        return response;
-      });
+      .toPromise();
   }
 }

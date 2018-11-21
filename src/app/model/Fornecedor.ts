@@ -3,7 +3,7 @@ import { Endereco, Cidade } from './Endereco';
 export class Fornecedor {
   id: number;
   nome: string;
-  nome_fantasia: string;
+  nomeFantasia: string;
   cpfOuCnpj: string;
   telefone: string;
   telefone_op: string;
