@@ -71,7 +71,8 @@ export class TipoService {
     return this.http.delete<any>(`${this.tiposUrl}/${id}`)
       .toPromise()
       .then(response => {
-           return this.buscarProximo(params, dadosPagina);
+          return response;
+           //return this.buscarProximo(params, dadosPagina);
       });
 
  }

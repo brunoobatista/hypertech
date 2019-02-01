@@ -63,17 +63,18 @@ export class FornecedoresPesquisaComponent implements OnInit {
       this.modalService.close(id);
   }
 
-  excluirFornecedor(tipo: any, idModal: string) {
-    this.fornecedorService.excluir(tipo.id, this.number, this.size)
+  excluirFornecedor(fornecedor: any, idModal: string) {
+    this.fornecedorService.excluir(fornecedor.id, this.number, this.size)
     .then(response => {
-          if (this.fornecedores.length === 0) {
+          /*if (this.fornecedores.length === 0) {
             this.pesquisar(0);
           }
           if (response !== null) {
             this.fornecedores = response;
-          }
+          }*/
           this.totalElements--;
           this.toasty.success('Fornecedor exclúido');
+          this.pesquisar(0);
       })
       .catch(error => {
         this.errorHandler.handle(error);

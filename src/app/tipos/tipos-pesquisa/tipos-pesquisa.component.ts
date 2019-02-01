@@ -69,14 +69,15 @@ export class TiposPesquisaComponent implements OnInit {
   excluirTipo(tipo: any, idModal: string) {
     this.tipoService.excluir(tipo.id, this.number, this.size)
     .then(response => {
-          if (this.tipos.length === 0) {
+          /*if (this.tipos.length === 0) {
             this.pesquisar(0);
           }
           if (response !== null) {
             this.tipos = response.tipos;
-          }
+          }*/
           this.totalElements--;
           this.toasty.success('Tipo exclúido');
+          this.pesquisar(0);
       })
       .catch(error => {
         this.errorHandler.handle(error);

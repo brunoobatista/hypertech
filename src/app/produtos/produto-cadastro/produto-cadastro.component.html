@@ -26,13 +26,22 @@
                 ></app-message>
 
           </div>
-          <div class="form-group col-md-6">
 
-            <label for="nome">Estoque</label>
-            <input type="text" class="form-control" id="estoque" placeholder=""
-              name="estoque" formControlName="estoque">
+          <div class="form-group col-md-6" formGroupName="tipo">
+                <label for="nome">Tipo</label>
+                <select type="text" class="form-control" id="id" placeholder=""
+                    name="id" formControlName="id">
 
-          </div>
+                  <option value="" selected="selected"></option>
+                  <option *ngFor="let tipo of tipos" value="{{ tipo.id }}">{{tipo.tipo}}</option>
+
+                </select>
+
+                <app-message [control]="formulario.get('id')" error="obrigatoriedade"
+                  text="Informe o tipo" msg="Tipo é obrigatório"
+                  ></app-message>
+            </div>
+          
         </div>
 
         <div class="row">
@@ -47,35 +56,15 @@
 
             </div>
 
-            <div class="form-group col-md-3" formGroupName="tipo">
-                <label for="nome">Cidade</label>
-                <select type="text" class="form-control" id="id" placeholder=""
-                    name="id" formControlName="id">
+            <div class="form-group col-md-3">
 
-                  <option value="" selected="selected"></option>
-                  <option *ngFor="let tipo of tipos" value="{{ tipo.id }}">{{tipo.tipo}}</option>
-
-                </select>
-
-                <app-message [control]="formulario.get('id')" error="obrigatoriedade"
-                  text="Informe o tipo" msg="Tipo é obrigatório"
-                  ></app-message>
+              <label for="nome">Estoque</label>
+              <input type="text" class="form-control" id="estoque" placeholder=""
+                name="estoque" formControlName="estoque">
+  
             </div>
 
-            <div class="form-group col-md-3" formGroupName="fornecedor">
-              <label for="nome">Cidade</label>
-              <select type="text" class="form-control" id="id" placeholder=""
-                  name="id" formControlName="id">
-
-                <option value="" selected="selected"></option>
-                <option *ngFor="let fornecedor of fornecedores" value="{{ fornecedor.id }}">{{fornecedor.nome}}</option>
-
-              </select>
-
-              <app-message [control]="formulario.get('id')" error="obrigatoriedade"
-                text="Informe o fornecedor" msg="Fornecedor é obrigatório"
-                ></app-message>
-            </div>
+            
 
         </div>
 

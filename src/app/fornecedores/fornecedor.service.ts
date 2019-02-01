@@ -75,7 +75,8 @@ export class FornecedorService {
     return this.http.delete<any>(`${this.fornecedorUrl}/${id}`)
     .toPromise()
     .then(response => {
-           return this.buscarProximo(params, dadosPagina);
+        return response;
+           //return this.buscarProximo(params, dadosPagina);
       });
   }
 
