@@ -2,3 +2,8 @@
   pointer-events:none;
   opacity:0.6;
 }
+
+li a {
+  width: 35px;
+  height: 30px;
+}

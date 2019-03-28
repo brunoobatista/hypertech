@@ -23,5 +23,9 @@ export const adminLteConf = {
     {label: 'Produtos', route: 'produtos', iconClasses: 'fa fa-file'},
     {label: 'Novo Produto', route: 'produtos/novo', iconClasses: 'fa fa-plus'},
 
+    {label: 'Vendas', iconClasses: 'fa fa-shopping-cart', children: [
+      {label: 'Efetuar venda', route: '/venda'},
+      {label: 'Efetuar venda avulsa', route: '/venda/avulsa'}
+    ]}
   ]
 };

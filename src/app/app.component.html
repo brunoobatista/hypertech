@@ -15,12 +15,12 @@
       <app-sidebar-right-inner></app-sidebar-right-inner>
     </mk-layout-sidebar-right> -->
     <mk-layout-content>
-      <div mk-layout-content-before-header>
+      <!--<div mk-layout-content-before-header>
         <div *mkLoadingPage="{checkPendingHttp: true, checkPendingRoute: true}">
           <mk-material-bar></mk-material-bar>
         </div>
       </div>
-
+-->
 
       <router-outlet></router-outlet>
 
@@ -34,8 +34,6 @@
       </mk-layout-footer-right>
     </mk-layout-footer>
   </mk-layout-wrapper>
+  <ng2-toasty></ng2-toasty>
 </ng-template>
-<div id="modal_root" style="z-index: 9999;"></div>
-
-<ng2-toasty></ng2-toasty>
 

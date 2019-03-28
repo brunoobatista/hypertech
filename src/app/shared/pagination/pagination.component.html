@@ -1,18 +1,19 @@
 <!-- /pagination -->
+
 <div class="box-footer clearfix">
-  <ul *ngFor="let page of pages.slice().reverse()" class="pagination pagination-sm no-margin pull-right">
-    <li *ngIf="totalPagesGeral > 4 && page === pages[0]" [ngClass]="{disabled: currentPageLocal === 0}"><a (click)="changePage(currentPageLocal - 1)">&laquo;</a></li>
+  <ul class="pagination pagination-sm no-margin pull-right">
+    <li  [ngClass]="{disabled: currentPageLocal === 0}"><a (click)="changePage(currentPageLocal - 1)">&laquo;</a></li>
 
-    <li *ngIf="page === pages[0]" [ngClass]="{active: currentPageLocal === 0}"><a (click)="changePage(0)" >1</a></li>
+    <li *ngIf="startPageLocal > 0" [ngClass]="{active: currentPageLocal === 0}"><a (click)="changePage(0)" >1</a></li>
 
-    <li *ngIf="page === pages[0] && pages[0] - 1 >= 1"><a >...</a></li>
+    <li *ngIf="startPageLocal > 1"><a >...</a></li>
 
-    <li *ngIf="page < lastPageLocal - 1" [ngClass]="{active: currentPageLocal === page}"><a (click)="changePage(page)" >{{(page + 1)}}</a></li>
+    <li *ngFor="let page of pages.slice()" [ngClass]="{active: currentPageLocal === page}"><a (click)="changePage(page)" >{{(page + 1)}}</a></li>
 
-    <li *ngIf="page === pages[2] && pages[2] < (lastPageLocal - 2)" [ngClass]="{active: currentPageLocal === (lastPageLocal - 1)}"><a >...</a></li>
+    <li *ngIf="endPageLocal < totalPagesGeral-1" [ngClass]="{active: currentPageLocal === (lastPageLocal - 1)}"><a >...</a></li>
 
-    <li *ngIf="page === pages[2] || (pages.length > 1 && endPageLocal === (lastPageLocal - 2) && page === endPageLocal) || (pages.length === 1 && endPageLocal === lastPageLocal - 2)" [ngClass]="{active: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(lastPageLocal - 1)">{{lastPageLocal}}</a></li>
+    <li *ngIf="endPageLocal < totalPagesGeral"><a (click)="changePage(lastPageLocal - 1)">{{lastPageLocal}}</a></li>
 
-    <li *ngIf="(totalPagesGeral > 4 && page === pages[2]) || (endPageLocal === (lastPageLocal - 2) && page === endPageLocal)" [ngClass]="{disabled: currentPageLocal === lastPageLocal - 2}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
+    <li [ngClass]="{disabled: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
   </ul>
 </div>

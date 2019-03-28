@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 export class PaginationComponent implements OnInit, OnChanges {
 
   private lastPageLocal: number;
+  private startPageLocal: number;
   private endPageLocal: number;
   private currentPageLocal: number;
   private pages = [];
@@ -33,12 +34,12 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
+//console.log(changes, this.pageCurrent);
     for (const propName in changes) {
       if (changes) {
         const value = changes[propName];
         if (propName === 'totalPages') {
-          this.totalPagesLocal = value.currentValue;
+          this.totalPagesLocal = value.currentValue - 1;
         } else if (propName === 'pageCurrent') {
           this.pageCurrentLocal = value.currentValue;
         } else if (propName === 'totalElements') {
@@ -58,22 +59,22 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   generatePagination(totalPages, pageCurrent, totalElements, rows) {
-      let startPage = (pageCurrent < 2) ? 1 : pageCurrent - 1;
-      let endPage = 3 + startPage;
+      let startPage = (pageCurrent < 3) ? 0 : pageCurrent - 2;
+      let endPage = 4 + startPage;
       endPage = (totalPages < endPage) ? totalPages : endPage;
-      const diff = startPage - endPage + 3;
+      const diff = startPage - endPage + 4;
       startPage -= (startPage - diff > 0) ? diff : 0;
       const array = [];
 
-
-      for (let i = startPage ; i <= endPage ; i++) {
+      for (let i = startPage ; i <= endPage; i++) {
         array.push(i);
       }
+      
       this.totalPagesGeral = totalPages;
       this.lastPageLocal = Math.ceil(totalElements / rows);
+      this.startPageLocal = startPage;
       this.endPageLocal = endPage;
       this.currentPageLocal = pageCurrent;
-
       return array;
   }
 

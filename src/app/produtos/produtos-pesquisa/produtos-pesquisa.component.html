@@ -61,23 +61,23 @@
     </div>
     <!-- /.box -->
 <app-modal id="confirmacaoModal" style="z-index: 9999;">
-          <div class="app-modal modal-dialog">
-              <div class="app-modal-body modal-content">
-                  <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">Excluir</h4>
-                    </div>
-                  <div class="modal-body">
-                    <p *ngIf="produtoModal">
-                      Deseja excluir o produto {{produtoModal.nome}}?
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" (click)="closeModal('confirmacaoModal');" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" (click)="excluirProduto(produtoModal, 'confirmacaoModal')">Excluir</button>
-                  </div>
-
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Excluir</h4>
               </div>
-          </div>
-          <div class="app-modal-background"></div>
-      </app-modal>
+            <div class="modal-body">
+              <p *ngIf="produtoModal">
+                Deseja excluir o produto {{produtoModal.nome}}?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal('confirmacaoModal');" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" (click)="excluirProduto(produtoModal, 'confirmacaoModal')">Excluir</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>

@@ -43,7 +43,7 @@ export class ProdutosPesquisaComponent implements OnInit {
     this.produtoService.pesquisar(this.filtro)
       .then(response => {
         this.produtos = response.content;
-        
+
         this.totalPages = response.totalPages;
         this.number = response.number;
         this.totalElements = response.totalElements;

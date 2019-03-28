@@ -27,6 +27,16 @@ const routes: Routes = [
       title: 'Fornecedores',
     },
   },
+
+  {
+    path: 'venda',
+    loadChildren: './vendas/vendas.module#VendasModule',
+    data: {
+      title: 'Vendas',
+    }
+  },
+
+
   {
   path: '',
   data: {
