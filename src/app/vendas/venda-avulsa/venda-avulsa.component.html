@@ -1,0 +1,95 @@
+<div class="row">
+    <!-- left column -->
+  <div class="col-md-12">
+  
+    <!-- general form elements -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <button class="btn btn-success pull-right" style="margin-left: 5px;" title="Adicionar produto"
+          (click)="openModal('adicionarItem')"><i class="fa fa-plus"></i>  Novo produto</button>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form" [formGroup]="formulario">
+        <div class="box-body">
+
+          <app-input-produto>
+            <ng-template #inputProdutos>
+              
+            
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-10">teste produto</div>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">-</button>
+                        </span>
+                        <input type="text" class="form-control" id="input"/>
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">+</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+            </ng-template>
+          </app-input-produto>
+
+        </div>
+        <!-- /.box-body -->
+  
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.box -->
+  </div>
+  
+  </div>
+
+  <ng-template #listHead>
+      <div class="live-search-list-head">
+          <div class="row">
+            <span class="col-md-9">Nome</span>
+            <span class="col-md-3 text-center">Unidades disponíveis</span>
+          </div>
+        </div>
+  </ng-template>
+
+  <app-modal id="adicionarItem" style="z-index: 9999;">
+      <div class="app-modal modal-dialog modal-lg">
+          <div class="app-modal-body modal-content">
+              <div class="modal-header">
+                  <button type="button" (click)="closeModal('adicionarItem');" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Novo item</h4>
+                </div>
+              <div class="modal-body">
+                <div class="form-group col-md-12">
+                  <input name="inputProduto" type="text" class="form-control" placeholder="Digite 3 caractéres..." title="Digite 3 caractéres" 
+                    #inputProduto id="inputProduto" (keyup)="pesquisarProduto($event, 'adicionarItem')">
+                    
+                    <div id="lista-produtos-live-search"  #divLiveSearch>
+                      <!--<ul class="live-search-list" #liveSearch>
+                        
+                      </ul>-->
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" (click)="closeModal('adicionarItem');" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="adicionarProduto('adicionarItem')">Adicionar</button>
+              </div>
+  
+          </div>
+      </div>
+      <div class="app-modal-background"></div>
+  </app-modal>
+
+ 
+  
