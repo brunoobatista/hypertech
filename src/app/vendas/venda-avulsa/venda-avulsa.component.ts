@@ -44,6 +44,29 @@ export class VendaAvulsaComponent implements OnInit {
     this.configurarFormulario();
   }
 
+  acrescentaQuantidade(item: any) {
+      item.quantidade += 1;
+  }
+
+  decrementarQuantidade(item: any) {
+    if (item.quantidade > 0) {
+      item.quantidade -= 1;
+    }
+  }
+
+  excluirItem(item: any) {
+    const p1 = this.formulario.get('produtos').value;
+
+    const novaLista = p1.filter(p => {
+      if (p.produto.id !== item.produto.id) {
+        return p;
+      }
+    } );
+    this.formulario.get('produtos').patchValue([]);
+    const p2 = this.formulario.get('produtos').value;
+    novaLista.forEach(nl => p2.push(nl));
+  }
+
   selecionaProduto(event) {
     const produto = event.target.parentNode;
     const divPai = this.render2.parentNode(produto);
@@ -67,7 +90,7 @@ export class VendaAvulsaComponent implements OnInit {
       if (notExist) {
         this.formulario.get('produtos').value.push({'produto': this.produtoTemp, 'quantidade': 0});
       } else {
-        this.errorHadler.handle('Produto já incluído na compra!');
+        this.errorHadler.handle('Produto já incluso na venda!');
       }
 
       this.closeModal(idModal);
@@ -183,7 +206,7 @@ export class VendaAvulsaComponent implements OnInit {
         this.render2.appendChild(ulbody, li);
       }
 
-      // adiciona as divs filhos na div pai 
+      // adiciona as divs filhos na div pai
       this.render2.appendChild(div, ulhead);
       this.render2.appendChild(div, ulbody);
     }

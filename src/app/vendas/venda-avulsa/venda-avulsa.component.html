@@ -13,24 +13,35 @@
       <form class="form" [formGroup]="formulario">
         <div class="box-body">
 
-          <app-input-produto>
-            <ng-template #inputProdutos>
+          <app-input-produto [(produtos)]="formulario.get('produtos').value">
+            <ng-template #produtoTemplate let-item>
               
             
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-md-10">teste produto</div>
-                    <div class="col-md-2">
+                    <div class="col-md-9">{{ item.produto.nome }}</div>
+                    <div class="col-md-3">
                       <div class="input-group">
                         <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">-</button>
+                          <button class="btn btn-default" (click)="decrementarQuantidade(item)" type="button">
+                            <i class="fa fa-minus"></i>
+                          </button>
                         </span>
-                        <input type="text" class="form-control" id="input"/>
+                        <input type="text" class="form-control" id="input" value="{{item.quantidade}}"/>
                         <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">+</button>
+                          <button class="btn btn-default" (click)="acrescentaQuantidade(item)" type="button">
+                            <i class="fa fa-plus"></i>
+                          </button>
                         </span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" (click)="excluirItem(item)" type="button">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                        </span>
+
                       </div>
+
                     </div>
                   </div>
                 </div>

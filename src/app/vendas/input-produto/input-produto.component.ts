@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ContentChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, ContentChild, TemplateRef, DoCheck } from '@angular/core';
 import { Produto } from 'src/app/model/Produto';
 import { NgForOfContext } from '@angular/common';
 
@@ -19,5 +19,7 @@ export class InputProdutoComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  
 
 }
