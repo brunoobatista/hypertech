@@ -95,6 +95,7 @@ export class RoutingService {
     this.router.events.subscribe(routeEvent => {
       // https://github.com/angular/angular/issues/17473: event not fired anymore on load for routed component.
       this.events.next(routeEvent);
+
       if (routeEvent instanceof NavigationEnd) {
         let route = this.router.routerState.root.snapshot,
           tmpUrl = '',

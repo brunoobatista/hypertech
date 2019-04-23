@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChil
 import { Router, NavigationStart, NavigationEnd, Event as RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+
 import { LayoutStore } from '../layout.store';
 
 import { RoutingService } from '../../services/routing.service';
@@ -20,6 +21,9 @@ import { removeSubscriptions } from '../../helpers';
 export class ContentComponent implements OnInit, OnDestroy {
   public description: string;
   public header: string;
+
+  public headers;
+
   public heightStyle: number;
   public sidebarLeftHeight: number;
   public windowInnerHeight: number;
@@ -62,6 +66,9 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.titleTag = this.titleService.getTitle();
 
     this.subscriptions.push(this.routingService.onChange.subscribe((value: any) => {
+      // Adicionei essa linha para poder usar sempre a ultíma opção correta do título de página
+      this.headers = value;
+
       if (value && value[value.length - 1]) {
         this.titleService.setTitle(this.getTitle(value[value.length - 1].data['title']));
         this.header = value[value.length - 1].data['title'];
