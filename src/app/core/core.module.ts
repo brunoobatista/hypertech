@@ -32,11 +32,20 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     TabsModule,
     BoxModule,
     HttpClientModule,
-
   ],
-  declarations: [HeaderInnerComponent, SidebarLeftInnerComponent, SidebarRightInnerComponent, NaoAutorizadoComponent],
+  declarations: [
+    HeaderInnerComponent,
+    SidebarLeftInnerComponent,
+    SidebarRightInnerComponent,
+    NaoAutorizadoComponent,
+  ],
   exports: [
-    BoxModule, TabsModule, HeaderInnerComponent, SidebarLeftInnerComponent, SidebarRightInnerComponent, ToastyModule,
+    BoxModule,
+    TabsModule,
+    HeaderInnerComponent,
+    SidebarLeftInnerComponent,
+    SidebarRightInnerComponent,
+    ToastyModule,
   ],
   providers: [
     ErrorHandlerService,

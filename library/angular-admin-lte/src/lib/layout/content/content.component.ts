@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChil
 import { Router, NavigationStart, NavigationEnd, Event as RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+
 import { LayoutStore } from '../layout.store';
 
 import { RoutingService } from '../../services/routing.service';
@@ -68,7 +69,6 @@ export class ContentComponent implements OnInit, OnDestroy {
       // Adicionei essa linha para poder usar sempre a ultíma opção correta do título de página
       this.headers = value;
 
-      console.log('ddd', value[value.length - 1]);
       if (value && value[value.length - 1]) {
         this.titleService.setTitle(this.getTitle(value[value.length - 1].data['title']));
         this.header = value[value.length - 1].data['title'];

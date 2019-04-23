@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 import { InputProdutoComponent } from './input-produto/input-produto.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,7 +21,7 @@ import { InputProdutoComponent } from './input-produto/input-produto.component';
   ],
   declarations: [VendaAvulsaComponent, InputProdutoComponent],
   providers: [
-    {provide: LOCALE_ID, useValue: 'pt'}
-  ]
+    {provide: LOCALE_ID, useValue: 'pt'},
+  ],
 })
 export class VendasModule { }

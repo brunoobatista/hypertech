@@ -9,11 +9,9 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service';
 import { VendasService } from '../vendas.service';
 
-import { Venda } from 'src/app/model/Venda';
-import { Produto } from 'src/app/model/Produto';
+
 import { environment } from './../../../environments/environment';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { t } from '@angular/core/src/render3';
+import { RoutingService } from 'library/angular-admin-lte/src/lib/services/routing.service';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -37,7 +35,6 @@ export class VendaAvulsaComponent implements OnInit {
   venda: any;
   vendaUrl: string;
 
-
   constructor(
     private modalService: ModalService,
     private produtoService: ProdutoService,
@@ -45,10 +42,12 @@ export class VendaAvulsaComponent implements OnInit {
     private errorHadler: ErrorHandlerService,
     private render2: Renderer2,
     private auth: AuthService,
-    private route: Router,
+    private router: Router,
     private activateRoute: ActivatedRoute,
+    private routingService: RoutingService,
   ) {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
+
   }
 
   ngOnInit() {
@@ -57,11 +56,9 @@ export class VendaAvulsaComponent implements OnInit {
 
     if (idVenda) {
       this.carregarVenda(idVenda);
-
-      this.activateRoute.snapshot.data['title'] = `Venda #${idVenda}`;
-
+      this.titulo = '#' + idVenda;
     } else {
-      this.titulo = 'Venda';
+      this.titulo = '';
     }
   }
 
@@ -84,7 +81,6 @@ export class VendaAvulsaComponent implements OnInit {
     this.tempo = setTimeout(() => {
      this.vendasService.adicionar(this.formulario.value)
         .then(response => {
-          console.log('atuatliza', response)
           if (response.id) {
             this.atualizarIdVendaRoute(response.id);
           }
@@ -95,12 +91,7 @@ export class VendaAvulsaComponent implements OnInit {
 
   atualizarIdVendaRoute(id: number) {
     this.formulario.get('id').setValue(id);
-
-    const sub = this.activateRoute.data.subscribe(s => {
-      console.log('id2', id, ' ==== ', s);
-      s['title'] = `Venda #${id}`;
-    });
-
+    this.titulo = '#' + id;
     window.history.replaceState({},
       '', `/vendas/${id}`);
   }
@@ -207,7 +198,8 @@ export class VendaAvulsaComponent implements OnInit {
         id: [this.auth.jwtPayload.id]
       }),
       produtos: this.formBuilder.array([]),
-      valor: [0.0],
+      valor: [0],
+      desconto: [],
     });
   }
 
@@ -296,29 +288,6 @@ export class VendaAvulsaComponent implements OnInit {
   closeModal(id: string) {
     this.modalService.close(id);
     this.cleanDataModal();
-  }
-
-  templateHeadModal() {
-    const tp = `
-          <div class="live-search-list-head">
-            <div class="row">
-              <span class="col-md-9">Nome</span>
-              <span class="col-md-3 text-center">Unidades disponíveis</span>
-            </div>
-          </div>
-    `;
-  }
-  templateModal() {
-    return `
-
-
-            <div id="1" class="body-live-list row">
-              <span class="col-md-9">produto 1</span>
-              <span class="col-md-3 text-center">654</span>
-            </div>
-
-
-    `;
   }
 
 }
