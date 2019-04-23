@@ -5,11 +5,27 @@ import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 
 const routes: Routes = [
     {
-        path: 'avulsa',
+        path: '',
         component: VendaAvulsaComponent,
         data: {
-            title: 'Venda Avulsa',
             roles: ['ROLE_CADASTRAR_TIPO'],
+        },
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'nova',
+        component: VendaAvulsaComponent,
+        data: {
+            title: 'Venda',
+            roles: ['ROLE_CADASTRAR_TIPO'],
+        },
+        canActivate: [AuthGuard]
+    },
+    {
+        path: ':id',
+        component: VendaAvulsaComponent,
+        data: {
+            title: 'Venda',
         },
         canActivate: [AuthGuard]
     }

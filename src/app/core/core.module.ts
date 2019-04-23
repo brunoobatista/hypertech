@@ -43,9 +43,11 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     AuthService,
     MasterHttp,
     JwtHelperService,
+
     TipoService,
     FornecedorService,
     CidadeService,
+
     ModalService,
     {
       provide: HTTP_INTERCEPTORS,

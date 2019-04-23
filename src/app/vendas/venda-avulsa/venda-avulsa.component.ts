@@ -1,13 +1,19 @@
-import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { ModalService } from 'src/app/core/modal.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service';
+import { VendasService } from '../vendas.service';
+
 import { Venda } from 'src/app/model/Venda';
 import { Produto } from 'src/app/model/Produto';
+import { environment } from './../../../environments/environment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { t } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -16,6 +22,7 @@ import { Produto } from 'src/app/model/Produto';
 })
 export class VendaAvulsaComponent implements OnInit {
 
+  titulo: any;
   produtosPesquisa = [];
   @ViewChild('inputProduto', {read: ElementRef}) inputProduto: any;
   @ViewChild('divLiveSearch', {read: ElementRef}) divLiveSearch: any;
@@ -28,29 +35,85 @@ export class VendaAvulsaComponent implements OnInit {
   produtoTemp: any;
 
   venda: any;
+  vendaUrl: string;
+
 
   constructor(
     private modalService: ModalService,
     private produtoService: ProdutoService,
+    private vendasService: VendasService,
     private errorHadler: ErrorHandlerService,
-    private el: ElementRef,
     private render2: Renderer2,
     private auth: AuthService,
+    private route: Router,
+    private activateRoute: ActivatedRoute,
   ) {
-
+    this.vendaUrl = `${environment.apiUrl}/vendas`;
   }
 
   ngOnInit() {
     this.configurarFormulario();
+    const idVenda = this.activateRoute.snapshot.params['id'];
+
+    if (idVenda) {
+      this.carregarVenda(idVenda);
+
+      this.activateRoute.snapshot.data['title'] = `Venda #${idVenda}`;
+
+    } else {
+      this.titulo = 'Venda';
+    }
+  }
+
+  carregarVenda(id: number) {
+    this.vendasService.buscarPorCodigo(id)
+      .then(response => {
+        this.formulario.patchValue(response);
+
+        response.produtos.forEach(p => {
+          this.formulario.get('produtos').value.push(p);
+        });
+      })
+      .catch(erro => this.errorHadler.handle(erro));
+  }
+
+  atualizarVenda() {
+    if (this.tempo) {
+      clearTimeout(this.tempo);
+    }
+    this.tempo = setTimeout(() => {
+     this.vendasService.adicionar(this.formulario.value)
+        .then(response => {
+          console.log('atuatliza', response)
+          if (response.id) {
+            this.atualizarIdVendaRoute(response.id);
+          }
+        })
+        .catch(error => this.errorHadler.handle(error));
+    }, 2000);
+  }
+
+  atualizarIdVendaRoute(id: number) {
+    this.formulario.get('id').setValue(id);
+
+    const sub = this.activateRoute.data.subscribe(s => {
+      console.log('id2', id, ' ==== ', s);
+      s['title'] = `Venda #${id}`;
+    });
+
+    window.history.replaceState({},
+      '', `/vendas/${id}`);
   }
 
   acrescentaQuantidade(item: any) {
       item.quantidade += 1;
+      this.atualizarVenda();
   }
 
   decrementarQuantidade(item: any) {
     if (item.quantidade > 0) {
       item.quantidade -= 1;
+      this.atualizarVenda();
     }
   }
 
@@ -65,6 +128,11 @@ export class VendaAvulsaComponent implements OnInit {
     this.formulario.get('produtos').patchValue([]);
     const p2 = this.formulario.get('produtos').value;
     novaLista.forEach(nl => p2.push(nl));
+
+    const idFormulario = this.formulario.get('id').value;
+    if (idFormulario) {
+      this.vendasService.removerProduto(idFormulario, item.produto.id);
+    }
   }
 
   selecionaProduto(event) {
@@ -134,11 +202,12 @@ export class VendaAvulsaComponent implements OnInit {
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      dataVenda: [formatDate(Date.now(), 'dd-MM-yyyy hh:mm:ss', 'pt')],
+      dataVenda: [formatDate(Date.now(), 'dd-MM-yyyy HH:mm:ss', 'pt')],
       usuario: this.formBuilder.group({
         id: [this.auth.jwtPayload.id]
       }),
       produtos: this.formBuilder.array([]),
+      valor: [0.0],
     });
   }
 
@@ -230,7 +299,7 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   templateHeadModal() {
-    const t = `
+    const tp = `
           <div class="live-search-list-head">
             <div class="row">
               <span class="col-md-9">Nome</span>

@@ -30,6 +30,8 @@
               "node_modules/prismjs/themes/prism-tomorrow.css",
               "node_modules/admin-lte-css/dist/css/AdminLTE.css",
               "node_modules/admin-lte-css/dist/css/skins/_all-skins.css",
+              "node_modules/admin-lte-css/dist/css/alt/AdminLTE-fullcalendar.min.css",
+              "node_modules/admin-lte-css/dist/css/alt/AdminLTE-select2.min.css",
               "src/styles.scss"
             ],
             "scripts": [

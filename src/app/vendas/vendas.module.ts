@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VendasRoutingModule } from './vendas-routing.module';
@@ -7,7 +8,6 @@ import { SharedModule } from '../shared/shared.module';
 
 import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 import { InputProdutoComponent } from './input-produto/input-produto.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +16,7 @@ import { InputProdutoComponent } from './input-produto/input-produto.component';
     ReactiveFormsModule,
     VendasRoutingModule,
     SharedModule,
+    RouterModule,
   ],
   declarations: [VendaAvulsaComponent, InputProdutoComponent],
   providers: [
