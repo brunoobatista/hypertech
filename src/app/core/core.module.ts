@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../seguranca/token.interceptor';
 import { FormsModule } from '@angular/forms';
 
-import { BoxModule, TabsModule, DropdownModule } from 'angular-admin-lte';
+import { BoxModule, TabsModule, DropdownModule, BoxSmallModule } from 'angular-admin-lte';
 import { ToastyModule } from 'ng2-toasty';
 
 import { JwtHelperService } from '@auth0/angular-jwt';

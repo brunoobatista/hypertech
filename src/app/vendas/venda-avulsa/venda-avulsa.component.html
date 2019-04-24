@@ -1,35 +1,67 @@
+<div *ngIf="titulo" >
+    {{ titulo }}
+  
+</div>
+
 <div class="row">
     <!-- left column -->
   <div class="col-md-12">
   
     <!-- general form elements -->
     <div class="box box-primary">
-
+        
       <form class="form" [formGroup]="formulario" class="">
         <div class="box-header with-border">
-          
+            
           <div class="row">
-            <div *ngIf="titulo" class="form-group col-md-1">
-                {{ titulo }}
-              
-            </div>
-            <div class="form-group col-md-3">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  R$
-                </span>
-                <input type="text" class="form-control" id="desconto" placeholder="Desconto" title="Desconto"
-                  name="desconto" formControlName="desconto" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"/>
-
+              <div class="col-md-12">
+                  <mk-box-small header="{{ calculaValorTotal() | currency:'R$':'symbol':'0.2-2':'pt'}}"  backgroundColor="aqua" iconStyleClass="fa fa-shopping-cart">
+                      Valor Total
+                  </mk-box-small>
               </div>
-
-            </div>
-            </div>
               
+          </div>
 
+          <div class="row">
+            
+            <div class="form-group col-md-3">
+                <label for="desconto" >Desconto</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    R$
+                  </span>
+                  <input type="text" class="form-control" id="desconto" placeholder="0,00" title="Desconto"
+                    name="desconto" formControlName="desconto" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"/>
 
-          <button class="btn btn-success pull-right" style="margin-left: 5px;" title="Adicionar produto"
-            (click)="openModal('adicionarItem')"><i class="fa fa-plus"></i>  Novo produto</button>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <label for="desconto" >Cliente</label>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                  
+                    <input class="form-control"
+                    list="clientes" (keyup)="pesquisarCliente($event)"/>
+                    <datalist id="clientes">
+                        <option value="Internet Explorer">
+                        <option value="Firefox">
+                        <option value="Chrome">
+                        <option value="Opera">
+                        <option value="Safari">
+                    </datalist>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="" ></label>
+
+                  <button class="btn btn-success pull-right botao-add-produto"  title="Adicionar produto"
+                      (click)="openModal('adicionarItem')"><i class="fa fa-plus"></i>  Novo produto</button>
+            </div>
+
+          </div>
+              
         </div>
       <!-- /.box-header -->
       <!-- form start -->
@@ -43,28 +75,19 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-md-9">{{ item.produto.nome }}</div>
-                    <div class="col-md-3">
-                      <div class="input-group">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" (click)="decrementarQuantidade(item)" type="button">
-                            <i class="fa fa-minus"></i>
-                          </button>
-                        </span>
-                        <input type="text" class="form-control" id="input" value="{{item.quantidade}}"/>
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" (click)="acrescentaQuantidade(item)" type="button">
-                            <i class="fa fa-plus"></i>
-                          </button>
-                        </span>
-                        <span class="input-group-btn">
-                            <button class="btn btn-danger" (click)="excluirItem(item)" type="button">
-                              <i class="fa fa-trash"></i>
-                            </button>
-                        </span>
-
-                      </div>
-
+                    <div class="col-md-2">
+                      
+                        <input type="number" class="form-control" id="input" 
+                            value="{{item.quantidade}}"
+                            (change)="inputValorProdutoAlterado($event, item)"/>
+                        
                     </div>
+                    <div class="col-md-1">
+                        <button class="form-control btn btn-danger" (click)="excluirItem(item)" type="button">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -76,7 +99,7 @@
         <!-- /.box-body -->
   
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="submit" class="btn btn-primary" (click)="salvarVenda()">Salvar</button>
         </div>
 
       </form>
