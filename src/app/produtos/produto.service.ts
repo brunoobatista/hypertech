@@ -30,6 +30,14 @@ export class ProdutoService {
       .toPromise();
   }
 
+  pesquisarTodos(valor: any): Promise<any> {
+    return this.http.get<Produto>(`${this.produtopUrl}/search/${valor}`)
+      .toPromise()
+      .then(response => {
+        return response;
+      });
+  }
+
   pesquisar(filtro: ProdutoFilter): Promise<any> {
     let params = new HttpParams({
       fromObject: {
@@ -89,7 +97,6 @@ export class ProdutoService {
           produtos: resp.content,
           total: resp.totalElements
         };
-        console.log('teste2 2 2 2 2', resp, resultado, dadosPagina)
         return (resultado.total + 1) < dadosPagina ? null : resultado.produtos;
       });
   }

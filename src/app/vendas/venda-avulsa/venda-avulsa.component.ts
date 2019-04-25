@@ -197,9 +197,9 @@ export class VendaAvulsaComponent implements OnInit {
         clearTimeout(this.tempo);
       }
       this.tempo = setTimeout(() => {
-        this.produtoService.pesquisar(filtro)
+        this.produtoService.pesquisarTodos(value)
         .then(response => {
-          this.produtosPesquisa = response.content;
+          this.produtosPesquisa = response;
           this.listaProdutosPesquisa(this.produtosPesquisa);
         })
         .catch(error => this.errorHadler.handle(error));

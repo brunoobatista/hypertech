@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "build:lib": "ng build angular-admin-lte --prod",
     "publish:lib": "npm publish dist/angular-admin-lte",
