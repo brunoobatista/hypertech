@@ -1,8 +1,8 @@
 <!-- /pagination -->
 
-<div class="box-footer clearfix">
-  <ul class="pagination pagination-sm no-margin pull-right">
-    <li  [ngClass]="{disabled: currentPageLocal === 0}"><a (click)="changePage(currentPageLocal - 1)">&laquo;</a></li>
+<div class="box-footer clearfix" >
+  <ul *ngIf="totalPagesGeral > 0" class="pagination pagination-sm no-margin pull-right">
+    <li *ngIf="totalPagesGeral" [ngClass]="{disabled: currentPageLocal === 0}"><a (click)="changePage(currentPageLocal - 1)">&laquo;</a></li>
 
     <li *ngIf="startPageLocal > 0" [ngClass]="{active: currentPageLocal === 0}"><a (click)="changePage(0)" >1</a></li>
 
@@ -14,6 +14,6 @@
 
     <li *ngIf="endPageLocal < totalPagesGeral"><a (click)="changePage(lastPageLocal - 1)">{{lastPageLocal}}</a></li>
 
-    <li [ngClass]="{disabled: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
+    <li *ngIf="totalPagesGeral" [ngClass]="{disabled: currentPageLocal === lastPageLocal - 1}"><a (click)="changePage(currentPageLocal + 1)">&raquo;</a></li>
   </ul>
 </div>

@@ -12,7 +12,7 @@ import { Produto } from '../model/Produto';
 export class ProdutoFilter {
   nome: string;
   pagina = 0;
-  itensPorPagina = 10;
+  itensPorPagina = 15;
 }
 
 @Injectable({
@@ -73,32 +73,31 @@ export class ProdutoService {
   }
 
   excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = posicaoPagina + itensPorPagina - 1;
+    const dadosPagina = (posicaoPagina + 1) * itensPorPagina;
     const params = new HttpParams({
       fromObject: {
-        page: `${posicaoPagina}`,
-        size: `${itensPorPagina}`
+        page: `${dadosPagina}`,
+        size: `1`
       }
     });
-
+    const produto = this.buscarProximo(params);
     return this.http.delete<any>(`${this.produtopUrl}/${id}`)
       .toPromise()
       .then(response => {
-        return response;
-        //return this.buscarProximo(params, dadosPagina);
+        return produto;
       });
   }
 
-  buscarProximo(params, dadosPagina): Promise<any> {
+  buscarProximo(params): Promise<any> {
     return this.http.get<any>(`${this.produtopUrl}`, { params })
-      .toPromise()
-      .then(resp => {
-        const resultado = {
-          produtos: resp.content,
-          total: resp.totalElements
-        };
-        return (resultado.total + 1) < dadosPagina ? null : resultado.produtos;
-      });
+    .toPromise()
+    .then(response => {
+      if (response.content.length > 0) {
+        return response.content[0];
+      } else {
+        return;
+      }
+    });
   }
 
 }

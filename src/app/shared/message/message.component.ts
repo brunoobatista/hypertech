@@ -19,7 +19,8 @@ export class MessageComponent implements OnInit {
   }
 
   temErro(): boolean {
-    const erro = this.control.hasError(this.error) && (this.control.dirty && this.control.touched);
+    const erro = this.control.hasError(this.error) && (this.control.dirty  && this.control.touched);
+
     if (erro) {
       this.elRef.nativeElement.parentElement.classList.add('has-error');
     } else if (this.control.errors === null) {

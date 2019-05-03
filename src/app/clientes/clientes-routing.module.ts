@@ -19,7 +19,7 @@ const routes: Routes = [
     component: ClienteCadastroComponent,
     data: {
       roles: ['ROLE_PESQUISAR_TIPO'],
-      title: 'Produto'
+      title: 'Cliente'
     },
     canActivate: [AuthGuard],
   },

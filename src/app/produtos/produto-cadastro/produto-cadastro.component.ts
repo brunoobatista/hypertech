@@ -82,7 +82,6 @@ export class ProdutoCadastroComponent implements OnInit {
       .then(response => {
         this.formulario.patchValue(response);
         this.toasty.success('Produto atualizado!');
-        this.router.navigate(['/produtos']);
       })
       .catch(error => this.errorHandler.handle(error));
   }

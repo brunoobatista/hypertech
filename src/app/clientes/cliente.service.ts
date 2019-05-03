@@ -10,9 +10,8 @@ import { Cliente } from '../model/Cliente';
 
 export class ClienteFilter {
   nome: string;
-  email: string;
   pagina = 0;
-  itensPorPagina = 10;
+  itensPorPagina = 15;
 }
 
 @Injectable({
@@ -23,6 +22,11 @@ export class ClienteService {
 
   constructor(private http: MasterHttp) {
     this.clienteUrl = `${environment.apiUrl}/clientes`;
+  }
+
+  adicionar(cliente: Cliente): Promise<any> {
+    return this.http.post<Cliente>(this.clienteUrl, cliente)
+      .toPromise();
   }
 
   pesquisarTodos(valor: any): Promise<any> {
@@ -60,6 +64,42 @@ export class ClienteService {
         return result;
       });
 
+  }
+
+  buscarPorCodigo(id: number): Promise<Cliente> {
+    return this.http.get<Cliente>(`${this.clienteUrl}/${id}`)
+        .toPromise();
+  }
+
+  excluirCliente(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
+    const dados = (posicaoPagina + 1) * itensPorPagina;
+
+    const params = new HttpParams({
+      fromObject: {
+        page: `${dados}`,
+        size: '1'
+      }
+    });
+
+    const cliente = this.buscarProximo(params);
+    return this.http.delete<any>(`${this.clienteUrl}/${id}`)
+        .toPromise()
+        .then(response => {
+            return cliente;
+        });
+
+  }
+
+  buscarProximo(params): Promise<any> {
+    return this.http.get<any>(`${this.clienteUrl}`, { params })
+        .toPromise()
+        .then(response => {
+          if (response.content.length > 0) {
+            return response.content[0];
+          } else {
+            return;
+          }
+        });
   }
 
 }

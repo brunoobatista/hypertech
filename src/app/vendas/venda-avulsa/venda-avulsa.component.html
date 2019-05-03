@@ -31,7 +31,8 @@
                     R$
                   </span>
                   <input type="text" class="form-control" id="desconto" placeholder="0,00" title="Desconto"
-                    name="desconto" formControlName="desconto" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"/>
+                    name="desconto" formControlName="desconto" 
+                    currencyMask  [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false}"/>
 
                 </div>
             </div>
@@ -43,7 +44,7 @@
                     </span>
                   
                     <input class="form-control"
-                    list="clientes" (keyup)="pesquisarCliente($event)"/>
+                        list="clientes" (keyup)="pesquisarCliente($event)"/>
                     <datalist id="clientes">
                         <option value="Internet Explorer">
                         <option value="Firefox">
