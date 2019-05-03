@@ -24,7 +24,7 @@ export class InputService {
         let { allowNegative, decimal, precision, prefix, suffix, thousands, type } = this.options;
         rawValue = isNumber ? new Number(rawValue).toFixed(precision) : rawValue;
         let onlyNumbers = rawValue.replace(/[^0-9]/g, "");
-console.log(this.options);
+
         if (!onlyNumbers) {
             return "";
         }

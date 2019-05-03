@@ -9,9 +9,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service';
 import { VendasService } from '../vendas.service';
 
-
 import { environment } from './../../../environments/environment';
-import { RoutingService } from 'library/angular-admin-lte/src/lib/services/routing.service';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -44,7 +42,6 @@ export class VendaAvulsaComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private routingService: RoutingService,
   ) {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
 
@@ -67,45 +64,65 @@ export class VendaAvulsaComponent implements OnInit {
       .then(response => {
         this.formulario.patchValue(response);
 
-        response.produtos.forEach(p => {
-          this.formulario.get('produtos').value.push(p);
-        });
+        this.preencherProdutosFormulario(response.produtos);
       })
       .catch(erro => this.errorHadler.handle(erro));
   }
 
+  salvarVenda() {
+    this.vendasService.adicionar(this.formulario.value)
+      .then(response => {
+        if (!this.formulario.get('id').value) {
+          this.atualizarIdVendaRoute(response.id);
+        } else {
+          this.formulario.patchValue(response);
+        }
+        this.preencherProdutosFormulario(response.produtos);
+      })
+      .catch(error => this.errorHadler.handle(error));
+  }
+
   atualizarVenda() {
-    if (this.tempo) {
-      clearTimeout(this.tempo);
-    }
-    this.tempo = setTimeout(() => {
-     this.vendasService.adicionar(this.formulario.value)
-        .then(response => {
-          if (response.id) {
-            this.atualizarIdVendaRoute(response.id);
-          }
-        })
-        .catch(error => this.errorHadler.handle(error));
-    }, 2000);
+    let valor = 0;
+    const produtos = this.formulario.get('produtos').value;
+    produtos.forEach(p => {
+      valor += p.produto.valor * p.quantidade;
+    });
+    this.formulario.get('valor').setValue(valor);
+  }
+
+  preencherProdutosFormulario(produtos: any[]) {
+    produtos.forEach(p => {
+      this.formulario.get('produtos').value.push(p);
+    });
   }
 
   atualizarIdVendaRoute(id: number) {
-    this.formulario.get('id').setValue(id);
-    this.titulo = '#' + id;
     window.history.replaceState({},
       '', `/vendas/${id}`);
   }
 
+  // podem ser retirados
   acrescentaQuantidade(item: any) {
       item.quantidade += 1;
       this.atualizarVenda();
   }
-
+// podem ser retirados
   decrementarQuantidade(item: any) {
     if (item.quantidade > 0) {
       item.quantidade -= 1;
       this.atualizarVenda();
     }
+  }
+
+  inputValorProdutoAlterado(event, item) {
+    item.quantidade = event.target.value;
+    //this.atualizarVenda();
+    this.atualizarVenda();
+  }
+
+  calculaValorTotal(): number {
+    return this.formulario.get('valor').value - this.formulario.get('desconto').value;
   }
 
   excluirItem(item: any) {
@@ -180,14 +197,18 @@ export class VendaAvulsaComponent implements OnInit {
         clearTimeout(this.tempo);
       }
       this.tempo = setTimeout(() => {
-        this.produtoService.pesquisar(filtro)
+        this.produtoService.pesquisarTodos(value)
         .then(response => {
-          this.produtosPesquisa = response.content;
+          this.produtosPesquisa = response;
           this.listaProdutosPesquisa(this.produtosPesquisa);
         })
         .catch(error => this.errorHadler.handle(error));
       }, 500);
     }
+  }
+
+  pesquisarCliente(event) {
+    console.log(event.target);
   }
 
   configurarFormulario() {
@@ -225,17 +246,22 @@ export class VendaAvulsaComponent implements OnInit {
       this.render2.setAttribute(liHead, 'class', 'row');
       const htNome = this.render2.createText('Nome');
       const htEstoque = this.render2.createText('Unidades disponíveis');
+      const htValor = this.render2.createText('Valor R$');
 
       const hsNome = this.render2.createElement('span');
-      this.render2.setAttribute(hsNome, 'class', 'col-md-9');
+      this.render2.setAttribute(hsNome, 'class', 'col-md-7');
       const hsEstoque = this.render2.createElement('span');
       this.render2.setAttribute(hsEstoque, 'class', 'col-md-3 text-center');
+      const hsValor = this.render2.createElement('span');
+      this.render2.setAttribute(hsValor, 'class', 'col-md-2 text-center');
 
       this.render2.appendChild(hsNome, htNome);
       this.render2.appendChild(hsEstoque, htEstoque);
+      this.render2.appendChild(hsValor, htValor);
 
       this.render2.appendChild(liHead, hsNome);
       this.render2.appendChild(liHead, hsEstoque);
+      this.render2.appendChild(liHead, hsValor);
       this.render2.appendChild(ulhead, liHead);
 
       if (produtos.length > 5) {
@@ -253,17 +279,22 @@ export class VendaAvulsaComponent implements OnInit {
         this.render2.setAttribute(li, 'class', 'body-live-list row');
         const nome = this.render2.createText(p.nome);
         const estoque = this.render2.createText(p.estoque);
+        const valor = this.render2.createText(p.valor);
 
         const spanNome = this.render2.createElement('span');
-        this.render2.setAttribute(spanNome, 'class', 'col-md-9');
+        this.render2.setAttribute(spanNome, 'class', 'col-md-7');
         const spanEstoque = this.render2.createElement('span');
         this.render2.setAttribute(spanEstoque, 'class', 'col-md-3 text-center');
+        const spanValor = this.render2.createElement('span');
+        this.render2.setAttribute(spanValor, 'class', 'col-md-2 text-center');
 
         this.render2.appendChild(spanNome, nome);
         this.render2.appendChild(spanEstoque, estoque);
+        this.render2.appendChild(spanValor, valor);
 
         this.render2.appendChild(li, spanNome);
         this.render2.appendChild(li, spanEstoque);
+        this.render2.appendChild(li, spanValor);
         this.render2.appendChild(ulbody, li);
       }
 

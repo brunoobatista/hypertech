@@ -15,6 +15,7 @@ import { TipoService } from './../tipos/tipo.service';
 import { FornecedorService } from './../fornecedores/fornecedor.service';
 import { CidadeService } from './../cidades/cidade.service';
 import { ModalService } from './modal.service';
+import { ClienteService } from '../clientes/cliente.service';
 
 import { ErrorHandlerService } from './error-handler.service';
 
@@ -58,6 +59,8 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     CidadeService,
 
     ModalService,
+
+    ClienteService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

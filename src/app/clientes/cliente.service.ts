@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { MasterHttp } from '../seguranca/master-http';
-import { Fornecedor } from './../model/Fornecedor';
 
 import 'rxjs/add/operator/toPromise';
 
 import { environment } from './../../environments/environment';
-import { Produto } from '../model/Produto';
+import { Cliente } from '../model/Cliente';
 
-export class ProdutoFilter {
+export class ClienteFilter {
   nome: string;
   pagina = 0;
   itensPorPagina = 15;
@@ -18,27 +17,27 @@ export class ProdutoFilter {
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutoService {
-  produtopUrl: string;
+export class ClienteService {
+  clienteUrl: string;
 
   constructor(private http: MasterHttp) {
-    this.produtopUrl = `${environment.apiUrl}/produtos`;
+    this.clienteUrl = `${environment.apiUrl}/clientes`;
   }
 
-  adicionar(produto: Produto): Promise<any> {
-    return this.http.post<Produto>(this.produtopUrl, produto)
+  adicionar(cliente: Cliente): Promise<any> {
+    return this.http.post<Cliente>(this.clienteUrl, cliente)
       .toPromise();
   }
 
   pesquisarTodos(valor: any): Promise<any> {
-    return this.http.get<Produto>(`${this.produtopUrl}/search/${valor}`)
+    return this.http.get<Cliente>(`${this.clienteUrl}/search/${valor}`)
       .toPromise()
       .then(response => {
         return response;
       });
   }
 
-  pesquisar(filtro: ProdutoFilter): Promise<any> {
+  pesquisar(filtro: ClienteFilter): Promise<any> {
     let params = new HttpParams({
       fromObject: {
         page: filtro.pagina.toString(),
@@ -50,7 +49,7 @@ export class ProdutoService {
       params = params.append('nome', filtro.nome);
     }
 
-    return this.http.get<any>(`${this.produtopUrl}`, { params })
+    return this.http.get<any>(`${this.clienteUrl}`, { params })
       .toPromise()
       .then(response => {
         const result = {
@@ -67,37 +66,40 @@ export class ProdutoService {
 
   }
 
-  buscarPorCodigo(id: number): Promise<Produto> {
-    return this.http.get<Produto>(`${this.produtopUrl}/${id}`)
-      .toPromise();
+  buscarPorCodigo(id: number): Promise<Cliente> {
+    return this.http.get<Cliente>(`${this.clienteUrl}/${id}`)
+        .toPromise();
   }
 
-  excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = (posicaoPagina + 1) * itensPorPagina;
+  excluirCliente(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
+    const dados = (posicaoPagina + 1) * itensPorPagina;
+
     const params = new HttpParams({
       fromObject: {
-        page: `${dadosPagina}`,
-        size: `1`
+        page: `${dados}`,
+        size: '1'
       }
     });
-    const produto = this.buscarProximo(params);
-    return this.http.delete<any>(`${this.produtopUrl}/${id}`)
-      .toPromise()
-      .then(response => {
-        return produto;
-      });
+
+    const cliente = this.buscarProximo(params);
+    return this.http.delete<any>(`${this.clienteUrl}/${id}`)
+        .toPromise()
+        .then(response => {
+            return cliente;
+        });
+
   }
 
   buscarProximo(params): Promise<any> {
-    return this.http.get<any>(`${this.produtopUrl}`, { params })
-    .toPromise()
-    .then(response => {
-      if (response.content.length > 0) {
-        return response.content[0];
-      } else {
-        return;
-      }
-    });
+    return this.http.get<any>(`${this.clienteUrl}`, { params })
+        .toPromise()
+        .then(response => {
+          if (response.content.length > 0) {
+            return response.content[0];
+          } else {
+            return;
+          }
+        });
   }
 
 }

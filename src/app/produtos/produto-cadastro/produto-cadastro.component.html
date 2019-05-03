@@ -15,7 +15,7 @@
           <div class="form-group col-md-6">
             <label for="nome">Nome</label>
             <input type="text" class="form-control" id="nome" placeholder=""
-              name="nome" formControlName="nome">
+              name="nome" formControlName="nome" autofocus>
 
             <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
                 text="Informe o nome" msg="Nome é obrigatório"

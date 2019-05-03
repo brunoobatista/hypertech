@@ -36,6 +36,14 @@ const routes: Routes = [
     }
   },
 
+  {
+    path: 'clientes',
+    loadChildren: './clientes/clientes.module#ClientesModule',
+    data: {
+      title: 'Clientes',
+    }
+  },
+
 
   {
   path: '',

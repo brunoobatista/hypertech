@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 import { InputProdutoComponent } from './input-produto/input-produto.component';
+import { BoxSmallModule } from 'angular-admin-lte';
 
 @NgModule({
   imports: [
@@ -18,6 +19,8 @@ import { InputProdutoComponent } from './input-produto/input-produto.component';
     VendasRoutingModule,
     SharedModule,
     RouterModule,
+
+    BoxSmallModule
   ],
   declarations: [VendaAvulsaComponent, InputProdutoComponent],
   providers: [

@@ -52,8 +52,8 @@ export class ProdutosPesquisaComponent implements OnInit {
       .catch(error => this.errorHanlder.handle(error));
   }
 
-  openModal(id: string, botaoExcluir: any, tipo: any) {
-    this.produtoModal = tipo;
+  openModal(id: string, botaoExcluir: any, produto: any) {
+    this.produtoModal = produto;
     this.modalService.open(id);
   }
 
@@ -77,7 +77,7 @@ export class ProdutosPesquisaComponent implements OnInit {
       .catch(error => {
         this.errorHanlder.handle(error);
       });
-      this.modalService.close(idModal);
+      this.closeModal(idModal);
   }
 
 }
