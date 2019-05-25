@@ -10,6 +10,12 @@ import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service'
 import { VendasService } from '../vendas.service';
 
 import { environment } from './../../../environments/environment';
+import { ClienteService } from 'src/app/clientes/cliente.service';
+
+import { Cliente } from 'src/app/model/Cliente';
+import { Observable, Subject, concat, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -20,6 +26,16 @@ export class VendaAvulsaComponent implements OnInit {
 
   titulo: any;
   produtosPesquisa = [];
+
+  clientesPesquisa = [];
+  allCliente = [];
+  clienteLoading = false;
+
+  cliente: any;
+
+  @ViewChild(NgSelectComponent)
+  ngSelect: NgSelectComponent;
+
   @ViewChild('inputProduto', {read: ElementRef}) inputProduto: any;
   @ViewChild('divLiveSearch', {read: ElementRef}) divLiveSearch: any;
 
@@ -36,6 +52,7 @@ export class VendaAvulsaComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private produtoService: ProdutoService,
+    private clienteService: ClienteService,
     private vendasService: VendasService,
     private errorHadler: ErrorHandlerService,
     private render2: Renderer2,
@@ -44,10 +61,10 @@ export class VendaAvulsaComponent implements OnInit {
     private activateRoute: ActivatedRoute,
   ) {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
-
   }
 
   ngOnInit() {
+
     this.configurarFormulario();
     const idVenda = this.activateRoute.snapshot.params['id'];
 
@@ -57,13 +74,16 @@ export class VendaAvulsaComponent implements OnInit {
     } else {
       this.titulo = '';
     }
+
   }
 
   carregarVenda(id: number) {
     this.vendasService.buscarPorCodigo(id)
       .then(response => {
         this.formulario.patchValue(response);
-
+        if (response.cliente) {
+          this.preencherClienteFormulario(response.cliente);
+        }
         this.preencherProdutosFormulario(response.produtos);
       })
       .catch(erro => this.errorHadler.handle(erro));
@@ -92,9 +112,15 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   preencherProdutosFormulario(produtos: any[]) {
+    this.formulario.get('produtos').setValue([]);
     produtos.forEach(p => {
       this.formulario.get('produtos').value.push(p);
     });
+  }
+
+  preencherClienteFormulario(cliente: any) {
+    this.allCliente.push(cliente);
+    this.clientesPesquisa = [...this.allCliente];
   }
 
   atualizarIdVendaRoute(id: number) {
@@ -102,22 +128,9 @@ export class VendaAvulsaComponent implements OnInit {
       '', `/vendas/${id}`);
   }
 
-  // podem ser retirados
-  acrescentaQuantidade(item: any) {
-      item.quantidade += 1;
-      this.atualizarVenda();
-  }
-// podem ser retirados
-  decrementarQuantidade(item: any) {
-    if (item.quantidade > 0) {
-      item.quantidade -= 1;
-      this.atualizarVenda();
-    }
-  }
-
   inputValorProdutoAlterado(event, item) {
     item.quantidade = event.target.value;
-    //this.atualizarVenda();
+
     this.atualizarVenda();
   }
 
@@ -191,8 +204,6 @@ export class VendaAvulsaComponent implements OnInit {
     }
 
     if (value.length >= 3) {
-      const filtro = new ProdutoFilter();
-      filtro.nome = value;
       if (this.tempo) {
         clearTimeout(this.tempo);
       }
@@ -208,7 +219,18 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   pesquisarCliente(event) {
-    console.log(event.target);
+    if (event) {
+      const value = event.term;
+
+      if (value.length >= 3) {
+        this.clienteLoading = true;
+        this.clienteService.pesquisarTodos(value)
+        .then(response => {
+          this.clientesPesquisa = response;
+          this.clienteLoading = false;
+        });
+      }
+    }
   }
 
   configurarFormulario() {
@@ -218,6 +240,8 @@ export class VendaAvulsaComponent implements OnInit {
       usuario: this.formBuilder.group({
         id: [this.auth.jwtPayload.id]
       }),
+      cliente: [null],
+      clienteId: [null],
       produtos: this.formBuilder.array([]),
       valor: [0],
       desconto: [],

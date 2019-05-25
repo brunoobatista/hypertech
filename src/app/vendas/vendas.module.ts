@@ -10,6 +10,9 @@ import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 import { InputProdutoComponent } from './input-produto/input-produto.component';
 import { BoxSmallModule } from 'angular-admin-lte';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+import { VendasPesquisaComponent } from './vendas-pesquisa/vendas-pesquisa.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,9 +23,10 @@ import { BoxSmallModule } from 'angular-admin-lte';
     SharedModule,
     RouterModule,
 
-    BoxSmallModule
+    BoxSmallModule,
+    NgSelectModule
   ],
-  declarations: [VendaAvulsaComponent, InputProdutoComponent],
+  declarations: [VendaAvulsaComponent, InputProdutoComponent, VendasPesquisaComponent],
   providers: [
     {provide: LOCALE_ID, useValue: 'pt'},
   ],

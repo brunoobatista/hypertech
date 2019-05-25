@@ -8,6 +8,8 @@ import 'rxjs/add/operator/toPromise';
 import { environment } from './../../environments/environment';
 import { Cliente } from '../model/Cliente';
 
+import { Observable } from 'rxjs';
+
 export class ClienteFilter {
   nome: string;
   pagina = 0;
@@ -36,7 +38,13 @@ export class ClienteService {
         return response;
       });
   }
+/*
+  pesquisarTodos(valor: any): Observable<Cliente[]> {
+    console.log('teste', this.http.get<Cliente[]>(`${this.clienteUrl}/search/${valor}`))
+    return this.http.get<Cliente[]>(`${this.clienteUrl}/search/${valor}`);
 
+  }
+*/
   pesquisar(filtro: ClienteFilter): Promise<any> {
     let params = new HttpParams({
       fromObject: {

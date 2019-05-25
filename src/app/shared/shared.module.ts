@@ -25,8 +25,20 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   imports: [
     CommonModule,
   ],
-  declarations: [PaginationComponent, MessageComponent, ModalComponent, CurrencyMaskDirective, CpfCnpjMaskDirective],
-  exports: [PaginationComponent, MessageComponent, ModalComponent, CurrencyMaskDirective, CpfCnpjMaskDirective],
+  declarations: [
+    PaginationComponent,
+    MessageComponent,
+    ModalComponent,
+    CurrencyMaskDirective,
+    CpfCnpjMaskDirective,
+  ],
+  exports: [
+    PaginationComponent,
+    MessageComponent,
+    ModalComponent,
+    CurrencyMaskDirective,
+    CpfCnpjMaskDirective,
+  ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],

@@ -10,7 +10,7 @@
     <!-- general form elements -->
     <div class="box box-primary">
         
-      <form class="form" [formGroup]="formulario" class="">
+      <form class="form" [formGroup]="formulario" class="" autocomplete="off">
         <div class="box-header with-border">
             
           <div class="row">
@@ -38,21 +38,29 @@
             </div>
             <div class="col-md-7">
                 <label for="desconto" >Cliente</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                    </span>
-                  
-                    <input class="form-control"
-                        list="clientes" (keyup)="pesquisarCliente($event)"/>
-                    <datalist id="clientes">
-                        <option value="Internet Explorer">
-                        <option value="Firefox">
-                        <option value="Chrome">
-                        <option value="Opera">
-                        <option value="Safari">
-                    </datalist>
-                </div>
+                    
+
+
+                    <ng-select [items]="clientesPesquisa"
+                              bindLabel="nome"
+                              bindValue="id"
+                              
+                              [virtualScroll]="true"
+                              [hideSelected]="false"
+                              [loading]="clienteLoading"
+                              (search)="pesquisarCliente($event)"
+
+                              placeholder="Cliente avulso"
+                              notFoundText="Cliente não encontrado"
+                              loadingText="Carregando..."
+                              typeToSearchText="Digite para buscar"
+                              
+                              formControlName="clienteId">
+
+
+                    </ng-select>
+
+
             </div>
             <div class="form-group col-md-2">
                 <label for="" ></label>

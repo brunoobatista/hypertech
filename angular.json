@@ -30,11 +30,13 @@
               "node_modules/prismjs/themes/prism-tomorrow.css",
               "node_modules/admin-lte-css/dist/css/AdminLTE.css",
               "node_modules/admin-lte-css/dist/css/skins/_all-skins.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-typescript.js"
+              "./node_modules/prismjs/prism.js",
+              "./node_modules/prismjs/components/prism-typescript.js",
+              "./node_modules/jquery/dist/jquery.min.js",
             ]
           },
           "configurations": {

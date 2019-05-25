@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { MasterHttp } from '../seguranca/master-http';
-import { Fornecedor } from './../model/Fornecedor';
 
 import 'rxjs/add/operator/toPromise';
 

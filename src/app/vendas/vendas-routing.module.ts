@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './../seguranca/auth.guard';
 import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
+import { VendasPesquisaComponent } from './vendas-pesquisa/vendas-pesquisa.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: VendaAvulsaComponent,
+        component: VendasPesquisaComponent,
         data: {
             roles: ['ROLE_CADASTRAR_TIPO'],
         },

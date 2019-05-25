@@ -116,7 +116,7 @@ export class ClienteCadastroComponent implements OnInit {
         } else {
             matchingControl.setErrors(null);
         }
-    }
+    };
   }
 
 }

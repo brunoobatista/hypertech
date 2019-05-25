@@ -7,6 +7,13 @@ import 'rxjs/add/operator/toPromise';
 import { environment } from './../../environments/environment';
 import { Venda } from '../model/Venda';
 
+export class VendaFilter {
+  vendaDe: Date;
+  vendaAte: Date;
+  pagina = 0;
+  itensPorPagina = 15;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +30,22 @@ export class VendasService {
       .toPromise();
   }
 
+  pesquisar(filtro: VendaFilter): Promise<any> {
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    });
+
+    return this.http.get<any>(`${this.vendaUrl}`, { params })
+        .toPromise()
+        .then(response => {
+          console.log('find page venda', response)
+          return response;
+        });
+  }
+
   buscarPorCodigo(id: number): Promise<any> {
     return this.http.get<Venda>(`${this.vendaUrl}/${id}`)
       .toPromise();
@@ -32,7 +55,6 @@ export class VendasService {
     return this.http.delete<any>(`${this.vendaUrl}/${vendaId}/${produtoId}`)
       .toPromise()
       .then(response => {
-        console.log(response);
         return response;
       });
   }
