@@ -25,8 +25,23 @@ export class VendasService {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
   }
 
-  adicionar(venda: Venda): Promise<any> {
+  salvar(venda: Venda): Promise<any> {
     return this.http.post<Venda>(this.vendaUrl, venda)
+      .toPromise();
+  }
+
+  salvarFinalizar(venda: Venda): Promise<any> {
+    return this.http.post<Venda>(`${this.vendaUrl}/finalizar`, venda)
+      .toPromise();
+  }
+
+  cancelar(venda: Venda): Promise<any> {
+    return this.http.post<Venda>(`${this.vendaUrl}/cancelar`, venda)
+      .toPromise();
+  }
+
+  estornar(venda: Venda): Promise<any> {
+    return this.http.put<Venda>(`${this.vendaUrl}/estornar`, venda)
       .toPromise();
   }
 
@@ -41,7 +56,6 @@ export class VendasService {
     return this.http.get<any>(`${this.vendaUrl}`, { params })
         .toPromise()
         .then(response => {
-          console.log('find page venda', response)
           return response;
         });
   }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../seguranca/token.interceptor';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { BoxModule, TabsModule, DropdownModule } from 'angular-admin-lte';
 import { ToastyModule } from 'ng2-toasty';
@@ -33,6 +34,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     TabsModule,
     BoxModule,
     HttpClientModule,
+    RouterModule,
   ],
   declarations: [
     HeaderInnerComponent,

@@ -1,3 +1,135 @@
-<p>
-  vendas-pesquisa works!
-</p>
+<!-- /.row -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title"></h3>
+
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 250px;">
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              <a [routerLink]="['/produtos/novo']"  class="btn btn-primary" style="margin-left: 5px;">
+                <i class="fa fa-plus"></i>  Adicionar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th class="width-column-id">#</th>
+            <th>Data da Venda</th>
+            <th class="text-center">Valor R$</th>
+            <th class="text-center">Desconto R$</th>
+            <th class="text-center">N. Produtos</th>
+            <th class="text-center">Cliente avulso?</th>
+            <th class="text-center">Status</th>
+            <th class="width-column-buttons"></th>
+          </tr>
+          <tr *ngFor="let venda of vendas">
+            <td class="width-column-id" >{{venda.id}}</td>
+            <td>{{venda.dataVenda | date:'dd MMMM, yyyy' }}</td>
+            <td class="text-center">{{venda.valor | number:'0.2-2'}}</td>
+            <td class="text-center">{{venda.desconto | number:'0.2-2'}}</td>
+            <td class="text-center">{{venda.produtos.length}}</td>
+            <td class="text-center">{{venda.clienteId ? 'Não': 'Sim'}}</td>
+            <td class="text-center">
+              <span class="label " appLabelStatus [lbStatus]="venda.status">
+                {{statusVenda.status[venda.status]}}
+              </span>
+            </td>
+            <td class="width-column-buttons">
+              <div class="text-center">
+                <ng-container *ngIf="venda.status === 'ABERTA'; ">
+                  <a 
+                    class="button-option" alt="Continuar venda"
+                    title="Continuar venda"
+                    [routerLink]="['/vendas', venda.id]">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+                  <a class="button-option" id="{{venda.id}}"  
+                    alt="Cancelar venda"
+                    title="Cancelar venda"
+                    (click)="openModal('confirmacaoModal', venda)">
+                    <i class="fa fa-times trash" aria-hidden="true"></i>
+                  </a>
+                </ng-container>
+                
+                    <a class="button-option" alt="Editar venda"
+                      title="Editar venda"
+                      [routerLink]="'/vendas/:id/show' | routerArray: [venda.id]">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a class="button-option" id="{{venda.id}}"  
+                    alt="Excluir venda"
+                    title="Excluir venda"
+                    (click)="openModal(exclusaoModal, venda)">
+                    <i class="fa fa-trash trash" aria-hidden="true"></i>
+                  </a>
+                  
+
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <app-pagination [totalPages]="totalPages" [pageCurrent]="number" [(totalElements)]="totalElements"
+        [rows]="size" (page)="aoMudarPagina($event)"></app-pagination>
+
+    </div>
+    </div>
+
+
+
+    </div>
+    <!-- /.box -->
+<app-modal id="confirmacaoModal" style="z-index: 9999;">
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cancelamento de venda</h4>
+              </div>
+            <div class="modal-body">
+              <p *ngIf="vendaModal">
+                Deseja cancelar esta venda ID: {{vendaModal.id}} do dia {{vendaModal.dataVenda | date:'dd MMMM, yyyy'}}?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal('confirmacaoModal');" class="btn btn-danger" data-dismiss="modal">Não</button>
+              <button type="button" class="btn btn-warning" (click)="cancelarVenda(vendaModal, 'confirmacaoModal')">  Sim  </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>
+
+
+<app-modal id="{{exclusaoModal}}" style="z-index: 9999;">
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Excluir venda</h4>
+              </div>
+            <div class="modal-body">
+              <p *ngIf="vendaModal">
+                Deseja excluir permanentemente esta venda?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal(exclusaoModal);" class="btn btn-danger" data-dismiss="modal">Não</button>
+              <button type="button" class="btn btn-success" (click)="excluirVenda(vendaModal, exclusaoModal)">  Sim  </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>

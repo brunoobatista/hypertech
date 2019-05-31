@@ -12,10 +12,8 @@ import { VendasService } from '../vendas.service';
 import { environment } from './../../../environments/environment';
 import { ClienteService } from 'src/app/clientes/cliente.service';
 
-import { Cliente } from 'src/app/model/Cliente';
-import { Observable, Subject, concat, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { ToastyService } from 'ng2-toasty';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -59,18 +57,17 @@ export class VendaAvulsaComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private activateRoute: ActivatedRoute,
+    private toasty: ToastyService,
   ) {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
   }
 
   ngOnInit() {
-
     this.configurarFormulario();
     const idVenda = this.activateRoute.snapshot.params['id'];
 
     if (idVenda) {
       this.carregarVenda(idVenda);
-      this.titulo = '#' + idVenda;
     } else {
       this.titulo = '';
     }
@@ -83,6 +80,7 @@ export class VendaAvulsaComponent implements OnInit {
         this.formulario.patchValue(response);
         if (response.cliente) {
           this.preencherClienteFormulario(response.cliente);
+          this.titulo = '#' + id;
         }
         this.preencherProdutosFormulario(response.produtos);
       })
@@ -90,14 +88,24 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   salvarVenda() {
-    this.vendasService.adicionar(this.formulario.value)
+    this.vendasService.salvar(this.formulario.value)
       .then(response => {
         if (!this.formulario.get('id').value) {
+          this.formulario.patchValue(response);
           this.atualizarIdVendaRoute(response.id);
         } else {
           this.formulario.patchValue(response);
         }
+        this.toasty.success('Venda salva!');
         this.preencherProdutosFormulario(response.produtos);
+      })
+      .catch(error => this.errorHadler.handle(error));
+  }
+
+  finalizarVenda() {
+    this.vendasService.salvarFinalizar(this.formulario.value)
+      .then(response => {
+        this.router.navigate(['/vendas']);
       })
       .catch(error => this.errorHadler.handle(error));
   }
@@ -124,6 +132,7 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   atualizarIdVendaRoute(id: number) {
+    this.titulo = '#' + id;
     window.history.replaceState({},
       '', `/vendas/${id}`);
   }
@@ -236,7 +245,7 @@ export class VendaAvulsaComponent implements OnInit {
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      dataVenda: [formatDate(Date.now(), 'dd-MM-yyyy HH:mm:ss', 'pt')],
+      dataVenda: [formatDate(Date.now(), 'yyyy-MM-dd HH:mm:ss', 'pt')],
       usuario: this.formBuilder.group({
         id: [this.auth.jwtPayload.id]
       }),
@@ -244,7 +253,8 @@ export class VendaAvulsaComponent implements OnInit {
       clienteId: [null],
       produtos: this.formBuilder.array([]),
       valor: [0],
-      desconto: [],
+      desconto: [0],
+      observacao: [''],
     });
   }
 

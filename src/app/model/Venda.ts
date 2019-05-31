@@ -10,6 +10,9 @@ export class Venda {
     usuario = new Usuario();
     cliente = new Cliente();
     cliente_id: number;
+    observacao: Text;
+    status: string;
+    desconto: number;
 
     constructor(idUsuario?, dataVenda?, valor = 0) {
         this.usuario.id = idUsuario;
@@ -17,4 +20,13 @@ export class Venda {
         this.valor = valor;
     }
 
+}
+
+export class StatusVenda {
+    status = {
+        ABERTA: "Em aberto",
+        FINALIZADA: "Finalizado",
+        CANCELADA: "Cancelado",
+        ESTORNADA: "Estornada",
+    };
 }

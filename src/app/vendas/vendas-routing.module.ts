@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './../seguranca/auth.guard';
 import { VendaAvulsaComponent } from './venda-avulsa/venda-avulsa.component';
 import { VendasPesquisaComponent } from './vendas-pesquisa/vendas-pesquisa.component';
+import { VendaShowComponent } from './venda-show/venda-show.component';
 
 const routes: Routes = [
     {
@@ -29,6 +30,14 @@ const routes: Routes = [
             title: 'Venda',
         },
         canActivate: [AuthGuard]
+    },
+    {
+        path: ':id/show',
+        component: VendaShowComponent,
+        data: {
+            title: 'Visulização da Venda',
+        },
+        canActivate: [AuthGuard],
     }
 ];
 

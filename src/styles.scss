@@ -49,6 +49,7 @@ app-modal {
 body.app-modal-open {
   /* body overflow is hidden to hide main scrollbar when modal window is open */
   overflow: hidden;
+  
 }
 
 
@@ -81,12 +82,13 @@ body {
 }
 
 .width-column-buttons {
-  width: 100px;
+  width: 120px;
   text-align: center;
 }
 
 .button-option {
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .trash {
