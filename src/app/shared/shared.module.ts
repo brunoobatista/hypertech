@@ -5,9 +5,9 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { MessageComponent } from './message/message.component';
 import { ModalComponent } from './modal.component';
 
-import { CurrencyMaskDirective } from '../currency-mask/currency-mask.directive';
+import { CurrencyMaskDirective } from './currency-mask/currency-mask.directive';
 
-import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "../currency-mask/currency-mask.config";
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "./currency-mask/currency-mask.config";
 import { CpfCnpjMaskDirective } from './cpfcnpjmaskmask/cpf-cnpj-mask.directive';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {

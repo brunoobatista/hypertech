@@ -14,7 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { VendasPesquisaComponent } from './vendas-pesquisa/vendas-pesquisa.component';
 import { LabelStatusDirective } from './label-status/label-status.directive';
 import { VendaShowComponent } from './venda-show/venda-show.component';
-import { RouterArrayPipe } from './router-array.pipe';
+import { RouterArrayPipe } from '../shared/router-array.pipe';
 
 @NgModule({
   imports: [

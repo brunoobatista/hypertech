@@ -22,6 +22,13 @@ export const adminLteConf = {
 
       {label: 'Novo Produto', route: 'produtos/novo', iconClasses: 'fa fa-plus'},
 
+
+      /* #####  */
+
+      {label: 'Usuários', route: 'usuarios', iconClasses: 'fa fa-user'},
+
+      {label: 'Novo Usuário', route: 'usuarios/novo', iconClasses: 'fa fa-plus'},
+
     ]},
 
     {label: '-', separator: true},

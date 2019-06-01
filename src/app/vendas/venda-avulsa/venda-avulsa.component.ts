@@ -255,6 +255,7 @@ export class VendaAvulsaComponent implements OnInit {
       valor: [0],
       desconto: [0],
       observacao: [''],
+      status: ['']
     });
   }
 

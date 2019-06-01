@@ -8,6 +8,7 @@ export class Cliente {
     nome: string;
     email: string;
     password: string;
+    confirmPassword: string;
     tipoPessoa: TipoPessoa;
     cpfCnpj: string;
 }

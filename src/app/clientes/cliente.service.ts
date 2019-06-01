@@ -8,8 +8,6 @@ import 'rxjs/add/operator/toPromise';
 import { environment } from './../../environments/environment';
 import { Cliente } from '../model/Cliente';
 
-import { Observable } from 'rxjs';
-
 export class ClienteFilter {
   nome: string;
   pagina = 0;
