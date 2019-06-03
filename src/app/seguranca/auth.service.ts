@@ -31,6 +31,7 @@ export class AuthService {
     return this.http.post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then(response => {
+        console.log(response);
         this.armazenarToken(response.access_token);
       })
       .catch(error => {
@@ -73,7 +74,7 @@ export class AuthService {
   }
 
   temPermissao(permissao: string) {
-      return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
 
   temQualquerPermissao(roles) {

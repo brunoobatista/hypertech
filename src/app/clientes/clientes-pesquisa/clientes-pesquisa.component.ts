@@ -46,6 +46,7 @@ export class ClientesPesquisaComponent implements OnInit {
         this.number = response.number;
         this.totalElements = response.totalElements;
         this.size = response.size;
+        console.log(response)
       })
       .catch(error => this.errorHandlerService.handle(error));
   }
@@ -64,7 +65,6 @@ export class ClientesPesquisaComponent implements OnInit {
       .then(response => {
         const index = this.clientes.indexOf(cliente);
         this.clientes.splice(index, 1);
-
         if (response !== undefined) {
           this.clientes.push(response);
         }

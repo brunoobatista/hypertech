@@ -7,11 +7,12 @@ import 'rxjs/add/operator/toPromise';
 
 import { environment } from './../../environments/environment';
 import { Cliente } from '../model/Cliente';
+import * as corePag from '../core/core-pagination';
 
 export class ClienteFilter {
   nome: string;
   pagina = 0;
-  itensPorPagina = 15;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -83,15 +84,16 @@ export class ClienteService {
     const params = new HttpParams({
       fromObject: {
         page: `${dados}`,
-        size: '1'
+        size: '1',
+        offset: `${dados}`
       }
     });
 
-    const cliente = this.buscarProximo(params);
-    return this.http.delete<any>(`${this.clienteUrl}/${id}`)
+    //const cliente = this.buscarProximo(params);
+    return this.http.delete<any>(`${this.clienteUrl}/${id}`, { params })
         .toPromise()
         .then(response => {
-            return cliente;
+          return response;
         });
 
   }

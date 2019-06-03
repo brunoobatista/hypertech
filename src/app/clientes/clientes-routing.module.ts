@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'novo',
     component: ClienteCadastroComponent,
     data: {
-      roles: ['ROLE_PESQUISAR_TIPO'],
+      roles: ['WRITE_CLIENTE', 'FULL_CLIENTE'],
       title: 'Cliente'
     },
     canActivate: [AuthGuard],

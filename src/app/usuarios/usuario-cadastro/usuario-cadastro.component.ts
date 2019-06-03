@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from '../usuarios.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
@@ -20,13 +20,15 @@ export class UsuarioCadastroComponent implements OnInit {
     private _fb: FormBuilder,
     private route: ActivatedRoute,
     private usuarioService: UsuariosService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.configurarFormulario();
     const id = this.route.snapshot.params['id'];
     if (id) {
+      this.carregarUsuario(id);
       this.titulo = 'Editar';
     } else {
       this.titulo = 'Novo';
@@ -34,8 +36,25 @@ export class UsuarioCadastroComponent implements OnInit {
 
     this.usuarioService.listarPermissoes()
       .then(response => {
-        console.log('permi', response)
         this.permissoes = response;
+      })
+      .catch(error => this.errorHandler.handle(error));
+  }
+
+  carregarUsuario(id) {
+    this.usuarioService.buscarPorCodigo(id)
+      .then(response => {
+        this.formulario.patchValue(response);
+        this.formulario.get('confirmPassword').setValue(response.password);
+      })
+      .catch(error => this.errorHandler.handle(error));
+  }
+
+  adicionar() {
+    this.usuarioService.salvar(this.formulario.value)
+      .then(response => {
+        console.log('resp', response);
+          this.router.navigate(['/usuarios']);
       })
       .catch(error => this.errorHandler.handle(error));
   }
@@ -60,7 +79,11 @@ export class UsuarioCadastroComponent implements OnInit {
       ])],
       confirmPassword: ['', [Validators.required]],
 
-      permissoes: this._fb.array([])
+      roles: this._fb.array([
+        this._fb.group({
+          id: new FormControl('', Validators.required)
+        })
+      ])
     }, {validator: this.mustMatch('password', 'confirmPassword')});
   }
 
