@@ -11,6 +11,7 @@ import * as corePag from '../core/core-pagination';
 
 export class ClienteFilter {
   nome: string;
+  tipoPessoa: string;
   pagina = 0;
   itensPorPagina = corePag.itensPorPagina;
 }
@@ -54,6 +55,9 @@ export class ClienteService {
 
     if (filtro.nome) {
       params = params.append('nome', filtro.nome);
+    }
+    if (filtro.tipoPessoa) {
+      params = params.append('tipoPessoa', filtro.tipoPessoa);
     }
 
     return this.http.get<any>(`${this.clienteUrl}`, { params })

@@ -38,6 +38,14 @@ export class UsuariosService {
               .toPromise();
   }
 
+  editar(usuario: Usuario): Promise<Usuario> {
+    return this.http.post<Usuario>(`${this.usuarioUrl}/edit`, usuario)
+      .toPromise()
+      .then(response => {
+        return response;
+      });
+  }
+
   pesquisarTodos(valor: any): Promise<any> {
     return this.http.get<any>(`${this.usuarioUrl}/search/${valor}`)
       .toPromise();

@@ -3,7 +3,6 @@ import { FormGroup, FormControl } from "@angular/forms";
 export class CpfCnpjValidator {
 
     static isCpfOrCpnj(formGroup: FormGroup) {
-      console.log('form', formGroup);
       let value;
       let valid = true;
       for (let key in formGroup.controls) {

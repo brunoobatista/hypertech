@@ -5,6 +5,7 @@ import { ProdutoFilter, ProdutoService } from '../produto.service';
 
 import { ToastyService } from 'ng2-toasty';
 import { ModalService } from 'src/app/core/modal.service';
+import { TipoService } from 'src/app/tipos/tipo.service';
 
 @Component({
   selector: 'app-produtos-pesquisa',
@@ -14,6 +15,8 @@ import { ModalService } from 'src/app/core/modal.service';
 export class ProdutosPesquisaComponent implements OnInit {
 
   produtos = [];
+  tipos = [];
+
   filtro = new ProdutoFilter();
 
   totalPages;
@@ -27,11 +30,16 @@ export class ProdutosPesquisaComponent implements OnInit {
     private produtoService: ProdutoService,
     private errorHanlder: ErrorHandlerService,
     private modalService: ModalService,
+    private tipoService: TipoService,
     private toasty: ToastyService
   ) { }
 
   ngOnInit() {
     this.pesquisar(0);
+    this.tipoService.pesquisarTodos('')
+      .then(response => {
+        this.tipos = response;
+      });
   }
 
   aoMudarPagina(event) {

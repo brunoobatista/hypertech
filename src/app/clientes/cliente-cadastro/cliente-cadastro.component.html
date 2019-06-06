@@ -9,6 +9,8 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
+
+      
       <form  (ngSubmit)="adicionar()"  [formGroup]="formulario">
         <div class="box-body">
           <div class="row">
@@ -38,7 +40,7 @@
             </div>         
           </div>
  
-          <ng-container *ngIf="formulario.get('id').value == null">
+          <ng-container *ngIf="formulario.get('id').value === null">
             
             <div class="row" >
               <div class="form-group col-md-6">

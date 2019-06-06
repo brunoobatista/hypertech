@@ -3,19 +3,32 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-              <h3 class="box-title"></h3>
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-4">
+                        <label for="tipoPessoa" >Tipo Pessoa</label>
+                        <select name="tipoPessoa" id="tipoPessoa" class="form-control" [(ngModel)]="filtro.tipoPessoa">
+                          <option value=""></option>
+                          <option value="{{item.key}}" *ngFor="let item of tipoPessoa">{{item.value}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nome" >Nome</label>
+                        <div class="input-group input-group-md">
+                          <input type="text" name="table_search" class="form-control" placeholder="Digite o nome, e-mail ou CPF/CNPJ.."
+                              [(ngModel)]="filtro.nome">
+                          <div class="input-group-btn">
+                              <button type="submit" class="btn btn-default" (click)="pesquisar(filtro.pagina)"><i class="fa fa-search"></i></button>
+                              <a [routerLink]="['/tipos/novo']"  class="btn btn-primary" style="margin-left: 5px;">
+                                <i class="fa fa-plus"></i>  Adicionar
+                              </a>
+                          </div>
+                        </div>
+                    </div>
+      
+                </div>
 
               <div class="box-tools">
-                <div class="input-group input-group-md" style="width: 250px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    <a [routerLink]="['/clientes/novo']"  class="btn btn-primary" style="margin-left: 5px;">
-                      <i class="fa fa-plus"></i>  Adicionar
-                    </a>
-                  </div>
-                </div>
+                
               </div>
             </div>
           <!-- /.box-header -->

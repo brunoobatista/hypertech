@@ -14,18 +14,17 @@ export const adminLteConf = {
       {label: 'Produtos', route: 'produtos', iconClasses: 'fa fa-list'},
       {label: 'Tipos', route: 'tipos', iconClasses: 'fa fa-cubes'},
       {label: 'Fornecedores', route: 'fornecedores', iconClasses: 'fa fa-truck'},
-      {label: 'Clientes', route: 'clientes', iconClasses: 'fa fa-user'},
+      {label: 'Clientes', route: 'clientes', iconClasses: 'fa fa-vcard-o'},
+      {label: 'Usuários', route: 'usuarios', iconClasses: 'fa fa-user-circle'},
+
+      /* #####  */
+
 
       {label: 'Novo Tipo', route: 'tipos/novo', iconClasses: 'fa fa-plus'},
 
       {label: 'Novo Fornecedor', route: 'fornecedores/novo', iconClasses: 'fa fa-plus'},
 
       {label: 'Novo Produto', route: 'produtos/novo', iconClasses: 'fa fa-plus'},
-
-
-      /* #####  */
-
-      {label: 'Usuários', route: 'usuarios', iconClasses: 'fa fa-user'},
 
       {label: 'Novo Usuário', route: 'usuarios/novo', iconClasses: 'fa fa-plus'},
 

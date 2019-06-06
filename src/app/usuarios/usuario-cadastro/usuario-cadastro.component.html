@@ -64,35 +64,32 @@
             </div>         
           </div>
 
-          
-          <ng-container *ngIf="formulario.get('id').value == null">
-            <div class="row" >
-              <div class="form-group col-md-6">
-                <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password"
-                    name="password" formControlName="password" />
+          <div class="row" >
+            <div class="form-group col-md-6">
+              <label for="password">Senha</label>
+              <input type="password" class="form-control" id="password"
+                  name="password" formControlName="password" />
 
-                <app-message [control]="formulario.get('password')" error="required"
-                  text="Informe a senha" msg="Senha é obrigatória">
-                </app-message>
-                <app-message [control]="formulario.get('password')" error="tamanhoMinimo"
-                  text="Tamanho mínimo é de 6 caractéres" msg="Senha é obrigatória">
-                </app-message>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="confirmPassword">Confirmar senha</label>
-                <input type="password" class="form-control" id="confirmPassword"
-                  name="confirmPassword" formControlName="confirmPassword" />
-                  
-                <app-message [control]="formulario.get('confirmPassword')" error="required"
-                  text="Informe a senha" msg="Senha é obrigatória">
-                </app-message>
-                <app-message [control]="formulario.get('confirmPassword')" error="mustMatch"
-                  text="Senhas não estão iguais" msg="Senha é obrigatória">
-                </app-message>
-              </div>
+              <app-message [control]="formulario.get('password')" error="required"
+                text="Informe a senha" msg="Senha é obrigatória">
+              </app-message>
+              <app-message [control]="formulario.get('password')" error="tamanhoMinimo"
+                text="Tamanho mínimo é de 6 caractéres" msg="Senha é obrigatória">
+              </app-message>
             </div>
-          </ng-container>
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">Confirmar senha</label>
+              <input type="password" class="form-control" id="confirmPassword"
+                name="confirmPassword" formControlName="confirmPassword" />
+                
+              <app-message [control]="formulario.get('confirmPassword')" error="required"
+                text="Informe a senha" msg="Senha é obrigatória">
+              </app-message>
+              <app-message [control]="formulario.get('confirmPassword')" error="mustMatch"
+                text="Senhas não estão iguais" msg="Senha é obrigatória">
+              </app-message>
+            </div>
+          </div>
 
 
           <div class="row" formArrayName="roles">

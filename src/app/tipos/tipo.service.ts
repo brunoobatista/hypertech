@@ -7,7 +7,7 @@ import { Tipo } from './../model/Tipo';
 import { environment } from './../../environments/environment';
 
 export class TipoFilter {
-  tipo: string;
+  nome: string;
   pagina = 0;
   itensPorPagina = 10;
 }
@@ -24,12 +24,16 @@ export class TipoService {
   }
 
   pesquisar(filtro: TipoFilter): Promise<any> {
-    const params = new HttpParams({
-      fromObject: {
-         page: filtro.pagina.toString(),
-         size: filtro.itensPorPagina.toString()
-      }
-   });
+    let params = new HttpParams({
+        fromObject: {
+          page: filtro.pagina.toString(),
+          size: filtro.itensPorPagina.toString()
+        }
+    });
+
+    if (filtro.nome) {
+      params = params.append('nome', filtro.nome);
+    }
 
     return this.http.get<any>(`${this.tiposUrl}`, { params })
       .toPromise()
@@ -44,6 +48,14 @@ export class TipoService {
           size: response.size
         };
         return result;
+      });
+  }
+
+  pesquisarTodos(valor: any): Promise<any> {
+    return this.http.get<Tipo>(`${this.tiposUrl}/search/${valor}`)
+      .toPromise()
+      .then(response => {
+        return response;
       });
   }
 

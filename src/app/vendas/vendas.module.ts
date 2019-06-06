@@ -16,6 +16,8 @@ import { LabelStatusDirective } from './label-status/label-status.directive';
 import { VendaShowComponent } from './venda-show/venda-show.component';
 import { RouterArrayPipe } from '../shared/router-array.pipe';
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -28,7 +30,9 @@ import { RouterArrayPipe } from '../shared/router-array.pipe';
 
     BoxSmallModule,
     BoxInfoModule,
-    NgSelectModule
+    NgSelectModule,
+
+    BsDatepickerModule.forRoot(),
   ],
   declarations: [VendaAvulsaComponent, InputProdutoComponent, VendasPesquisaComponent, LabelStatusDirective, VendaShowComponent, RouterArrayPipe],
   providers: [

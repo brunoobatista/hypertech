@@ -31,9 +31,6 @@ export class VendaAvulsaComponent implements OnInit {
 
   cliente: any;
 
-  @ViewChild(NgSelectComponent)
-  ngSelect: NgSelectComponent;
-
   @ViewChild('inputProduto', {read: ElementRef}) inputProduto: any;
   @ViewChild('divLiveSearch', {read: ElementRef}) divLiveSearch: any;
 

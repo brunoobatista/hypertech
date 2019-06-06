@@ -11,7 +11,7 @@ const routes: Routes = [
     component: FornecedoresPesquisaComponent,
     data: {
       title: 'Fornecedor',
-      roles: ['ROLE_PESQUISAR_TIPO']
+      permissaos: ['READ_FORNECEDOR', 'WRITE_FORNECEDOR', 'FULL_FORNECEDOR']
     },
     canActivate: [AuthGuard],
   },
@@ -20,7 +20,7 @@ const routes: Routes = [
     component: FornecedoresNovoComponent,
     data: {
       title: 'Fornecedor',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_FORNECEDOR', 'FULL_FORNECEDOR']
     },
     canActivate: [AuthGuard],
   },
@@ -29,7 +29,7 @@ const routes: Routes = [
     component: FornecedoresNovoComponent,
     data: {
       title: 'Fornecedor',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_FORNECEDOR', 'FULL_FORNECEDOR']
     },
     canActivate: [AuthGuard],
   }

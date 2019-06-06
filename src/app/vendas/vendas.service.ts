@@ -6,12 +6,16 @@ import { MasterHttp } from '../seguranca/master-http';
 import 'rxjs/add/operator/toPromise';
 import { environment } from './../../environments/environment';
 import { Venda } from '../model/Venda';
+import { formatDate } from '@angular/common';
+
+import * as corePag from '../core/core-pagination';
 
 export class VendaFilter {
   vendaDe: Date;
   vendaAte: Date;
+  clienteId: string;
   pagina = 0;
-  itensPorPagina = 15;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -52,6 +56,18 @@ export class VendasService {
         size: filtro.itensPorPagina.toString()
       }
     });
+
+    if (filtro.vendaDe) {
+      params = params.append('vendaDe', formatDate(filtro.vendaDe.toString(), 'yyyy-MM-dd HH:mm:ss', 'pt'));
+    }
+
+    if (filtro.vendaAte) {
+      params = params.append('vendaAte', formatDate(filtro.vendaAte.toString(), 'yyyy-MM-dd HH:mm:ss', 'pt'));
+    }
+
+    if (filtro.clienteId) {
+      params = params.append('clienteId', filtro.clienteId);
+    }
 
     return this.http.get<any>(`${this.vendaUrl}`, { params })
         .toPromise()

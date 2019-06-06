@@ -57,7 +57,7 @@ export class MasterHttp extends HttpClient {
                return fn().toPromise();
             })
             .catch(error => {
-              console.log('teste');
+              console.log(error);
             });
 
          return observableFromPromise(chamadaNovoAccessToken);

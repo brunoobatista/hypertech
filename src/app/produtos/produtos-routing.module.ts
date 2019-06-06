@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ProdutosPesquisaComponent,
     data: {
       title: 'Produto',
-      roles: ['ROLE_PESQUISAR_TIPO']
+      permissaos: ['READ_PRODUTO', 'WRITE_PRODUTO', 'FULL_PRODUTO']
     },
     canActivate: [AuthGuard],
   },
@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'novo',
     component: ProdutoCadastroComponent,
     data: {
-      roles: ['ROLE_PESQUISAR_TIPO'],
+      permissaos: ['WRITE_PRODUTO', 'FULL_PRODUTO'],
       title: 'Produto'
     },
     canActivate: [AuthGuard],
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: ProdutoCadastroComponent,
     data: {
       title: 'Produto',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_PRODUTO', 'FULL_PRODUTO'],
     },
     canActivate: [AuthGuard],
   }

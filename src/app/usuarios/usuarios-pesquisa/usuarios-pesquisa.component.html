@@ -3,19 +3,25 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-              <h3 class="box-title"></h3>
+                <div class="row">
+                    <div class=" col-md-offset-6 col-md-6">
+                        <label for="nome" >Valor de busca</label>
+                        <div class="input-group input-group-md">
+                          <input type="text" name="table_search" class="form-control" placeholder="Digite o nome, e-mail, usuario ou CPF.."
+                              [(ngModel)]="filtro.nome">
+                          <div class="input-group-btn">
+                              <button type="submit" class="btn btn-default" (click)="pesquisar(filtro.pagina)"><i class="fa fa-search"></i></button>
+                              <a [routerLink]="['/usuarios/novo']"  class="btn btn-primary" style="margin-left: 5px;">
+                                <i class="fa fa-plus"></i>  Adicionar
+                              </a>
+                          </div>
+                        </div>
+                    </div>
+      
+                </div>
 
               <div class="box-tools">
-                <div class="input-group input-group-md" style="width: 250px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    <a [routerLink]="['/usuarios/novo']"  class="btn btn-primary" style="margin-left: 5px;">
-                      <i class="fa fa-plus"></i>  Adicionar
-                    </a>
-                  </div>
-                </div>
+                
               </div>
             </div>
           <!-- /.box-header -->
@@ -38,9 +44,12 @@
                   <td class="width-column-buttons">
                     <div class="text-center">
 
-                      <a class="button-option"
+                      <!--<a class="button-option" (click)="openModal(editarUsuario, usuario)"
                         [routerLink]="['/usuarios', usuario.id]">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>-->
+                      <a class="button-option" id="{{usuario.id}}"  #botaoEditar (click)="openModal(editarUsuarioModal, usuario)">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
                       </a>
                       <a class="button-option" id="{{usuario.id}}"  #botaoExcluir (click)="openModal(confirmacaoModal, usuario)">
                         <i class="fa fa-trash trash" aria-hidden="true"></i>
@@ -75,6 +84,25 @@
             <div class="modal-footer">
               <button type="button" (click)="closeModal(confirmacaoModal);" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               <button type="button" class="btn btn-primary" (click)="excluirUsuario(usuarioModal, confirmacaoModal)">Excluir</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>
+
+<app-modal id="editarUsuarioModal" style="z-index: 9999;" 
+      (click)="eventoModal($event, editarUsuarioModal)" (keyup)="eventoModal($event, editarUsuarioModal)">
+    <div class="app-modal modal-dialog modal-lg">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal(editarUsuarioModal);"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Editar usuário: {{usuarioModal ? usuarioModal.nome : ''}}</h4>
+            </div>
+            <div class="modal-body">
+              <app-usuario-editar [usuario]="usuarioModal" [permissoes]="permissoes" (formularioSalvo)="editarUsuario($event, editarUsuarioModal)">
+
+              </app-usuario-editar>
             </div>
 
         </div>

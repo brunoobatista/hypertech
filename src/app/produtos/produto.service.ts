@@ -10,6 +10,7 @@ import { Produto } from '../model/Produto';
 
 export class ProdutoFilter {
   nome: string;
+  tipoId: number;
   pagina = 0;
   itensPorPagina = 15;
 }
@@ -47,6 +48,9 @@ export class ProdutoService {
 
     if (filtro.nome) {
       params = params.append('nome', filtro.nome);
+    }
+    if (filtro.tipoId) {
+      params = params.append('tipoId', filtro.tipoId.toString());
     }
 
     return this.http.get<any>(`${this.produtopUrl}`, { params })

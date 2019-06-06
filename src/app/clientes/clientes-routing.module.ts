@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ClientesPesquisaComponent,
     data: {
       title: 'Cliente',
-      roles: ['ROLE_PESQUISAR_TIPO']
+      permissaos: ['READ_CLIENTE', 'WRITE_CLIENTE', 'FULL_CLIENTE']
     },
     canActivate: [AuthGuard],
   },
@@ -18,8 +18,8 @@ const routes: Routes = [
     path: 'novo',
     component: ClienteCadastroComponent,
     data: {
-      roles: ['WRITE_CLIENTE', 'FULL_CLIENTE'],
-      title: 'Cliente'
+      title: 'Cliente',
+      permissaos: ['WRITE_CLIENTE', 'FULL_CLIENTE']
     },
     canActivate: [AuthGuard],
   },
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: ClienteCadastroComponent,
     data: {
       title: 'Cliente',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_CLIENTE', 'FULL_CLIENTE']
     },
     canActivate: [AuthGuard],
   }

@@ -3,19 +3,25 @@
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title"></h3>
+          <div class="row">
+              <div class="col-md-offset-6 col-md-6">
+                  <label for="nome" >Nome</label>
+                  <div class="input-group input-group-md">
+                    <input type="text" name="table_search" class="form-control" placeholder="Digite o nome do tipo.."
+                        [(ngModel)]="filtro.nome">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default" (click)="pesquisar(filtro.pagina)"><i class="fa fa-search"></i></button>
+                        <a [routerLink]="['/tipos/novo']"  class="btn btn-primary" style="margin-left: 5px;">
+                          <i class="fa fa-plus"></i>  Adicionar
+                        </a>
+                    </div>
+                  </div>
+              </div>
+
+          </div>
 
         <div class="box-tools">
-          <div class="input-group input-group-sm" style="width: 250px;">
-            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-            <div class="input-group-btn">
-              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              <a [routerLink]="['/tipos/novo']"  class="btn btn-primary" style="margin-left: 5px;">
-                <i class="fa fa-plus"></i>  Adicionar
-              </a>
-            </div>
-          </div>
+          
         </div>
       </div>
       <!-- /.box-header -->
@@ -28,7 +34,7 @@
           </tr>
           <tr *ngFor="let tipo of tipos">
             <td class="width-column--id">{{tipo.id}}</td>
-            <td>{{tipo.tipo}}</td>
+            <td>{{tipo.nome}}</td>
             <td class="width-column-buttons">
               <div class="text-center">
 
@@ -65,7 +71,7 @@
                     </div>
                   <div class="modal-body">
                     <p *ngIf="tipoModal">
-                      Deseja excluir o tipo {{tipoModal.tipo}}?
+                      Deseja excluir o tipo {{tipoModal.nome}}?
                     </p>
                   </div>
                   <div class="modal-footer">

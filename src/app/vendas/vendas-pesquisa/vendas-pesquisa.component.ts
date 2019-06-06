@@ -4,6 +4,10 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ModalService } from 'src/app/core/modal.service';
 import { ToastyService } from 'ng2-toasty';
 import { StatusVenda } from 'src/app/model/Venda';
+import { ClienteService } from 'src/app/clientes/cliente.service';
+
+import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-vendas-pesquisa',
@@ -16,6 +20,8 @@ export class VendasPesquisaComponent implements OnInit {
   vendas = [];
   statusVenda;
 
+  vendaDe: Date;
+
   filtro = new VendaFilter();
   totalPages;
   number;
@@ -24,19 +30,38 @@ export class VendasPesquisaComponent implements OnInit {
 
   vendaModal;
 
+  clientesPesquisa = [];
+  allCliente = [];
+  clienteLoading = false;
+  bsConfig: Partial<BsDatepickerConfig>;
   constructor(
     private vendaService: VendasService,
+    private clienteService: ClienteService,
     private errorHandler: ErrorHandlerService,
     private modalService: ModalService,
     private toasty: ToastyService,
   ) {
-
+    this.bsConfig = Object.assign({}, {
+      dateInputFormat: 'DD/MM/YYYY',
+    });
   }
 
   ngOnInit() {
     this.statusVenda = new StatusVenda();
     this.pesquisar(0);
 
+  }
+
+  pesquisarFiltro() {
+    if (this.filtro.vendaDe) {
+      this.filtro.vendaDe = new Date(this.filtro.vendaDe);
+      this.filtro.vendaDe.setHours(0, 0, 0);
+    }
+    if (this.filtro.vendaAte) {
+      this.filtro.vendaAte = new Date(this.filtro.vendaAte);
+      this.filtro.vendaAte.setHours(23, 59, 59);
+    }
+    this.pesquisar(this.filtro.pagina);
   }
 
   pesquisar(pagina = 0) {
@@ -57,7 +82,6 @@ export class VendasPesquisaComponent implements OnInit {
   cancelarVenda(venda: any, id: string) {
     this.vendaService.cancelar(venda)
       .then(response => {
-        console.log(response);
         venda.status = response.status;
         this.toasty.success('Venda cancelada.');
       })
@@ -66,7 +90,6 @@ export class VendasPesquisaComponent implements OnInit {
   }
 
   excluirVenda(venda: any, id: string) {
-    console.log(venda)
     /*this.vendaService.cancelar(venda)
       .then(response => {
         console.log(response);
@@ -75,6 +98,30 @@ export class VendasPesquisaComponent implements OnInit {
       })
       .catch(error => this.errorHandler.handle(error));*/
       this.closeModal(id);
+  }
+
+  pesquisarCliente(event) {
+    if (event) {
+      const value = event.term;
+
+      if (value.length >= 3) {
+        this.clienteLoading = true;
+        this.clienteService.pesquisarTodos(value)
+        .then(response => {
+          this.clientesPesquisa = response;
+          this.clienteLoading = false;
+        });
+      }
+    }
+  }
+
+  aoMudarPagina(event) {
+    this.pesquisar(event);
+  }
+
+  preencherClienteFormulario(cliente: any) {
+    this.allCliente.push(cliente);
+    this.clientesPesquisa = [...this.allCliente];
   }
 
   openModal(id: string, venda: any) {

@@ -10,7 +10,7 @@ const routes: Routes = [
     component: TiposPesquisaComponent,
     data: {
       title: 'Tipo',
-      permissaos: ['READ_PRODUTO', 'FULL_PRODUTO']
+      permissaos: ['READ_PRODUTO', 'WRITE_PRODUTO', 'FULL_PRODUTO']
     },
     canActivate: [AuthGuard],
   },

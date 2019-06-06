@@ -12,6 +12,7 @@ export class FornecedorFilter {
   cpfCnpj: string;
   nome: string;
   nomeFantasia: string;
+  valorDeBusca: string;
   pagina = 0;
   itensPorPagina = 10;
 }
@@ -35,16 +36,21 @@ export class FornecedorService {
   }
 
   pesquisar(filtro: FornecedorFilter): Promise<any> {
-    const params = new HttpParams({
+    let params = new HttpParams({
       fromObject: {
          page: filtro.pagina.toString(),
          size: filtro.itensPorPagina.toString()
       }
    });
 
+   if (filtro.valorDeBusca) {
+     params = params.append('valorDeBusca', filtro.valorDeBusca);
+   }
+
     return this.http.get<any>(`${this.fornecedorUrl}`, { params })
       .toPromise()
       .then(response => {
+        console.log('forne', response)
         const result = {
           content: response.content,
           totalElements: response.totalElements,

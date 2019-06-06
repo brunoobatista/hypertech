@@ -23,7 +23,7 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard]
   },
-  {
+  /*{
     path: ':id',
     component: UsuarioCadastroComponent,
     data: {
@@ -31,7 +31,7 @@ const routes: Routes = [
       permissaos: ['WRITE_USUARIO', 'FULL_USUARIO']
     },
     canActivate: [AuthGuard]
-  }
+  }*/
 ];
 
 @NgModule({

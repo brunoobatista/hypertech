@@ -11,6 +11,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 })
 export class UsuarioCadastroComponent implements OnInit {
 
+  idUsuario;
   formulario: FormGroup;
   titulo: string;
 
@@ -25,10 +26,10 @@ export class UsuarioCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.idUsuario = this.route.snapshot.params['id'];
     this.configurarFormulario();
-    const id = this.route.snapshot.params['id'];
-    if (id) {
-      this.carregarUsuario(id);
+    if (this.idUsuario) {
+      //this.carregarUsuario(this.idUsuario);
       this.titulo = 'Editar';
     } else {
       this.titulo = 'Novo';
@@ -41,19 +42,19 @@ export class UsuarioCadastroComponent implements OnInit {
       .catch(error => this.errorHandler.handle(error));
   }
 
-  carregarUsuario(id) {
+  /*carregarUsuario(id) {
     this.usuarioService.buscarPorCodigo(id)
       .then(response => {
         this.formulario.patchValue(response);
-        this.formulario.get('confirmPassword').setValue(response.password);
+        //this.formulario.get('confirmPassword').setValue(response.password);
+        console.log(this.formulario.value)
       })
       .catch(error => this.errorHandler.handle(error));
-  }
+  }*/
 
   adicionar() {
     this.usuarioService.salvar(this.formulario.value)
       .then(response => {
-        console.log('resp', response);
           this.router.navigate(['/usuarios']);
       })
       .catch(error => this.errorHandler.handle(error));
@@ -74,10 +75,10 @@ export class UsuarioCadastroComponent implements OnInit {
       username: new FormControl('', Validators.compose([
         Validators.required, this.validarTamanhoMinimo(3)
       ])),
-      password: ['', Validators.compose([
+      password: [null, Validators.compose([
         Validators.required, this.validarTamanhoMinimo(6)
       ])],
-      confirmPassword: ['', [Validators.required]],
+      confirmPassword: [null, [Validators.required]],
 
       roles: this._fb.array([
         this._fb.group({

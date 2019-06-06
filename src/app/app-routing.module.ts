@@ -30,8 +30,8 @@ const routes: Routes = [
 
   {
     path: 'vendas',
-    loadChildren: './vendas/vendas.module#VendasModule',
-    //loadChildren: () => import('./vendas/vendas.module').then(mod => mod.VendasModule),
+    //loadChildren: './vendas/vendas.module#VendasModule',
+    loadChildren: () => import('./vendas/vendas.module').then(mod => mod.VendasModule),
     data: {
       title: 'Vendas',
     }
@@ -57,7 +57,8 @@ const routes: Routes = [
   {
   path: '',
   data: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      permissaos: ['READ_PRODUTO', 'WRITE_PRODUTO', 'FULL_PRODUTO']
   },
   canActivate: [AuthGuard],
   children: [

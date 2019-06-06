@@ -10,7 +10,8 @@ const routes: Routes = [
         path: '',
         component: VendasPesquisaComponent,
         data: {
-            roles: ['ROLE_CADASTRAR_TIPO'],
+            title: 'Vendas',
+            permissaos: ['READ_VENDA', 'WRITE_VENDA', 'FULL_VENDA']
         },
         canActivate: [AuthGuard]
     },
@@ -19,7 +20,7 @@ const routes: Routes = [
         component: VendaAvulsaComponent,
         data: {
             title: 'Venda',
-            roles: ['ROLE_CADASTRAR_TIPO'],
+            permissaos: ['WRITE_VENDA', 'FULL_VENDA']
         },
         canActivate: [AuthGuard]
     },
@@ -28,6 +29,7 @@ const routes: Routes = [
         component: VendaAvulsaComponent,
         data: {
             title: 'Venda',
+            permissaos: ['WRITE_VENDA', 'FULL_VENDA']
         },
         canActivate: [AuthGuard]
     },
@@ -36,6 +38,7 @@ const routes: Routes = [
         component: VendaShowComponent,
         data: {
             title: 'Visulização da Venda',
+            permissaos: ['READ_VENDA', 'WRITE_VENDA', 'FULL_VENDA']
         },
         canActivate: [AuthGuard],
     }

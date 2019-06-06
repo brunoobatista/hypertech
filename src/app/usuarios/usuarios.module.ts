@@ -7,9 +7,10 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 
 import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.component';
 import { UsuariosPesquisaComponent } from './usuarios-pesquisa/usuarios-pesquisa.component';
+import { UsuarioEditarComponent } from './usuario-editar/usuario-editar.component';
 
 @NgModule({
-  declarations: [UsuarioCadastroComponent, UsuariosPesquisaComponent],
+  declarations: [UsuarioCadastroComponent, UsuariosPesquisaComponent, UsuarioEditarComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule, FormsModule,
