@@ -30,12 +30,12 @@
           <tr>
             <th class="width-column-id">#</th>
             <th>Nome</th>
-            <th class="width-column-buttons"></th>
+            <th *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons"></th>
           </tr>
           <tr *ngFor="let tipo of tipos">
             <td class="width-column--id">{{tipo.id}}</td>
             <td>{{tipo.nome}}</td>
-            <td class="width-column-buttons">
+            <td *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons">
               <div class="text-center">
 
                 <a class="button-option"

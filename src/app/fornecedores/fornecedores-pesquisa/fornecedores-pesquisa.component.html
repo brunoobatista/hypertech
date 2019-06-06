@@ -31,14 +31,14 @@
             <th>Nome</th>
             <th>Nome Fantasia</th>
             <th>CPF/CNPJ</th>
-            <th class="width-column-buttons"></th>
+            <th *roles="['WRITE_FORNECEDOR', 'FULL_FORNECEDOR']" class="width-column-buttons"></th>
           </tr>
           <tr *ngFor="let fornecedor of fornecedores">
             <td class="width-column--id">{{fornecedor.id}}</td>
             <td>{{fornecedor.nome}}</td>
             <td>{{fornecedor.nomeFantasia}}</td>
             <td>{{fornecedor.cpfOuCnpj}}</td>
-            <td class="width-column-buttons">
+            <td *roles="['WRITE_FORNECEDOR', 'FULL_FORNECEDOR']" class="width-column-buttons">
               <div class="text-center">
 
                 <a class="button-option"

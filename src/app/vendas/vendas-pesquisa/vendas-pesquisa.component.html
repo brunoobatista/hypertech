@@ -95,12 +95,11 @@
                     (click)="openModal('confirmacaoModal', venda)">
                     <i class="fa fa-times trash" aria-hidden="true"></i>
                   </a>
-                </ng-container>
-
+                </ng-container >
                   <a class="button-option" id="{{venda.id}}"  
-                    alt="Excluir venda"
-                    title="Excluir venda"
-                    (click)="openModal(exclusaoModal, venda)">
+                    alt="Excluir venda" title="Excluir venda"
+                    (click)="openModal(exclusaoModal, venda)"
+                    *roles="['WRITE_VENDA', 'FULL_VENDA']">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
                   

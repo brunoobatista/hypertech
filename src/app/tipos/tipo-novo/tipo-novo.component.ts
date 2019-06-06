@@ -86,7 +86,7 @@ export class TipoNovoComponent implements OnInit {
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      tipo: ['', [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]]
+      nome: ['', [this.validarObrigatoriedade, this.validarTamanhoMinimo(3)]]
     });
   }
 

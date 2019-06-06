@@ -13,16 +13,16 @@
         <div class="box-body">
           <div class="form-group" #tipoDiv>
 
-            <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" id="tipo" placeholder="Tipo"
-              [(ngModel)]="tipo.tipo" name="tipo" formControlName="tipo">
+            <label for="nome">Tipo</label>
+            <input type="text" class="form-control" id="nome" placeholder="Nome"
+              name="nome" formControlName="nome">
 
-            <app-message [control]="formulario.get('tipo')" error="obrigatoriedade"
-                text="Informe o tipo" msg="Tipo é obrigatório"
+            <app-message [control]="formulario.get('nome')" error="obrigatoriedade"
+                text="Informe o Nome"
                 ></app-message>
 
-            <app-message [control]="formulario.get('tipo')" error="tamanhoMinimo"
-                text="Mínimo de {{ formulario.get('tipo').errors?.tamanhoMinimo?.tamanho }} caracteres" msg="Tipo é obrigatório"
+            <app-message [control]="formulario.get('nome')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('nome').errors?.tamanhoMinimo?.tamanho }} caracteres"
                 ></app-message>
 
           </div>

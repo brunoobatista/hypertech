@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { VendaFilter, VendasService } from '../vendas.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ModalService } from 'src/app/core/modal.service';
@@ -6,8 +6,7 @@ import { ToastyService } from 'ng2-toasty';
 import { StatusVenda } from 'src/app/model/Venda';
 import { ClienteService } from 'src/app/clientes/cliente.service';
 
-import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { formatDate } from '@angular/common';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-vendas-pesquisa',

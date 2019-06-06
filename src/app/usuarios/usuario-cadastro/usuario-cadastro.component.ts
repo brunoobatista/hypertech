@@ -53,6 +53,7 @@ export class UsuarioCadastroComponent implements OnInit {
   }*/
 
   adicionar() {
+    console.log(this.formulario);
     this.usuarioService.salvar(this.formulario.value)
       .then(response => {
           this.router.navigate(['/usuarios']);

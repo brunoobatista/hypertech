@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import 'rxjs';
 import { environment } from '../../environments/environment';
-import { ErrorHandlerService } from '../core/error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +77,7 @@ export class AuthService {
 
   temQualquerPermissao(roles) {
     for (const role of roles) {
-       if (this.temPermissao(role)) {
+      if (this.temPermissao(role)) {
           return true;
        }
     }

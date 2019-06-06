@@ -8,7 +8,7 @@
                   <label for="tipo" >Tipo</label>
                   <select class="form-control" name="tipo" id="tipo" [(ngModel)]="filtro.tipoId">
                     <option value=""></option>
-                    <option value="{{item.id}}" *ngFor="let item of tipos">{{item.tipo}}</option>
+                    <option value="{{item.id}}" *ngFor="let item of tipos">{{item.nome}}</option>
                   </select>
               </div>
               <div class="col-md-6">
@@ -38,14 +38,14 @@
             <th>Nome</th>
             <th>Valor</th>
             <th>Estoque</th>
-            <th class="width-column-buttons"></th>
+            <th *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons"></th>
           </tr>
           <tr *ngFor="let produto of produtos">
             <td class="width-column--id">{{produto.id}}</td>
             <td>{{produto.nome}}</td>
             <td>{{produto.valor}}</td>
             <td>{{produto.estoque}}</td>
-            <td class="width-column-buttons">
+            <td *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons">
               <div class="text-center">
 
                 <a class="button-option"

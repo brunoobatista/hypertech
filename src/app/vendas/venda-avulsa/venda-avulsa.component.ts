@@ -6,13 +6,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { ModalService } from 'src/app/core/modal.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service';
+import { ProdutoService } from 'src/app/produtos/produto.service';
 import { VendasService } from '../vendas.service';
 
 import { environment } from './../../../environments/environment';
 import { ClienteService } from 'src/app/clientes/cliente.service';
 
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { ToastyService } from 'ng2-toasty';
 
 @Component({

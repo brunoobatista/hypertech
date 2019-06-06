@@ -6,9 +6,10 @@ import { AnimationsModule } from '../../animations/animations.module';
 
 import { SidebarLeftToggleDirective } from './sidebar-left.directive';
 import { SidebarLeftComponent } from './sidebar-left.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, AnimationsModule],
+    imports: [CommonModule, RouterModule, AnimationsModule, SharedModule],
     exports: [SidebarLeftComponent],
     declarations: [SidebarLeftToggleDirective, SidebarLeftComponent]
 })

@@ -33,7 +33,7 @@
                   <th>E-mail</th>
                   <th class="text-center">Usuário</th>
                   <th class="text-center">CPF</th>
-                  <th class="width-column-buttons"></th>
+                  <th *roles="['WRITE_USUARIO', 'FULL_USUARIO']" class="width-column-buttons"></th>
                 </tr>
                 <tr *ngFor="let usuario of usuarios">
                   <td class="width-column--id">{{usuario.id}}</td>
@@ -41,7 +41,7 @@
                   <td>{{usuario.email}}</td>
                   <td class="text-center">{{usuario.username}}</td>
                   <td class="text-center">{{usuario.cpf ? usuario.cpf : '-'}}</td>
-                  <td class="width-column-buttons">
+                  <td *roles="['WRITE_USUARIO', 'FULL_USUARIO']" class="width-column-buttons">
                     <div class="text-center">
 
                       <!--<a class="button-option" (click)="openModal(editarUsuario, usuario)"
@@ -69,7 +69,7 @@
 </div>
 
     <!-- /.box -->
-<app-modal id="confirmacaoModal" style="z-index: 9999;">
+<app-modal *roles="['WRITE_USUARIO', 'FULL_USUARIO']" id="confirmacaoModal" style="z-index: 9999;">
     <div class="app-modal modal-dialog">
         <div class="app-modal-body modal-content">
             <div class="modal-header">
@@ -91,7 +91,7 @@
     <div class="app-modal-background"></div>
 </app-modal>
 
-<app-modal id="editarUsuarioModal" style="z-index: 9999;" 
+<app-modal *roles="['WRITE_USUARIO', 'FULL_USUARIO']" id="editarUsuarioModal" style="z-index: 9999;" 
       (click)="eventoModal($event, editarUsuarioModal)" (keyup)="eventoModal($event, editarUsuarioModal)">
     <div class="app-modal modal-dialog modal-lg">
         <div class="app-modal-body modal-content">

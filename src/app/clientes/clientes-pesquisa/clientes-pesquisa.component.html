@@ -40,7 +40,7 @@
                   <th>E-mail</th>
                   <th>Pessoa</th>
                   <th>CPF/CNPJ</th>
-                  <th class="width-column-buttons"></th>
+                  <th *roles="['WRITE_CLIENTE', 'FULL_CLIENTE']" class="width-column-buttons"></th>
                 </tr>
                 <tr *ngFor="let cliente of clientes">
                   <td class="width-column--id">{{cliente.id}}</td>
@@ -48,7 +48,7 @@
                   <td>{{cliente.email}}</td>
                   <td>{{cliente.tipoPessoa}}</td>
                   <td>{{cliente.cpfCnpj}}</td>
-                  <td class="width-column-buttons">
+                  <td *roles="['WRITE_CLIENTE', 'FULL_CLIENTE']" class="width-column-buttons">
                     <div class="text-center">
 
                       <a class="button-option"
