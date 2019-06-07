@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
+import { NaoEncontradoComponent } from './core/nao-encontrado.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,13 @@ const routes: Routes = [
   {
     path: 'nao-autorizado',
     component: NaoAutorizadoComponent,
+    data: {
+      customLayout: true
+    }
+  },
+  {
+    path: '**',
+    component: NaoEncontradoComponent,
     data: {
       customLayout: true
     }

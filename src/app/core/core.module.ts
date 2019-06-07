@@ -25,6 +25,8 @@ import { HeaderInnerComponent } from './header-inner/header-inner.component';
 import { SidebarLeftInnerComponent } from './sidebar-left-inner/sidebar-left-inner.component';
 import { SidebarRightInnerComponent } from './sidebar-right-inner/sidebar-right-inner.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { NaoEncontradoComponent } from './nao-encontrado.component';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -44,6 +46,7 @@ import { SharedModule } from '../shared/shared.module';
     SidebarLeftInnerComponent,
     SidebarRightInnerComponent,
     NaoAutorizadoComponent,
+    NaoEncontradoComponent
   ],
   exports: [
     BoxModule,
