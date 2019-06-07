@@ -100,7 +100,7 @@
 
           <p>
             {{usuario.email}}
-            <small>Member since Nov. 2012</small>
+            <small *ngIf="dataCriado">Membro desde {{dataCriado }}</small>
           </p>
         </li>
         <li class="user-body">
