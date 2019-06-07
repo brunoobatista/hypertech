@@ -89,7 +89,6 @@ export class ClienteService {
       fromObject: {
         page: `${dados}`,
         size: '1',
-        offset: `${dados}`
       }
     });
 

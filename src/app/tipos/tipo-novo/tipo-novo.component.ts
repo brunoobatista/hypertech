@@ -46,9 +46,7 @@ export class TipoNovoComponent implements OnInit {
   carregarTipo(id: number) {
     this.tipoService.buscarPorCodigo(id)
       .then(response => {
-        this.tipo = new Tipo();
-        this.tipo.tipo = response.tipo;
-        this.tipo.id = response.id;
+        this.formulario.patchValue(response);
       })
       .catch(error => {
         this.errorHandler.handle(error);
@@ -68,7 +66,7 @@ export class TipoNovoComponent implements OnInit {
     this.tipoService.adicionar(this.formulario.value)
       .then(response => {
         this.toasty.success('Tipo adicionado!');
-        this.router.navigate(['/fornecedores']);
+        this.router.navigate(['/tipos']);
       })
       .catch(error => this.errorHandler.handle(error));
   }
@@ -78,7 +76,7 @@ export class TipoNovoComponent implements OnInit {
       .then(response => {
         this.formulario.patchValue(response);
         this.toasty.success('Tipo atualizado!');
-        this.router.navigate(['/fornecedores', response.id]);
+        this.router.navigate(['/tipos', response.id]);
       })
       .catch(error => this.errorHandler.handle(error));
   }

@@ -75,7 +75,7 @@ export class ClientesPesquisaComponent implements OnInit {
       .then(response => {
         const index = this.clientes.indexOf(cliente);
         this.clientes.splice(index, 1);
-        if (response !== undefined) {
+        if (response !== undefined && response !== null) {
           this.clientes.push(response);
         }
 

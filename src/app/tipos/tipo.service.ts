@@ -3,13 +3,14 @@ import { MasterHttp } from './../seguranca/master-http';
 import { HttpParams } from '@angular/common/http';
 import { Tipo } from './../model/Tipo';
 
+import * as corePag from '../core/core-pagination';
 
 import { environment } from './../../environments/environment';
 
 export class TipoFilter {
   nome: string;
   pagina = 0;
-  itensPorPagina = 10;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -69,35 +70,21 @@ export class TipoService {
       .toPromise();
   }
 
-  excluir(id: number, posicaoDaPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = posicaoDaPagina + itensPorPagina - 1;
+  excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
+    const dados = (posicaoPagina + 1) * itensPorPagina;
 
     const params = new HttpParams({
-       fromObject: {
-          page: `${posicaoDaPagina}`,
-          size: `${itensPorPagina}`
-       }
+      fromObject: {
+        page: `${dados}`,
+        size: '1',
+      }
     });
 
-
-    return this.http.delete<any>(`${this.tiposUrl}/${id}`)
+    return this.http.delete<any>(`${this.tiposUrl}/${id}`, { params })
       .toPromise()
       .then(response => {
           return response;
-           //return this.buscarProximo(params, dadosPagina);
       });
-
- }
-
-  buscarProximo(params, dadosPagina): Promise<any> {
-    return this.http.get<any>(`${this.tiposUrl}`, { params })
-    .toPromise()
-    .then(resp => {
-      const resultado = {
-          tipos: resp.content,
-          total: resp.totalElements
-      };
-      return (resultado.total + 1) < dadosPagina ? null : resultado;
-    });
   }
+
 }

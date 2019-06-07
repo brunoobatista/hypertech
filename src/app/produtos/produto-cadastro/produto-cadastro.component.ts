@@ -31,24 +31,29 @@ export class ProdutoCadastroComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private toasty: ToastyService,
     private produtoService: ProdutoService,
-    private fornecedorService: FornecedorService,
     private tipoService: TipoService
   ) { }
 
   ngOnInit() {
     this.configurarFormulario();
     const idProduto = this.activateRoute.snapshot.params['id'];
-    const tipoFilter = new TipoFilter();
-    this.tipoService.pesquisar(tipoFilter)
-      .then(response => {
-        this.tipos = response.content;
-      });
-
     if (idProduto) {
       this.carregarProduto(idProduto);
       this.titulo = 'Editar';
     } else {
       this.titulo = 'Criar';
+    }
+  }
+
+  carregarTipos(event) {
+    if (event) {
+      const valor = event.term;
+      if (valor.length >= 2) {
+        this.tipoService.pesquisarTodos(valor)
+          .then(response => {
+            this.tipos = response;
+          });
+      }
     }
   }
 
@@ -93,8 +98,8 @@ export class ProdutoCadastroComponent implements OnInit {
       estoque: [null],
       valor: [null],
       tipo: this.formBuilder.group({
-        id: [''],
-        tipo: ['']
+        id: [null],
+        nome: ['']
       })
     });
   }

@@ -89,13 +89,17 @@ export class VendasPesquisaComponent implements OnInit {
   }
 
   excluirVenda(venda: any, id: string) {
-    /*this.vendaService.cancelar(venda)
+    this.vendaService.remover(venda.id, this.number, this.size)
       .then(response => {
-        console.log(response);
-        venda.status = response.status;
+        const index = this.vendas.indexOf(venda);
+        this.vendas.splice(index, 1);
+        if (response !== null && response !== undefined) {
+          this.vendas.push(response);
+        }
+        this.totalElements--;
         this.toasty.success('Venda excluída.');
       })
-      .catch(error => this.errorHandler.handle(error));*/
+      .catch(error => this.errorHandler.handle(error));
       this.closeModal(id);
   }
 

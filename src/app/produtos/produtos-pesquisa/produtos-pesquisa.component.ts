@@ -72,20 +72,18 @@ export class ProdutosPesquisaComponent implements OnInit {
   excluirProduto(produto: any, idModal: string) {
     this.produtoService.excluir(produto.id, this.number, this.size)
       .then(response => {
-        /*if (this.produtos.length === 0) {
-          this.pesquisar(0);
-        }
-        if (response !== null) {
-          this.produtos = response;
-        }*/
-        this.totalElements--;
-        this.toasty.success('Produto excluído!');
-        this.pesquisar(0);
+          const index = this.produtos.indexOf(produto);
+          this.produtos.splice(index, 1);
+          if (response !== null && response !== undefined) {
+            this.produtos.push(response);
+          }
+          this.totalElements--;
+          this.toasty.success('Produto excluído!');
       })
       .catch(error => {
         this.errorHanlder.handle(error);
       });
-      this.closeModal(idModal);
+    this.modalService.close(idModal);
   }
 
 }

@@ -29,17 +29,29 @@
 
           <div class="form-group col-md-6" formGroupName="tipo">
                 <label for="nome">Tipo</label>
-                <select type="text" class="form-control" id="id" placeholder=""
-                    name="id" formControlName="id">
 
-                  <option value="" selected="selected"></option>
-                  <option *ngFor="let tipo of tipos" value="{{ tipo.id }}">{{tipo.tipo}}</option>
+                <ng-select [items]="tipos"
+                            bindLabel="nome"
+                            bindValue="id"
+                            
+                            [virtualScroll]="true"
+                            [hideSelected]="false"
+                            [loading]="clienteLoading"
+                            (search)="carregarTipos($event)"
 
-                </select>
+                            placeholder="Tipo"
+                            notFoundText="Tipo não encontrado"
+                            loadingText="Carregando..."
+                            typeToSearchText="Digite para buscar"
+                            
+                            formControlName="id">
+
+                  </ng-select>
+
 
                 <app-message [control]="formulario.get('id')" error="obrigatoriedade"
-                  text="Informe o tipo" msg="Tipo é obrigatório"
-                  ></app-message>
+                    text="Informe o tipo" msg="Tipo é obrigatório">
+                </app-message>
             </div>
           
         </div>

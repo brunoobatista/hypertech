@@ -79,9 +79,12 @@ export class UsuariosService {
       });
   }
 
-  buscarPorCodigo(id) {
+  buscarPorCodigo(id): Promise<any> {
     return this.http.get<any>(`${this.usuarioUrl}/${id}`)
-      .toPromise();
+      .toPromise()
+      .then(response => {
+        return response;
+      });
   }
 
   desativarUsuario(id: number, posicaoPagina, itensPorPagina): Promise<any> {

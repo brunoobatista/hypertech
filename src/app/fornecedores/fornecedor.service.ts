@@ -8,13 +8,15 @@ import 'rxjs/add/operator/toPromise';
 
 import { environment } from './../../environments/environment';
 
+import * as corePag from '../core/core-pagination';
+
 export class FornecedorFilter {
   cpfCnpj: string;
   nome: string;
   nomeFantasia: string;
   valorDeBusca: string;
   pagina = 0;
-  itensPorPagina = 10;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -50,7 +52,6 @@ export class FornecedorService {
     return this.http.get<any>(`${this.fornecedorUrl}`, { params })
       .toPromise()
       .then(response => {
-        console.log('forne', response)
         const result = {
           content: response.content,
           totalElements: response.totalElements,
@@ -70,31 +71,19 @@ export class FornecedorService {
   }
 
   excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = posicaoPagina + itensPorPagina - 1;
+    const dados = (posicaoPagina + 1) * itensPorPagina;
 
     const params = new HttpParams({
       fromObject: {
-         page: `${posicaoPagina}`,
-         size: `${itensPorPagina}`
+        page: `${dados}`,
+        size: '1',
       }
     });
-    return this.http.delete<any>(`${this.fornecedorUrl}/${id}`)
-    .toPromise()
-    .then(response => {
-        return response;
-           //return this.buscarProximo(params, dadosPagina);
-      });
-  }
 
-  buscarProximo(params, dadosPagina): Promise<any> {
-    return this.http.get<any>(`${this.fornecedorUrl}`, { params })
-    .toPromise()
-    .then(resp => {
-      const resultado = {
-        fornecedores: resp.content,
-        total: resp.totalElements
-      };
-        return (resultado.total + 1) < dadosPagina ? null : resultado.fornecedores;
+    return this.http.delete<any>(`${this.fornecedorUrl}/${id}`, { params })
+      .toPromise()
+      .then(response => {
+          return response;
       });
   }
 

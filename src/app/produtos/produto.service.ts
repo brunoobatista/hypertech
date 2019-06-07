@@ -8,11 +8,13 @@ import 'rxjs/add/operator/toPromise';
 import { environment } from './../../environments/environment';
 import { Produto } from '../model/Produto';
 
+import * as corePag from '../core/core-pagination';
+
 export class ProdutoFilter {
   nome: string;
   tipoId: number;
   pagina = 0;
-  itensPorPagina = 15;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -76,18 +78,19 @@ export class ProdutoService {
   }
 
   excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = (posicaoPagina + 1) * itensPorPagina;
+    const dados = (posicaoPagina + 1) * itensPorPagina;
+
     const params = new HttpParams({
       fromObject: {
-        page: `${dadosPagina}`,
-        size: `1`
+        page: `${dados}`,
+        size: '1',
       }
     });
-    const produto = this.buscarProximo(params);
-    return this.http.delete<any>(`${this.produtopUrl}/${id}`)
+
+    return this.http.delete<any>(`${this.produtopUrl}/${id}`, { params })
       .toPromise()
       .then(response => {
-        return produto;
+        return response;
       });
   }
 

@@ -49,6 +49,24 @@ export class VendasService {
       .toPromise();
   }
 
+  remover(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
+    const dados = (posicaoPagina + 1) * itensPorPagina;
+
+    const params = new HttpParams({
+      fromObject: {
+        page: `${dados}`,
+        size: '1',
+      }
+    });
+
+    return this.http.delete<any>(`${this.vendaUrl}/${id}`, { params })
+        .toPromise()
+        .then(response => {
+          return response;
+        });
+
+  }
+
   pesquisar(filtro: VendaFilter): Promise<any> {
     let params = new HttpParams({
       fromObject: {
