@@ -37,7 +37,7 @@
             <th class="width-column-id">#</th>
             <th>Nome</th>
             <th class="text-center">Tipo</th>
-            <th class="text-center">Valor</th>
+            <th class="text-center">Valor R$</th>
             <th class="text-center">Estoque</th>
             <th *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons"></th>
           </tr>
@@ -49,12 +49,20 @@
             <td class="text-center">{{produto.estoque}}</td>
             <td *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons">
               <div class="text-center">
-
+                <a  *roles="['FULL_PRODUTO']"
+                    class="button-option" id="{{produto.id}}"
+                    (click)="openModal(adicionarEstoque, produto)"
+                    alt="Adicionar no estoque" title="Adicionar no estoque">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
                 <a class="button-option"
+                  alt="Editar produto" title="Editar produto"
                   [routerLink]="['/produtos', produto.id]">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
-                <a class="button-option" id="{{produto.id}}"  #botaoExcluir (click)="openModal('confirmacaoModal', botaoExcluir, produto)">
+                <a class="button-option" id="{{produto.id}}" 
+                  alt="Excluir produto" title="Excluir produto"
+                  (click)="openModal('confirmacaoModal', produto)">
                   <i class="fa fa-trash trash" aria-hidden="true"></i>
                 </a>
 
@@ -89,6 +97,35 @@
             <div class="modal-footer">
               <button type="button" (click)="closeModal('confirmacaoModal');" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               <button type="button" class="btn btn-primary" (click)="excluirProduto(produtoModal, 'confirmacaoModal')">Excluir</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>
+
+<app-modal id="{{adicionarEstoque}}" style="z-index: 9999;">
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="closeModal(adicionarEstoque);"
+                     data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Adicionar</h4>
+              </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <strong>{{produtoModal.nome}}</strong>
+                </div>
+                <div class="col-md-4">
+                  <input class="form-control" type="number" 
+                      name="quantidade" id="quantidade" min="0" #inputUnidade>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal(adicionarEstoque);" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" (click)="adicionarUnidades(produtoModal.id, inputUnidade, adicionarEstoque)">Adicionar</button>
             </div>
 
         </div>

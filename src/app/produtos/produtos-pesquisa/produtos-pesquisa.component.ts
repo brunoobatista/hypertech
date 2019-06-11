@@ -6,6 +6,7 @@ import { ProdutoFilter, ProdutoService } from '../produto.service';
 import { ToastyService } from 'ng2-toasty';
 import { ModalService } from 'src/app/core/modal.service';
 import { TipoService } from 'src/app/tipos/tipo.service';
+import { Produto } from 'src/app/model/Produto';
 
 @Component({
   selector: 'app-produtos-pesquisa',
@@ -14,6 +15,7 @@ import { TipoService } from 'src/app/tipos/tipo.service';
 })
 export class ProdutosPesquisaComponent implements OnInit {
 
+  adicionarEstoque = 'adicionarEstoque';
   produtos = [];
   tipos = [];
 
@@ -24,7 +26,7 @@ export class ProdutosPesquisaComponent implements OnInit {
   totalElements;
   size;
 
-  produtoModal;
+  produtoModal = new Produto();
 
   constructor(
     private produtoService: ProdutoService,
@@ -60,7 +62,7 @@ export class ProdutosPesquisaComponent implements OnInit {
       .catch(error => this.errorHanlder.handle(error));
   }
 
-  openModal(id: string, botaoExcluir: any, produto: any) {
+  openModal(id: string, produto: any) {
     this.produtoModal = produto;
     this.modalService.open(id);
   }
@@ -84,6 +86,20 @@ export class ProdutosPesquisaComponent implements OnInit {
         this.errorHanlder.handle(error);
       });
     this.modalService.close(idModal);
+  }
+
+  adicionarUnidades(produtoId, inputValor, idModal) {
+    this.produtoService.adicionarUnidadesProduto(produtoId, Number(inputValor.value))
+      .then(response => {
+        this.produtos.forEach(p => {
+          if (p.id === response.id) {
+            p.estoque = response.estoque;
+          }
+        });
+      })
+      .catch(error => this.errorHanlder.handle(error));
+    inputValor.value = null;
+    this.closeModal(idModal);
   }
 
 }

@@ -94,16 +94,12 @@ export class ProdutoService {
       });
   }
 
-  buscarProximo(params): Promise<any> {
-    return this.http.get<any>(`${this.produtopUrl}`, { params })
-    .toPromise()
-    .then(response => {
-      if (response.content.length > 0) {
-        return response.content[0];
-      } else {
-        return;
-      }
-    });
+  adicionarUnidadesProduto(produtoId, quantidade): Promise<any> {
+    return this.http.put<any>(`${this.produtopUrl}/${produtoId}/adicionar`, quantidade)
+      .toPromise()
+      .then(response => {
+        return response;
+      });
   }
 
 }

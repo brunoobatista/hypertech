@@ -69,7 +69,7 @@ export const adminLteConf = {
         },
         { /** SideBar link executador de Vendas */
           roles: ['READ_VENDA', 'WRITE_VENDA', 'FULL_VENDA'],
-          label: 'Efetuar venda', route: 'vendas/nova', iconClasses: 'fa fa-money'
+          label: 'Nova venda', route: 'vendas/nova', iconClasses: 'fa fa-money'
         }
     ]}
   ]
