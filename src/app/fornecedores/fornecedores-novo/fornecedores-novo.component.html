@@ -47,7 +47,8 @@
             <div class="form-group col-md-3">
                 <label for="nome">CPF/CNPJ</label>
                 <input type="text" class="form-control" id="cpfOuCnpj" placeholder=""
-                  name="cpfOuCnpj" formControlName="cpfOuCnpj">
+                  name="cpfOuCnpj" formControlName="cpfOuCnpj"
+                  appCpfCnpjMask>
 
                 <app-message [control]="formulario.get('cpfOuCnpj')" error="obrigatoriedade"
                     text="Informe o CPF/CNPJ" msg="CPF/CNPJ é obrigatório"
@@ -86,7 +87,7 @@
         </div>
 
         <div class="row" formGroupName="endereco">
-          <div class="form-group col-md-3" >
+          <div class="form-group col-md-4" >
               <label for="nome">Endereço</label>
               <input type="text" class="form-control" id="endereco" placeholder=""
                 name="endereco" formControlName="endereco">
@@ -98,7 +99,7 @@
                 name="numero" formControlName="numero">
 
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
               <label for="nome">Complemento</label>
               <input type="text" class="form-control" id="complemento" placeholder=""
                 name="complemento" formControlName="complemento">

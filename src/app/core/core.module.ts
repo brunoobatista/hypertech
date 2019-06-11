@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../seguranca/token.interceptor';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { BoxModule, TabsModule, DropdownModule } from 'angular-admin-lte';
 import { ToastyModule } from 'ng2-toasty';
@@ -16,6 +17,7 @@ import { FornecedorService } from './../fornecedores/fornecedor.service';
 import { CidadeService } from './../cidades/cidade.service';
 import { ModalService } from './modal.service';
 import { ClienteService } from '../clientes/cliente.service';
+import { UsuariosService } from '../usuarios/usuarios.service';
 
 import { ErrorHandlerService } from './error-handler.service';
 
@@ -23,6 +25,9 @@ import { HeaderInnerComponent } from './header-inner/header-inner.component';
 import { SidebarLeftInnerComponent } from './sidebar-left-inner/sidebar-left-inner.component';
 import { SidebarRightInnerComponent } from './sidebar-right-inner/sidebar-right-inner.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { NaoEncontradoComponent } from './nao-encontrado.component';
+
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -33,12 +38,15 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     TabsModule,
     BoxModule,
     HttpClientModule,
+    RouterModule,
+    SharedModule,
   ],
   declarations: [
     HeaderInnerComponent,
     SidebarLeftInnerComponent,
     SidebarRightInnerComponent,
     NaoAutorizadoComponent,
+    NaoEncontradoComponent
   ],
   exports: [
     BoxModule,
@@ -61,6 +69,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     ModalService,
 
     ClienteService,
+    UsuariosService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

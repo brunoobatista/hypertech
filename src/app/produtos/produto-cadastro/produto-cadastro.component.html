@@ -29,17 +29,29 @@
 
           <div class="form-group col-md-6" formGroupName="tipo">
                 <label for="nome">Tipo</label>
-                <select type="text" class="form-control" id="id" placeholder=""
-                    name="id" formControlName="id">
 
-                  <option value="" selected="selected"></option>
-                  <option *ngFor="let tipo of tipos" value="{{ tipo.id }}">{{tipo.tipo}}</option>
+                <ng-select [items]="tipos"
+                            bindLabel="nome"
+                            bindValue="id"
+                            
+                            [virtualScroll]="true"
+                            [hideSelected]="false"
+                            [loading]="clienteLoading"
+                            (search)="carregarTipos($event)"
 
-                </select>
+                            placeholder="Tipo"
+                            notFoundText="Tipo não encontrado"
+                            loadingText="Carregando..."
+                            typeToSearchText="Digite para buscar"
+                            
+                            formControlName="id">
+
+                  </ng-select>
+
 
                 <app-message [control]="formulario.get('id')" error="obrigatoriedade"
-                  text="Informe o tipo" msg="Tipo é obrigatório"
-                  ></app-message>
+                    text="Informe o tipo" msg="Tipo é obrigatório">
+                </app-message>
             </div>
           
         </div>
@@ -48,7 +60,8 @@
             <div class="form-group col-md-3">
                 <label for="nome">Valor</label>
                 <input type="text" class="form-control" id="valor" placeholder=""
-                  name="valor" formControlName="valor">
+                  name="valor" formControlName="valor"
+                  currencyMask  [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false}">
 
                 <app-message [control]="formulario.get('valor')" error="obrigatoriedade"
                     text="Informe o valor" msg="Valor é obrigatório"
@@ -60,7 +73,8 @@
 
               <label for="nome">Estoque</label>
               <input type="text" class="form-control" id="estoque" placeholder=""
-                name="estoque" formControlName="estoque">
+                name="estoque" formControlName="estoque"
+                currencyMask  [options]="{ prefix: '', thousands: '', decimal: '', precision: '', allowNegative: false}">
   
             </div>
 

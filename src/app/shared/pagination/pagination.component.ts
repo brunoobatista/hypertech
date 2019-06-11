@@ -34,7 +34,6 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-//console.log(changes, this.pageCurrent);
     for (const propName in changes) {
       if (changes) {
         const value = changes[propName];

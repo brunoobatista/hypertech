@@ -1,0 +1,72 @@
+<div class="row">
+    <!-- left column -->
+  <div class="col-md-12">
+
+      <!-- form start -->
+      <form  (ngSubmit)="salvarModel()"  [formGroup]="formulario">
+          <div class="row">
+            <div class="col-md-3 ajuste-foto">
+              <a href="#" class="thumbnail">
+                <img src="https://image.flaticon.com/icons/png/512/23/23716.png" alt="...">
+              </a>
+            </div>
+            <div class="form-group col-md-9">
+              <label for="nome">Nome</label>
+              <input type="text" class="form-control" id="nome" placeholder=""
+                name="nome" formControlName="nome" #inputNome>
+  
+              <app-message [control]="formulario.get('nome')" error="required"
+                  text="Informe o nome" msg="Nome é obrigatório"
+                  ></app-message>
+
+              <app-message [control]="formulario.get('nome')" error="tamanhoMinimo" text="Tamanho mínimo para nome é 3 caractéres"
+                  ></app-message>
+
+            </div>   
+            <div class="form-group col-md-9">
+              <label for="email">E-mail</label>
+              <input type="text" class="form-control" id="email" placeholder=""
+                  name="email" formControlName="email"
+                 />
+  
+              <app-message [control]="formulario.get('email')" error="required"
+                  text="Informe o E-mail" msg="E-mail é obrigatório"
+                  ></app-message>
+
+              <app-message [control]="formulario.get('email')" error="pattern" text="Formato incorreto"
+                  ></app-message>
+
+            </div>
+            <div class="form-group col-md-9">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder=""
+                    name="cpf" formControlName="cpf"
+                    appCpfCnpjMask/>
+  
+              </div>  
+              
+              <div formArrayName="roles">
+                <div *ngFor="let role of formulario.get('roles').controls; let i=index">
+                  <div class="form-group col-md-9" [formGroupName]="i" >
+                    <label for="nome">Grupo</label>
+                    <select name="id" id="id" class="form-control" formControlName="id">
+                      <option value="" disabled>Selecione um grupo</option>
+                      <option value="{{item.id}}" *ngFor="let item of permissoes">{{item.label}}</option>
+                    </select>
+                    
+                  </div>   
+                </div> 
+              </div>         
+          </div>
+
+
+  
+        <div class="box-footer pull-right">
+          <button type="submit" class="btn btn-primary" >Salvar</button>
+        </div>
+      </form>
+
+  </div>
+  
+  </div>
+  

@@ -10,7 +10,7 @@ const routes: Routes = [
     component: TiposPesquisaComponent,
     data: {
       title: 'Tipo',
-      roles: ['ROLE_PESQUISAR_TIPO']
+      permissaos: ['READ_PRODUTO', 'WRITE_PRODUTO', 'FULL_PRODUTO']
     },
     canActivate: [AuthGuard],
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
     component: TipoNovoComponent,
     data: {
       title: 'Tipo',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_PRODUTO', 'FULL_PRODUTO']
     },
     canActivate: [AuthGuard],
   },
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: TipoNovoComponent,
     data: {
       title: 'Tipo',
-      roles: ['ROLE_CADASTRAR_TIPO']
+      permissaos: ['WRITE_PRODUTO', 'FULL_PRODUTO']
     },
     canActivate: [AuthGuard],
   }

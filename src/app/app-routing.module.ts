@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
+import { NaoEncontradoComponent } from './core/nao-encontrado.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,8 @@ const routes: Routes = [
 
   {
     path: 'vendas',
-    loadChildren: './vendas/vendas.module#VendasModule',
+    //loadChildren: './vendas/vendas.module#VendasModule',
+    loadChildren: () => import('./vendas/vendas.module').then(mod => mod.VendasModule),
     data: {
       title: 'Vendas',
     }
@@ -44,11 +46,20 @@ const routes: Routes = [
     }
   },
 
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then(mod => mod.UsuariosModule),
+    data: {
+      title: 'Usuários',
+    }
+  },
+
 
   {
   path: '',
   data: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      permissaos: ['READ_PRODUTO', 'READ_USUARIO', 'READ_CLIENTE', 'READ_FORNECEDOR', 'WRITE_PRODUTO', 'FULL_PRODUTO', 'FULL_USUARIO', 'FULL_VENDA', 'FULL_FORNECEDOR']
   },
   canActivate: [AuthGuard],
   children: [
@@ -75,6 +86,13 @@ const routes: Routes = [
   {
     path: 'nao-autorizado',
     component: NaoAutorizadoComponent,
+    data: {
+      customLayout: true
+    }
+  },
+  {
+    path: '**',
+    component: NaoEncontradoComponent,
     data: {
       customLayout: true
     }

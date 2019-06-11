@@ -6,10 +6,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { ModalService } from 'src/app/core/modal.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { ProdutoService, ProdutoFilter } from 'src/app/produtos/produto.service';
+import { ProdutoService } from 'src/app/produtos/produto.service';
 import { VendasService } from '../vendas.service';
 
 import { environment } from './../../../environments/environment';
+import { ClienteService } from 'src/app/clientes/cliente.service';
+
+import { ToastyService } from 'ng2-toasty';
+import { Produto } from 'src/app/model/Produto';
+import { VendaProduto } from 'src/app/model/VendaProduto';
 
 @Component({
   selector: 'app-venda-avulsa',
@@ -18,12 +23,24 @@ import { environment } from './../../../environments/environment';
 })
 export class VendaAvulsaComponent implements OnInit {
 
+  exclusaoProduto = 'exclusaoProduto';
+  produtoModal;
+
   titulo: any;
   produtosPesquisa = [];
+
+  clientesPesquisa = [];
+  allCliente = [];
+  clienteLoading = false;
+
+  cliente: any;
+
   @ViewChild('inputProduto', {read: ElementRef}) inputProduto: any;
   @ViewChild('divLiveSearch', {read: ElementRef}) divLiveSearch: any;
+  @ViewChild('botaoFinalizar', {read: ElementRef}) botaoFinalizar: any;
 
   formulario: FormGroup;
+  formularioTemp = [];
   formBuilder = new FormBuilder();
 
   tempo: any;
@@ -36,15 +53,16 @@ export class VendaAvulsaComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private produtoService: ProdutoService,
+    private clienteService: ClienteService,
     private vendasService: VendasService,
     private errorHadler: ErrorHandlerService,
     private render2: Renderer2,
     private auth: AuthService,
     private router: Router,
     private activateRoute: ActivatedRoute,
+    private toasty: ToastyService,
   ) {
     this.vendaUrl = `${environment.apiUrl}/vendas`;
-
   }
 
   ngOnInit() {
@@ -53,31 +71,94 @@ export class VendaAvulsaComponent implements OnInit {
 
     if (idVenda) {
       this.carregarVenda(idVenda);
-      this.titulo = '#' + idVenda;
     } else {
       this.titulo = '';
     }
+    this.botaoFinalizar.nativeElement.disabled = true;
+    this.onChange();
+  }
+
+  onChange() {
+    const array = ['clienteId', 'desconto', 'observacao'];
+    this.formulario.valueChanges.subscribe(val => {
+      for (const prop in this.formulario.value) {
+        if (prop) {
+          if (array.indexOf(prop) >= 0 &&
+          this.formulario.value[prop] !== this.formularioTemp[prop]) {
+            this.botaoFinalizar.nativeElement.disabled = true;
+            break;
+          } else {
+            this.botaoFinalizar.nativeElement.disabled = false;
+          }
+          if (prop === 'produtos') {
+            for (const {item, index} of this.formulario.value[prop].map((item, index) => ({item, index})) ) {
+              if (this.formularioTemp['produtos'].length > 0) {
+                if (Number(item.produto.quantidade) !== Number(this.formularioTemp['produtos'][index].quantidade)) {
+                  this.botaoFinalizar.nativeElement.disabled = true;
+                  break;
+                } else {
+                  this.botaoFinalizar.nativeElement.disabled = false;
+                }
+              } else {
+                this.botaoFinalizar.nativeElement.disabled = true;
+              }
+            }
+          }
+          if (this.botaoFinalizar.nativeElement.disabled) {
+            break;
+          }
+        }
+      }
+    });
   }
 
   carregarVenda(id: number) {
     this.vendasService.buscarPorCodigo(id)
       .then(response => {
         this.formulario.patchValue(response);
-
+        if (response.cliente) {
+          this.preencherClienteFormulario(response.cliente);
+          this.titulo = '#' + id;
+        }
         this.preencherProdutosFormulario(response.produtos);
+        this.ativarBotaoFinalizar();
       })
       .catch(erro => this.errorHadler.handle(erro));
   }
 
   salvarVenda() {
-    this.vendasService.adicionar(this.formulario.value)
+    this.vendasService.salvar(this.formulario.value)
       .then(response => {
         if (!this.formulario.get('id').value) {
+          this.formulario.patchValue(response);
           this.atualizarIdVendaRoute(response.id);
         } else {
           this.formulario.patchValue(response);
         }
+        this.toasty.success('Venda salva!');
         this.preencherProdutosFormulario(response.produtos);
+        this.ativarBotaoFinalizar();
+      })
+      .catch(error => this.errorHadler.handle(error));
+  }
+
+  ativarBotaoFinalizar() {
+    this.formularioTemp = this.formulario.value;
+    this.formularioTemp['produtos'] = [];
+    for (const item of this.formulario.get('produtos').value) {
+      const vp = new VendaProduto();
+      vp.quantidade = item.quantidade;
+      vp.id = item.id;
+      vp.produto = item.produto;
+      this.formularioTemp['produtos'].push(vp);
+    }
+    this.botaoFinalizar.nativeElement.disabled = false;
+  }
+
+  finalizarVenda() {
+    this.vendasService.salvarFinalizar(this.formulario.value)
+      .then(response => {
+        this.router.navigate(['/vendas']);
       })
       .catch(error => this.errorHadler.handle(error));
   }
@@ -92,32 +173,30 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   preencherProdutosFormulario(produtos: any[]) {
+    this.formulario.get('produtos').setValue([]);
     produtos.forEach(p => {
       this.formulario.get('produtos').value.push(p);
     });
   }
 
+  preencherClienteFormulario(cliente: any) {
+    this.allCliente.push(cliente);
+    this.clientesPesquisa = [...this.allCliente];
+  }
+
   atualizarIdVendaRoute(id: number) {
+    this.titulo = '#' + id;
     window.history.replaceState({},
       '', `/vendas/${id}`);
   }
 
-  // podem ser retirados
-  acrescentaQuantidade(item: any) {
-      item.quantidade += 1;
-      this.atualizarVenda();
-  }
-// podem ser retirados
-  decrementarQuantidade(item: any) {
-    if (item.quantidade > 0) {
-      item.quantidade -= 1;
-      this.atualizarVenda();
-    }
-  }
-
   inputValorProdutoAlterado(event, item) {
-    item.quantidade = event.target.value;
-    //this.atualizarVenda();
+    let valor = event.target.value;
+    if (valor > (item.produto.estoque - item.produto.reserva)) {
+      valor = item.produto.estoque - item.produto.reserva;
+    }
+    item.quantidade = valor;
+
     this.atualizarVenda();
   }
 
@@ -125,7 +204,12 @@ export class VendaAvulsaComponent implements OnInit {
     return this.formulario.get('valor').value - this.formulario.get('desconto').value;
   }
 
-  excluirItem(item: any) {
+  retirarItemDaLista(idModal, produto) {
+    this.produtoModal = produto;
+    this.openModal(idModal, this.produtoModal);
+  }
+
+  excluirItem(item: any, idModal) {
     const p1 = this.formulario.get('produtos').value;
 
     const novaLista = p1.filter(p => {
@@ -138,9 +222,15 @@ export class VendaAvulsaComponent implements OnInit {
     novaLista.forEach(nl => p2.push(nl));
 
     const idFormulario = this.formulario.get('id').value;
-    if (idFormulario) {
-      this.vendasService.removerProduto(idFormulario, item.produto.id);
+    if (idFormulario && item.id) {
+      this.vendasService.removerProduto(idFormulario, item.produto.id)
+        .then(response => {
+          this.formulario.patchValue(response);
+          this.preencherProdutosFormulario(response.produtos);
+          this.ativarBotaoFinalizar();
+        });
     }
+    this.closeModal(idModal);
   }
 
   selecionaProduto(event) {
@@ -191,8 +281,6 @@ export class VendaAvulsaComponent implements OnInit {
     }
 
     if (value.length >= 3) {
-      const filtro = new ProdutoFilter();
-      filtro.nome = value;
       if (this.tempo) {
         clearTimeout(this.tempo);
       }
@@ -208,20 +296,38 @@ export class VendaAvulsaComponent implements OnInit {
   }
 
   pesquisarCliente(event) {
-    console.log(event.target);
+    if (event) {
+      const value = event.term;
+
+      if (value.length >= 3) {
+        this.clienteLoading = true;
+        this.clienteService.pesquisarTodos(value)
+        .then(response => {
+          this.clientesPesquisa = response;
+          this.clienteLoading = false;
+        });
+      }
+    }
   }
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      dataVenda: [formatDate(Date.now(), 'dd-MM-yyyy HH:mm:ss', 'pt')],
+      dataVenda: [formatDate(Date.now(), 'yyyy-MM-dd HH:mm:ss', 'pt')],
       usuario: this.formBuilder.group({
         id: [this.auth.jwtPayload.id]
       }),
+      cliente: [null],
+      clienteId: [null],
       produtos: this.formBuilder.array([]),
       valor: [0],
-      desconto: [],
+      desconto: [0],
+      observacao: [''],
+      status: ['']
     });
+
+    this.formularioTemp = this.formulario.value;
+    //console.log('testmp', this.formularioTemp);
   }
 
   removeDivChildren(div: any) {
@@ -245,22 +351,27 @@ export class VendaAvulsaComponent implements OnInit {
       const liHead = this.render2.createElement('div');
       this.render2.setAttribute(liHead, 'class', 'row');
       const htNome = this.render2.createText('Nome');
-      const htEstoque = this.render2.createText('Unidades disponíveis');
+      const htEstoque = this.render2.createText('Estoque');
+      const htReserva = this.render2.createText('Reserva');
       const htValor = this.render2.createText('Valor R$');
 
       const hsNome = this.render2.createElement('span');
-      this.render2.setAttribute(hsNome, 'class', 'col-md-7');
+      this.render2.setAttribute(hsNome, 'class', 'col-md-6');
       const hsEstoque = this.render2.createElement('span');
-      this.render2.setAttribute(hsEstoque, 'class', 'col-md-3 text-center');
+      this.render2.setAttribute(hsEstoque, 'class', 'col-md-2 text-center');
+      const hsReserva = this.render2.createElement('span');
+      this.render2.setAttribute(hsReserva, 'class', 'col-md-2 text-center');
       const hsValor = this.render2.createElement('span');
       this.render2.setAttribute(hsValor, 'class', 'col-md-2 text-center');
 
       this.render2.appendChild(hsNome, htNome);
       this.render2.appendChild(hsEstoque, htEstoque);
+      this.render2.appendChild(hsReserva, htReserva);
       this.render2.appendChild(hsValor, htValor);
 
       this.render2.appendChild(liHead, hsNome);
       this.render2.appendChild(liHead, hsEstoque);
+      this.render2.appendChild(liHead, hsReserva);
       this.render2.appendChild(liHead, hsValor);
       this.render2.appendChild(ulhead, liHead);
 
@@ -279,21 +390,26 @@ export class VendaAvulsaComponent implements OnInit {
         this.render2.setAttribute(li, 'class', 'body-live-list row');
         const nome = this.render2.createText(p.nome);
         const estoque = this.render2.createText(p.estoque);
+        const reserva = this.render2.createText(p.reserva);
         const valor = this.render2.createText(p.valor);
 
         const spanNome = this.render2.createElement('span');
-        this.render2.setAttribute(spanNome, 'class', 'col-md-7');
+        this.render2.setAttribute(spanNome, 'class', 'col-md-6');
         const spanEstoque = this.render2.createElement('span');
-        this.render2.setAttribute(spanEstoque, 'class', 'col-md-3 text-center');
+        this.render2.setAttribute(spanEstoque, 'class', 'col-md-2 text-center acert-padding');
+        const spanReserva = this.render2.createElement('span');
+        this.render2.setAttribute(spanReserva, 'class', 'col-md-2 text-center acert-padding');
         const spanValor = this.render2.createElement('span');
-        this.render2.setAttribute(spanValor, 'class', 'col-md-2 text-center');
+        this.render2.setAttribute(spanValor, 'class', 'col-md-2 text-center acert-padding');
 
         this.render2.appendChild(spanNome, nome);
         this.render2.appendChild(spanEstoque, estoque);
+        this.render2.appendChild(spanReserva, reserva);
         this.render2.appendChild(spanValor, valor);
 
         this.render2.appendChild(li, spanNome);
         this.render2.appendChild(li, spanEstoque);
+        this.render2.appendChild(li, spanReserva);
         this.render2.appendChild(li, spanValor);
         this.render2.appendChild(ulbody, li);
       }
@@ -305,7 +421,7 @@ export class VendaAvulsaComponent implements OnInit {
 
   }
 
-  openModal(id: string, botaoExcluir: any, tipo: any) {
+  openModal(id: string, produto: any) {
     this.modalService.open(id);
     this.inputProduto.nativeElement.focus();
   }

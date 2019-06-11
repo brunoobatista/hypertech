@@ -5,6 +5,8 @@ import { ProdutoFilter, ProdutoService } from '../produto.service';
 
 import { ToastyService } from 'ng2-toasty';
 import { ModalService } from 'src/app/core/modal.service';
+import { TipoService } from 'src/app/tipos/tipo.service';
+import { Produto } from 'src/app/model/Produto';
 
 @Component({
   selector: 'app-produtos-pesquisa',
@@ -13,7 +15,10 @@ import { ModalService } from 'src/app/core/modal.service';
 })
 export class ProdutosPesquisaComponent implements OnInit {
 
+  adicionarEstoque = 'adicionarEstoque';
   produtos = [];
+  tipos = [];
+
   filtro = new ProdutoFilter();
 
   totalPages;
@@ -21,17 +26,22 @@ export class ProdutosPesquisaComponent implements OnInit {
   totalElements;
   size;
 
-  produtoModal;
+  produtoModal = new Produto();
 
   constructor(
     private produtoService: ProdutoService,
     private errorHanlder: ErrorHandlerService,
     private modalService: ModalService,
+    private tipoService: TipoService,
     private toasty: ToastyService
   ) { }
 
   ngOnInit() {
     this.pesquisar(0);
+    this.tipoService.pesquisarTodos('')
+      .then(response => {
+        this.tipos = response;
+      });
   }
 
   aoMudarPagina(event) {
@@ -52,7 +62,7 @@ export class ProdutosPesquisaComponent implements OnInit {
       .catch(error => this.errorHanlder.handle(error));
   }
 
-  openModal(id: string, botaoExcluir: any, produto: any) {
+  openModal(id: string, produto: any) {
     this.produtoModal = produto;
     this.modalService.open(id);
   }
@@ -64,20 +74,32 @@ export class ProdutosPesquisaComponent implements OnInit {
   excluirProduto(produto: any, idModal: string) {
     this.produtoService.excluir(produto.id, this.number, this.size)
       .then(response => {
-        /*if (this.produtos.length === 0) {
-          this.pesquisar(0);
-        }
-        if (response !== null) {
-          this.produtos = response;
-        }*/
-        this.totalElements--;
-        this.toasty.success('Produto excluído!');
-        this.pesquisar(0);
+          const index = this.produtos.indexOf(produto);
+          this.produtos.splice(index, 1);
+          if (response !== null && response !== undefined) {
+            this.produtos.push(response);
+          }
+          this.totalElements--;
+          this.toasty.success('Produto excluído!');
       })
       .catch(error => {
         this.errorHanlder.handle(error);
       });
-      this.closeModal(idModal);
+    this.modalService.close(idModal);
+  }
+
+  adicionarUnidades(produtoId, inputValor, idModal) {
+    this.produtoService.adicionarUnidadesProduto(produtoId, Number(inputValor.value))
+      .then(response => {
+        this.produtos.forEach(p => {
+          if (p.id === response.id) {
+            p.estoque = response.estoque;
+          }
+        });
+      })
+      .catch(error => this.errorHanlder.handle(error));
+    inputValor.value = null;
+    this.closeModal(idModal);
   }
 
 }

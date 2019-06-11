@@ -4,6 +4,7 @@ import { ClienteFilter, ClienteService } from '../cliente.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ToastyService } from 'ng2-toasty';
 import { ModalService } from 'src/app/core/modal.service';
+import { TipoPessoa } from 'src/app/model/Cliente';
 
 @Component({
   selector: 'app-clientes-pesquisa',
@@ -13,6 +14,7 @@ import { ModalService } from 'src/app/core/modal.service';
 export class ClientesPesquisaComponent implements OnInit {
 
   clientes = [];
+  tipoPessoa = [];
   filtro = new ClienteFilter();
 
   totalPages;
@@ -30,6 +32,9 @@ export class ClientesPesquisaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    Object.keys(TipoPessoa).forEach(p => {
+      this.tipoPessoa.push({'key': p, 'value': TipoPessoa[p]});
+    });
     this.pesquisar();
   }
 
@@ -46,8 +51,14 @@ export class ClientesPesquisaComponent implements OnInit {
         this.number = response.number;
         this.totalElements = response.totalElements;
         this.size = response.size;
+
+        this.clientes = this.clientes.map(c => {
+          c.tipoPessoa = TipoPessoa[c.tipoPessoa];
+          return c;
+        });
       })
       .catch(error => this.errorHandlerService.handle(error));
+
   }
 
   openModal(id: string, cliente: any) {
@@ -64,8 +75,7 @@ export class ClientesPesquisaComponent implements OnInit {
       .then(response => {
         const index = this.clientes.indexOf(cliente);
         this.clientes.splice(index, 1);
-
-        if (response !== undefined) {
+        if (response !== undefined && response !== null) {
           this.clientes.push(response);
         }
 

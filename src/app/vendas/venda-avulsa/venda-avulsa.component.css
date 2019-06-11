@@ -67,4 +67,13 @@
     .botao-add-produto {
         margin-top: 5px;
     }
-  }
+}
+
+.select-search {
+    margin: 20px;
+    padding: 20px;
+}
+
+.acert-padding {
+    padding-left: 5%;
+}

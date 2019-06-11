@@ -10,7 +10,7 @@
     <!-- general form elements -->
     <div class="box box-primary">
         
-      <form class="form" [formGroup]="formulario" class="">
+      <form class="form" [formGroup]="formulario" class="" autocomplete="off">
         <div class="box-header with-border">
             
           <div class="row">
@@ -38,21 +38,25 @@
             </div>
             <div class="col-md-7">
                 <label for="desconto" >Cliente</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                    </span>
-                  
-                    <input class="form-control"
-                        list="clientes" (keyup)="pesquisarCliente($event)"/>
-                    <datalist id="clientes">
-                        <option value="Internet Explorer">
-                        <option value="Firefox">
-                        <option value="Chrome">
-                        <option value="Opera">
-                        <option value="Safari">
-                    </datalist>
-                </div>
+
+                    <ng-select [items]="clientesPesquisa"
+                              bindLabel="nome"
+                              bindValue="id"
+                              
+                              [virtualScroll]="true"
+                              [hideSelected]="false"
+                              [loading]="clienteLoading"
+                              (search)="pesquisarCliente($event)"
+
+                              placeholder="Cliente avulso"
+                              notFoundText="Cliente não encontrado"
+                              loadingText="Carregando..."
+                              typeToSearchText="Digite para buscar"
+                              
+                              formControlName="clienteId">
+
+                    </ng-select>
+
             </div>
             <div class="form-group col-md-2">
                 <label for="" ></label>
@@ -62,21 +66,41 @@
             </div>
 
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="observacao">Observação</label>
+              <textarea class="form-control" name="observacao" id="observacao" rows="2" formControlName="observacao"></textarea>
+            </div>
+          </div>
               
         </div>
       <!-- /.box-header -->
       <!-- form start -->
         <div class="box-body">
 
+          <!--
+            <div class="row">
+                <div class="col-md-7">Nome do produto</div>
+                <div class="col-md-1">Estoque</div>
+                <div class="col-md-1">Reserva</div>
+                <div class="col-md-2">Quantidade</div>
+                <div class="col-md-1"></div>
+            </div>
           <app-input-produto [(produtos)]="formulario.get('produtos').value">
-            <ng-template #produtoTemplate let-item>
-              
-            
+           
+             Passar esse template para o componente e criar os eventos necessários
+           <ng-template #produtoTemplate let-item>
+ 
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-md-9">{{ item.produto.nome }}</div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
+                        <img src="https://www.aprenderexcel.com.br//imagens/post/385/2901-1.jpg" alt="" style="width: 50px; height: 40px;">
+                    </div>
+                    <div class="col-md-6">{{ item.produto.nome }}</div>
+                    <div class="col-md-1 text-center acert-padding">{{ item.produto.estoque }}</div>
+                    <div class="col-md-1 text-center acert-padding">{{ item.produto.reserva }}</div>
+                    <div class="col-md-2 text-center ">
                       
                         <input type="number" class="form-control" id="input" 
                             value="{{item.quantidade}}"
@@ -84,7 +108,7 @@
                         
                     </div>
                     <div class="col-md-1">
-                        <button class="form-control btn btn-danger" (click)="excluirItem(item)" type="button">
+                        <button class="form-control btn btn-danger" (click)="retirarItemDaLista(exclusaoProduto, item)" type="button">
                             <i class="fa fa-trash"></i>
                         </button>
                     </div>
@@ -96,11 +120,73 @@
             </ng-template>
           </app-input-produto>
 
+##########################################-->
+
+          <div class="table-responsive">
+          <table class="table">
+              <tr>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th class="text-center">Estoque</th>
+                <th class="text-center">Reserva</th>
+                <th class="text-center">Quantidade</th>
+                <th  class="width-column-buttons"></th>
+              </tr>
+              <tbody *ngFor="let item of formulario.get('produtos').value">
+                    <tr>
+                      <td>
+                        <img src="https://www.aprenderexcel.com.br//imagens/post/385/2901-1.jpg" alt="" style="width: 50px; height: 40px;">
+                      </td>
+                      <td>{{item.produto.nome}}</td>
+                      <td class="text-center">{{item.produto.estoque}}</td>
+                      <td class="text-center">{{item.produto.reserva}}</td>
+                      <td class="text-center" style="width: 10%;">
+                          <input type="number" class="form-control" id="input" 
+                              value="{{item.quantidade}}"
+                              min="0" max="{{item.produto.estoque - item.produto.reserva}}"
+                              (change)="inputValorProdutoAlterado($event, item)"/>
+                      </td>
+                      <td class="width-column-buttons" style="width: 6%;">
+                        <div class="text-center">
+                            <button class="form-control btn btn-danger" (click)="retirarItemDaLista(exclusaoProduto, item)" type="button">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                      </td>
+                    </tr>
+              </tbody>
+            
+          </table>
+          </div>
         </div>
         <!-- /.box-body -->
   
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary" (click)="salvarVenda()">Salvar</button>
+
+          <button type="submit" class="btn btn-primary margin" (click)="salvarVenda()" 
+              [disabled]="formulario.get('produtos').value.length === 0">
+            Salvar</button>
+          <button type="submit" class="btn btn-warning" (click)="finalizarVenda()"
+              #botaoFinalizar>
+            Finalizar</button>
+<!--
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary" (click)="salvarVenda()">Salvar</button>
+            <button type="button" class="btn btn-primary dropdown-toggle"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                  <a class="button-option" (click)="finalizarVenda()">Salvar e finalizar</a>
+              </li>
+            </ul>
+            
+          </div>
+        -->
+
+
         </div>
 
       </form>
@@ -141,5 +227,28 @@
       <div class="app-modal-background"></div>
   </app-modal>
 
+
+  <app-modal id="{{exclusaoProduto}}" style="z-index: 9999;">
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="closeModal(exclusaoProduto);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Excluir Produto</h4>
+              </div>
+            <div class="modal-body">
+              <p *ngIf="produtoModal">
+                Deseja retirar o produto {{produtoModal.nome}} da lista?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal(exclusaoProduto);" class="btn btn-danger" data-dismiss="modal">Não</button>
+              <button type="button" class="btn btn-success" (click)="excluirItem(produtoModal, exclusaoProduto)">  Sim  </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+  </app-modal>
  
   

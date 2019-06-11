@@ -1,5 +1,4 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CpfCnpjService } from './cpf-cnpj.service';
 
 @Directive({

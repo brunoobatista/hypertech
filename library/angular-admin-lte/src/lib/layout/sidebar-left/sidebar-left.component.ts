@@ -33,6 +33,7 @@ export interface Item {
   route?: string;
   iconClasses?: string;
   children?: Array<Item>;
+  roles?: Array<Item>;
   isActive?: boolean;
   isCollapsed?: boolean;
   disableCollapse?: boolean;

@@ -7,7 +7,6 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 import { TipoPessoa } from 'src/app/model/Cliente';
 import { ClienteService } from '../cliente.service';
-import { isArray } from 'util';
 
 @Component({
   selector: 'app-cliente-cadastro',
@@ -116,7 +115,7 @@ export class ClienteCadastroComponent implements OnInit {
         } else {
             matchingControl.setErrors(null);
         }
-    }
+    };
   }
 
 }

@@ -1,0 +1,121 @@
+<div class="row">
+    <!-- left column -->
+  <div class="col-md-12">
+  
+    <!-- general form elements -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{titulo}} usuário</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form  (ngSubmit)="adicionar()"  [formGroup]="formulario">
+        <div class="box-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="nome">Nome</label>
+              <input type="text" class="form-control" id="nome" placeholder=""
+                name="nome" formControlName="nome" autofocus>
+  
+              <app-message [control]="formulario.get('nome')" error="required"
+                  text="Informe o nome" msg="Nome é obrigatório"
+                  ></app-message>
+
+              <app-message [control]="formulario.get('nome')" error="tamanhoMinimo" text="Tamanho mínimo para nome é 3 caractéres"
+                  ></app-message>
+
+            </div>   
+            <div class="form-group col-md-6">
+              <label for="email">E-mail</label>
+              <input type="text" class="form-control" id="email" placeholder=""
+                  name="email" formControlName="email"
+                 />
+  
+              <app-message [control]="formulario.get('email')" error="required"
+                  text="Informe o E-mail" msg="E-mail é obrigatório"
+                  ></app-message>
+
+              <app-message [control]="formulario.get('email')" error="pattern" text="Formato incorreto"
+                  ></app-message>
+
+            </div>         
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="nome">Nome de Usuário</label>
+              <input type="text" class="form-control" id="username" placeholder=""
+                name="username" formControlName="username" autofocus>
+  
+              <app-message [control]="formulario.get('username')" error="required"
+                  text="Nome de usuário é obrigatório"
+                  ></app-message>
+
+              <app-message [control]="formulario.get('nome')" error="minLength" text="Informe o nome" msg="Tamanho mínimo para nome é 3 caractéres"
+                  ></app-message>
+
+            </div>   
+            <div class="form-group col-md-6">
+              <label for="cpf">CPF</label>
+              <input type="text" class="form-control" id="cpf" placeholder=""
+                  name="cpf" formControlName="cpf"
+                  appCpfCnpjMask/>
+
+            </div>         
+          </div>
+
+          <div class="row" >
+            <div class="form-group col-md-6">
+              <label for="password">Senha</label>
+              <input type="password" class="form-control" id="password"
+                  name="password" formControlName="password" />
+
+              <app-message [control]="formulario.get('password')" error="required"
+                text="Informe a senha" msg="Senha é obrigatória">
+              </app-message>
+              <app-message [control]="formulario.get('password')" error="tamanhoMinimo"
+                text="Tamanho mínimo é de 6 caractéres" msg="Senha é obrigatória">
+              </app-message>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="confirmPassword">Confirmar senha</label>
+              <input type="password" class="form-control" id="confirmPassword"
+                name="confirmPassword" formControlName="confirmPassword" />
+                
+              <app-message [control]="formulario.get('confirmPassword')" error="required"
+                text="Informe a senha" msg="Senha é obrigatória">
+              </app-message>
+              <app-message [control]="formulario.get('confirmPassword')" error="mustMatch"
+                text="Senhas não estão iguais" msg="Senha é obrigatória">
+              </app-message>
+            </div>
+          </div>
+
+
+          <div class="row" formArrayName="roles">
+            <div *ngFor="let role of formulario.get('roles').controls; let i=index">
+              <div class="form-group col-md-6" [formGroupName]="i" >
+                <label for="nome">Grupo</label>
+                <select name="id" id="id" class="form-control" formControlName="id">
+                  <option value="" disabled>Selecione um grupo</option>
+                  <option value="{{item.id}}" *ngFor="let item of permissoes">{{item.label}}</option>
+                </select>
+                
+              </div>   
+            </div> 
+          </div>
+
+
+        </div>
+        <!-- /.box-body -->
+  
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Salvar</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.box -->
+  </div>
+  
+  </div>
+  

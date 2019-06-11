@@ -11,7 +11,6 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(private auth: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         const authHeader = this.auth.getAuthorizationHeader();
         if (!this.auth.isAccessTokenInvalido() && (request.url !== this.auth.oauthTokenUrl)) {
           const authReq = request.clone({headers: request.headers.set('Authorization', authHeader)});

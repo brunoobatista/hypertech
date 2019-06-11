@@ -5,10 +5,11 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { MessageComponent } from './message/message.component';
 import { ModalComponent } from './modal.component';
 
-import { CurrencyMaskDirective } from '../currency-mask/currency-mask.directive';
+import { CurrencyMaskDirective } from './currency-mask/currency-mask.directive';
 
-import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "../currency-mask/currency-mask.config";
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "./currency-mask/currency-mask.config";
 import { CpfCnpjMaskDirective } from './cpfcnpjmaskmask/cpf-cnpj-mask.directive';
+import { RolesDirective } from './roles.directive';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     align: "right",
@@ -25,8 +26,22 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   imports: [
     CommonModule,
   ],
-  declarations: [PaginationComponent, MessageComponent, ModalComponent, CurrencyMaskDirective, CpfCnpjMaskDirective],
-  exports: [PaginationComponent, MessageComponent, ModalComponent, CurrencyMaskDirective, CpfCnpjMaskDirective],
+  declarations: [
+    PaginationComponent,
+    MessageComponent,
+    ModalComponent,
+    CurrencyMaskDirective,
+    CpfCnpjMaskDirective,
+    RolesDirective,
+  ],
+  exports: [
+    PaginationComponent,
+    MessageComponent,
+    ModalComponent,
+    CurrencyMaskDirective,
+    CpfCnpjMaskDirective,
+    RolesDirective,
+  ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],

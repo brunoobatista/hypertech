@@ -9,6 +9,8 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
+
+      
       <form  (ngSubmit)="adicionar()"  [formGroup]="formulario">
         <div class="box-body">
           <div class="row">
@@ -18,31 +20,27 @@
                 name="nome" formControlName="nome" autofocus>
   
               <app-message [control]="formulario.get('nome')" error="required"
-                  text="Informe o nome" msg="Nome é obrigatório"
-                  ></app-message>
+                  text="Informe o nome" msg="Nome é obrigatório"></app-message>
 
-              <app-message [control]="formulario.get('nome')" error="minLength" text="Informe o nome" msg="Tamanho mínimo para nome é 3 caractéres"
-                  ></app-message>
+              <app-message [control]="formulario.get('nome')" error="minLength" 
+                  text="Tamanho mínimo para nome é 3 caractéres"></app-message>
 
             </div>   
             <div class="form-group col-md-6">
               <label for="email">E-mail</label>
               <input type="text" class="form-control" id="email" placeholder=""
-                  name="email" formControlName="email"
-                 />
+                  name="email" formControlName="email"/>
   
               <app-message [control]="formulario.get('email')" error="required"
-                  text="Informe o E-mail" msg="E-mail é obrigatório"
-                  ></app-message>
+                  text="E-mail é obrigatório"></app-message>
 
-              <app-message [control]="formulario.get('email')" error="pattern" text="Formato incorreto" msg="Tamanho mínimo para nome é 3 caractéres"
-                  ></app-message>
+              <app-message [control]="formulario.get('email')" error="pattern" 
+                  text="Formato incorreto"></app-message>
 
             </div>         
           </div>
-
-        
-          <ng-container *ngIf="formulario.get('id').value == null">
+ 
+          <ng-container *ngIf="formulario.get('id').value === null">
             
             <div class="row" >
               <div class="form-group col-md-6">

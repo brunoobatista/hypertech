@@ -24,17 +24,21 @@
             ],
             "styles": [
               "node_modules/ng2-toasty/style-bootstrap.css",
-              "node_modules/bootstrap-css-only/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ionicons/css/ionicons.css",
               "node_modules/prismjs/themes/prism-tomorrow.css",
               "node_modules/admin-lte-css/dist/css/AdminLTE.css",
               "node_modules/admin-lte-css/dist/css/skins/_all-skins.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-typescript.js"
+              "./node_modules/prismjs/prism.js",
+              "./node_modules/prismjs/components/prism-typescript.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {

@@ -1,0 +1,133 @@
+<!-- /.row -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      
+      <div class="box-header">
+        <h3 class="box-title">
+            # {{venda.id}}
+        </h3>
+        <div class="box-tools">
+            <span class="label " appLabelStatus [lbStatus]="venda.status">
+                Status: {{statusVenda.status[venda.status]}}
+            </span>
+            
+        </div>
+      </div>
+      <!-- /.box-header -->
+
+      <div class="box-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <mk-box-info header="Valor" content="teste"
+                      backgroundColor="aqua" iconStyleClass="fa fa-money">
+                  {{venda.valor | currency:'R$':'symbol':'0.2-2':'pt'}}
+              </mk-box-info>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <mk-box-info header="Desconto" content="teste"
+                      backgroundColor="aqua" iconStyleClass="fa fa-money">
+                  {{venda.desconto | currency:'R$':'symbol':'0.2-2':'pt'}}
+              </mk-box-info>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <mk-box-info header="Valor Total" content="teste"
+                      backgroundColor="green" iconStyleClass="fa fa-money">
+                  {{calcularValorTotal() | currency:'R$':'symbol':'0.2-2':'pt'}}
+              </mk-box-info>
+            </div>      
+          </div>
+          
+          <div class="row">
+            <div class="col-md-4">
+              <dl>
+                <dt>Data da Venda</dt>
+                <dd>{{venda.dataVenda | date}}</dd>
+              </dl>
+            </div>
+            <div class="col-md-4">
+              <dl>
+                  <dt>Cliente</dt>
+                  <dd>{{venda.cliente ? venda.cliente.nome : 'Venda avulsa'}}</dd>
+              </dl>
+            </div>
+            <div class="col-md-4">
+                <ng-container *ngIf="venda.status === 'ABERTA'; else elseTemplate">
+                    <a [routerLink]="['/vendas', venda.id]"
+                        class="btn btn-default pull-right" >Continuar Venda</a>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <ng-container *ngIf="venda.status === 'FINALIZADA'; else elseTemplate2">
+                        <a (click)="openModal(confirmacaoModal, venda)"
+                            appLabelStatus [lbStatus]="'ESTORNADA'" 
+                            class="btn" [lbClass]="'btn'" [lbClassExtra]="'pull-right'">Estornar Venda</a>
+                    </ng-container>
+                </ng-template>
+                <ng-template #elseTemplate2>
+                    
+                </ng-template>
+                
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <dl>
+                  <dt>Observação</dt>
+                  <dd>{{venda.observacao ? venda.observacao : '-'}}</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-12">
+                <label for="">Produtos</label>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+
+              <table class="table table-hover">
+                <tr>
+                  <th class="">Nome</th>
+                  <th class="text-center">Tipo</th>
+                  <th class="text-center">Valor R$</th>
+                  <th class="text-center">Quantidade</th>
+                </tr>
+                <tr *ngFor="let produto of venda.produtos">
+                  <td class="">{{produto.produto.nome}}</td>
+                  <td class="text-center">{{produto.produto.tipo.tipo}}</td>
+                  <td class="text-center">{{produto.valor | number: '0.2-2'}}</td>
+                  <td class="text-center">{{produto.quantidade}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+      </div>
+    
+    </div>
+  </div>
+</div>
+<!-- /.box -->
+<app-modal id="{{confirmacaoModal}}" style="z-index: 9999;">
+    <div class="app-modal modal-dialog">
+        <div class="app-modal-body modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Estornar venda</h4>
+              </div>
+            <div class="modal-body">
+              <p *ngIf="vendaModal">
+                Deseja estornar esta venda?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="closeModal(confirmacaoModal);" class="btn btn-danger" data-dismiss="modal">Não</button>
+              <button type="button" class="btn btn-success" (click)="estornarVenda(vendaModal, confirmacaoModal)">  Sim  </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-modal-background"></div>
+</app-modal>
+

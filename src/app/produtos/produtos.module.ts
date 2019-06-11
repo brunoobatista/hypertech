@@ -7,6 +7,8 @@ import { ProdutosRoutingModule } from './produtos-routing.module';
 import { ProdutosPesquisaComponent } from './produtos-pesquisa/produtos-pesquisa.component';
 import { ProdutoCadastroComponent } from './produto-cadastro/produto-cadastro.component';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -15,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule, FormsModule,
     SharedModule,
     ProdutosRoutingModule,
+    NgSelectModule,
   ],
     declarations: [ProdutosPesquisaComponent, ProdutoCadastroComponent]
 })

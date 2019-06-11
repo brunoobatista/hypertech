@@ -2,17 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { MasterHttp } from '../seguranca/master-http';
-import { Fornecedor } from './../model/Fornecedor';
 
 import 'rxjs/add/operator/toPromise';
 
 import { environment } from './../../environments/environment';
 import { Produto } from '../model/Produto';
 
+import * as corePag from '../core/core-pagination';
+
 export class ProdutoFilter {
   nome: string;
+  tipoId: number;
   pagina = 0;
-  itensPorPagina = 15;
+  itensPorPagina = corePag.itensPorPagina;
 }
 
 @Injectable({
@@ -49,6 +51,9 @@ export class ProdutoService {
     if (filtro.nome) {
       params = params.append('nome', filtro.nome);
     }
+    if (filtro.tipoId) {
+      params = params.append('tipoId', filtro.tipoId.toString());
+    }
 
     return this.http.get<any>(`${this.produtopUrl}`, { params })
       .toPromise()
@@ -73,31 +78,28 @@ export class ProdutoService {
   }
 
   excluir(id: number, posicaoPagina: number, itensPorPagina: number): Promise<any> {
-    const dadosPagina = (posicaoPagina + 1) * itensPorPagina;
+    const dados = (posicaoPagina + 1) * itensPorPagina;
+
     const params = new HttpParams({
       fromObject: {
-        page: `${dadosPagina}`,
-        size: `1`
+        page: `${dados}`,
+        size: '1',
       }
     });
-    const produto = this.buscarProximo(params);
-    return this.http.delete<any>(`${this.produtopUrl}/${id}`)
+
+    return this.http.delete<any>(`${this.produtopUrl}/${id}`, { params })
       .toPromise()
       .then(response => {
-        return produto;
+        return response;
       });
   }
 
-  buscarProximo(params): Promise<any> {
-    return this.http.get<any>(`${this.produtopUrl}`, { params })
-    .toPromise()
-    .then(response => {
-      if (response.content.length > 0) {
-        return response.content[0];
-      } else {
-        return;
-      }
-    });
+  adicionarUnidadesProduto(produtoId, quantidade): Promise<any> {
+    return this.http.put<any>(`${this.produtopUrl}/${produtoId}/adicionar`, quantidade)
+      .toPromise()
+      .then(response => {
+        return response;
+      });
   }
 
 }
