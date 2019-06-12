@@ -23,7 +23,7 @@
     "test:lib": "ng test angular-admin-lte",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod --env=prod"
+    "postinstall": "ng build --prod --configuration=production"
   },
   "repository": {
     "type": "git",
