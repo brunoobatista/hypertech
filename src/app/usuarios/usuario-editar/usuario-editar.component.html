@@ -46,7 +46,7 @@
               </div>  
               
               <div formArrayName="roles">
-                <div *ngFor="let role of formulario.get('roles').controls; let i=index">
+                <div *ngFor="let role of formulario.get('roles')['controls']; let i=index">
                   <div class="form-group col-md-9" [formGroupName]="i" >
                     <label for="nome">Grupo</label>
                     <select name="id" id="id" class="form-control" formControlName="id">

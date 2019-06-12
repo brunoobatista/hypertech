@@ -76,7 +76,7 @@ export const adminLteConf = {
 };
 
 
-function todasRoles() {
+export function todasRoles() {
   return [
     'READ_PRODUTO', 'WRITE_PRODUTO', 'FULL_PRODUTO',
     'READ_CLIENTE', 'WRITE_CLIENTE', 'FULL_CLIENTE',

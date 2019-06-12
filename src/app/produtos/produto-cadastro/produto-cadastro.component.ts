@@ -3,10 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
-import { FornecedorService } from './../../fornecedores/fornecedor.service';
 import { ProdutoService } from './../produto.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
-import { TipoService, TipoFilter } from './../../tipos/tipo.service';
+import { TipoService } from './../../tipos/tipo.service';
 
 import { Tipo } from './../../model/Tipo';
 import { Fornecedor } from 'src/app/model/Fornecedor';

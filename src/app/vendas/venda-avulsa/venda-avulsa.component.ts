@@ -206,7 +206,7 @@ export class VendaAvulsaComponent implements OnInit {
 
   retirarItemDaLista(idModal, produto) {
     this.produtoModal = produto;
-    this.openModal(idModal, this.produtoModal);
+    this.openModal(idModal);
   }
 
   excluirItem(item: any, idModal) {
@@ -421,7 +421,7 @@ export class VendaAvulsaComponent implements OnInit {
 
   }
 
-  openModal(id: string, produto: any) {
+  openModal(id: string) {
     this.modalService.open(id);
     this.inputProduto.nativeElement.focus();
   }
