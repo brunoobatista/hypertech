@@ -31,8 +31,8 @@ const routes: Routes = [
 
   {
     path: 'vendas',
-    //loadChildren: './vendas/vendas.module#VendasModule',
-    loadChildren: () => import('./vendas/vendas.module').then(mod => mod.VendasModule),
+    loadChildren: './vendas/vendas.module#VendasModule',
+    //loadChildren: () => import('./vendas/vendas.module').then(mod => mod.VendasModule),
     data: {
       title: 'Vendas',
     }
@@ -48,7 +48,8 @@ const routes: Routes = [
 
   {
     path: 'usuarios',
-    loadChildren: () => import('./usuarios/usuarios.module').then(mod => mod.UsuariosModule),
+    loadChildren: './usuarios/usuarios.module#UsuariosModule',
+    //loadChildren: () => import('./usuarios/usuarios.module').then(mod => mod.UsuariosModule),
     data: {
       title: 'Usuários',
     }
