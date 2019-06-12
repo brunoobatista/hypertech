@@ -14,7 +14,6 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
     "build:lib": "ng build angular-admin-lte --prod",
     "publish:lib": "npm publish dist/angular-admin-lte",
     "build:demo": "ng build angular-admin-lte-demo --prod --base-href=/angular-admin-lte/",
@@ -24,7 +23,7 @@
     "test:lib": "ng test angular-admin-lte",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod"
+    "postinstall": "ng build --prod --env=prod"
   },
   "repository": {
     "type": "git",
