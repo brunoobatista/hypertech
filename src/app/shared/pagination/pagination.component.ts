@@ -7,13 +7,13 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 })
 export class PaginationComponent implements OnInit, OnChanges {
 
-  private lastPageLocal: number;
-  private startPageLocal: number;
-  private endPageLocal: number;
-  private currentPageLocal: number;
-  private pages = [];
+  lastPageLocal: number;
+  startPageLocal: number;
+  endPageLocal: number;
+  currentPageLocal: number;
+  pages = [];
 
-  private totalPagesGeral: number;
+  totalPagesGeral: number;
 
   @Input()  totalPages: number;
   totalPagesLocal: number;
