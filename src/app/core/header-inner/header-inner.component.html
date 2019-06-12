@@ -13,7 +13,8 @@
   <ul class="nav navbar-nav">
     <!-- Messages: style can be found in dropdown.less -->
 
-
+<!-- #### EXMPLOS DE MENSAGEMS -->
+<!--
     <li mk-dropdown type="list" [isWrapper]="false" class="tasks-menu">
       <mk-dropdown-toggle>
         <a #toggleElement>
@@ -85,7 +86,7 @@
         </li>
       </mk-dropdown-menu>
     </li>
-
+  -->
 
     <li mk-dropdown type="list" [isWrapper]="false" class="user user-menu">
       <mk-dropdown-toggle>
@@ -113,7 +114,7 @@
             <a href="#" class="btn btn-default btn-flat">Profile</a>
           </div>
           <div class="pull-right">
-            <a href="#" title="Logout" class="btn btn-default btn-flat">Sign out</a>
+            <a href="#" title="Logout" class="btn btn-default btn-flat" (click)="logout()">Sair</a>
           </div>
         </li>
       </mk-dropdown-menu>

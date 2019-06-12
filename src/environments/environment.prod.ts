@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  tokenWhitelistedDomains: [ /localhost:8080/ ],
+  apiUrl: 'https://tendtudo-business-api.herokuapp.com',
+  tokenWhitelistedDomains: [ /tendtudo-business-api.herokuapp.com/ ],
   tokenBlacklistedRoutes: [ /\/oauth\/token/  ]
 };
