@@ -58,7 +58,7 @@ const routes: Routes = [
   {
   path: '',
   data: {
-      title: 'Dashboard',
+      title: 'Home',
       permissaos: ['READ_PRODUTO', 'READ_USUARIO', 'READ_CLIENTE', 'READ_FORNECEDOR', 'WRITE_PRODUTO', 'FULL_PRODUTO', 'FULL_USUARIO', 'FULL_VENDA', 'FULL_FORNECEDOR']
   },
   canActivate: [AuthGuard],

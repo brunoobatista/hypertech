@@ -25,11 +25,9 @@ export class FornecedorFilter {
 export class FornecedorService {
 
   fornecedorUrl: string;
-  cidadeUrl: string;
 
   constructor(private http: MasterHttp) {
     this.fornecedorUrl = `${environment.apiUrl}/fornecedores`;
-    this.cidadeUrl = `${environment.apiUrl}/cidades`;
   }
 
   adicionar(fornecedor: Fornecedor): Promise<any> {
