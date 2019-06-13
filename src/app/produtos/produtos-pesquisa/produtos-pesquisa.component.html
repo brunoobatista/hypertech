@@ -39,14 +39,16 @@
             <th class="text-center">Tipo</th>
             <th class="text-center">Valor R$</th>
             <th class="text-center">Estoque</th>
+            <th class="text-center">Reserva</th>
             <th *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons"></th>
           </tr>
           <tr *ngFor="let produto of produtos">
             <td class="width-column--id">{{produto.id}}</td>
             <td>{{produto.nome}}</td>
             <td class="text-center">{{produto.tipo.nome}}</td>
-            <td class="text-center">{{produto.valor}}</td>
+            <td class="text-center">{{produto.valor | number:'0.2-2'}}</td>
             <td class="text-center">{{produto.estoque}}</td>
+            <td class="text-center">{{produto.reserva}}</td>
             <td *roles="['WRITE_PRODUTO', 'FULL_PRODUTO']" class="width-column-buttons">
               <div class="text-center">
                 <a  *roles="['FULL_PRODUTO']"
