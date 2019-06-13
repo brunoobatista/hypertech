@@ -26,8 +26,11 @@ export class ErrorHandlerService {
          && errorResponse.status >= 400 && errorResponse.status <= 499) {
             if (errorResponse.status === 403) {
                msg = 'Você não tem permissão para executar esta ação!';
+            } else if (errorResponse.status === 400) {
+               msg = 'Usuário incorreto ou senha inválida';
+            } else {
+               msg = 'Ocorreu erro ao processar a sua solicitação.';
             }
-            msg = 'Ocorreu erro ao processar a sua solicitação.';
 
             try {
                msg = errorResponse.error[0].mensagemUsuario;
@@ -37,6 +40,7 @@ export class ErrorHandlerService {
       }
       console.log('handler', errorResponse)
       this.toasty.error(msg);
+      return msg;
    }
 
 }

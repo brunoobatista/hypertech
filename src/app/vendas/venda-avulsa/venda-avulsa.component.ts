@@ -390,7 +390,7 @@ export class VendaAvulsaComponent implements OnInit {
         this.render2.setAttribute(li, 'class', 'body-live-list row');
         const nome = this.render2.createText(p.nome);
         const estoque = this.render2.createText(p.estoque);
-        const reserva = this.render2.createText(p.reserva);
+        const reserva = this.render2.createText(p.reserva ? p.reserva : '0');
         const valor = this.render2.createText(p.valor);
 
         const spanNome = this.render2.createElement('span');

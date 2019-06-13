@@ -139,7 +139,7 @@
                       </td>
                       <td>{{item.produto.nome}}</td>
                       <td class="text-center">{{item.produto.estoque}}</td>
-                      <td class="text-center">{{item.produto.reserva}}</td>
+                      <td class="text-center">{{item.produto.reserva ? item.produto.reserva : '0'}}</td>
                       <td class="text-center" style="width: 10%;">
                           <input type="number" class="form-control" id="input" 
                               value="{{item.quantidade}}"

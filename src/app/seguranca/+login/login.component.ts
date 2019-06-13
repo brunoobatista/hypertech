@@ -10,7 +10,8 @@ import { ErrorHandlerService } from '../../core/error-handler.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  show = false;
+  msg;
   constructor(
       private auth: AuthService,
       private router: Router,
@@ -30,7 +31,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
        })
        .catch(error => {
-          this.errorHandler.handle(error);
+          this.msg = this.errorHandler.handle(error);
+          this.show = true;
+          setTimeout(() => {
+            this.show = false;
+          }, 4000);
        });
 }
 

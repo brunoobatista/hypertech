@@ -4,7 +4,7 @@
       <a routerLink="/"><b>Tend</b>TUDO</a>
       <span class="move-down">BUSINESS</span>
     </div>
-
+    <div *ngIf="show" class="alert alert-warning" role="alert">{{msg}}</div>
     <!-- /.login-logo -->
     <div class="login-box-body">
       <p class="login-box-msg">Informe seu usuario e senha</p>
