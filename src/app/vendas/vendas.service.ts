@@ -30,7 +30,7 @@ export class VendasService {
   }
 
   salvar(venda: Venda): Promise<any> {
-    return this.http.post<Venda>(`${this.vendaUrl}/salvar`, venda)
+    return this.http.post<Venda>(`${this.vendaUrl}`, venda)
       .toPromise();
   }
 
