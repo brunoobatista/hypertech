@@ -58,14 +58,13 @@
     background-color: #bfbfbf;
 }
 
-.botao-add-produto {
-    margin-left: 5px;
-    margin-top: 25px;
-}
+@media screen and (max-width: 625px) {
+    .button-mobile {
+        border-radius: 20px;
+    }
 
-@media screen and (max-width: 1225px) {
-    .botao-add-produto {
-        margin-top: 5px;
+    .button-text {
+        display: none;
     }
 }
 
