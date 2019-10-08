@@ -1,5 +1,14 @@
-.botao-nav-destaque {
-    border: 2px solid #2677a7;
-    border-radius: 5px;
-    /* background-color: #2677a7; */
+$break-large: 782px;
+
+@media screen and (max-width: $break-large) {
+    .botao-nav-destaque {
+        width: 50px;
+        margin-bottom: 5px;
+        border-radius: 30px;
+        border: 1px solid whitesmoke;
+    }
+
+    .botao-nav-destaque span {
+        display: none;
+    }
 }
