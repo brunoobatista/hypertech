@@ -1,1 +1,14 @@
+$break-large: 782px;
 
+@media screen and (max-width: $break-large) {
+    .botao-nav-destaque {
+        width: 50px;
+        margin-bottom: 5px;
+        border-radius: 30px;
+        border: 1px solid whitesmoke;
+    }
+
+    .botao-nav-destaque span {
+        display: none;
+    }
+}

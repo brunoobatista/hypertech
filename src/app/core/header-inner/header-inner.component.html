@@ -1,24 +1,14 @@
+
 <div class="navbar-custom-menu">
 
-    <ul class="nav navbar-nav" *roles="['WRITE_VENDA', 'FULL_VENDA']">
-        
-    </ul>
-
-
   <ul class="nav navbar-nav">
-      
-    <li>
-        <a class="botao-nav-destaque" [routerLink]="['/vendas/nova']" >
-          <i class="fa fa-money"></i>
-          Nova Venda
-        </a>
 
-        <a class="botao-nav-mobile" [routerLink]="['/vendas/nova']" >
+    <li class="botao-nav-destaque-color" *roles="['WRITE_VENDA', 'FULL_VENDA']">
+        <a class="botao-nav-destaque"  [routerLink]="['/vendas/nova']" >
           <i class="fa fa-money"></i>
+          <span> Nova Venda</span>
         </a>
     </li>
-
-
     <!-- Messages: style can be found in dropdown.less -->
 
 <!-- #### EXMPLOS DE MENSAGEMS -->
