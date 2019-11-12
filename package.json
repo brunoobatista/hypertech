@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
-    "build:lib": "ng build angular-admin-lte --prod",
+    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "build:lib": "ng build angular-admin-lte",
     "publish:lib": "npm publish dist/angular-admin-lte",
     "build:demo": "ng build angular-admin-lte-demo --prod --base-href=/angular-admin-lte/",
     "gh-pages": "node ./scripts/gh-pages-multi/bin/gh-pages-multi.js deploy -s dist/angular-admin-lte-demo --dry-run --tmp-dir",
@@ -22,8 +22,7 @@
     "test:demo": "ng test angular-admin-lte-demo",
     "test:lib": "ng test angular-admin-lte",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "ng build --prod --configuration=production"
+    "e2e": "ng e2e"
   },
   "repository": {
     "type": "git",

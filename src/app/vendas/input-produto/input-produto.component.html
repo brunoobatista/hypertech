@@ -1,2 +1,50 @@
-<ng-template ngFor let-produto [ngForOf]="produtos" [ngForTemplate]="produtoTemplate">
-</ng-template>
+<div class="app-modal modal-dialog modal-lg">
+    <div class="app-modal-body modal-content">
+        <div class="modal-header">
+            <button type="button" (click)="close();" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Novo item</h4>
+        </div>
+        
+        <div class="modal-body">
+          <div class="form-group col-md-12">
+              
+            
+            <div class="form-group">
+                <label *ngIf="label" for="name">{{label}}</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="{{placeholder}}" #inputName>
+                
+                <div class="table-responsive scrollit" #divLiveSearch>
+                    <table class="table" *ngIf="produtosInput.length > 0">
+                        <thead>
+                            <tr>
+                                <th class="col-text-center">Foto</th>
+                                <th class="col-text-name">Nome</th>
+                                <th class="col-text-center">Estoque</th>
+                                <th class="col-text-center">Reserva</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="{{prod.id}}" #productsList (click)="productSelected($event)" *ngFor="let prod of produtosInput">
+                                <td class="col-picture">
+                                    <img src="https://www.aprenderexcel.com.br//imagens/post/385/2901-1.jpg" alt="" style="width: 50px; height: 40px;">
+                                </td>
+                                <td class="col-text-name">{{prod.nome}}</td>
+                                <td class="col-text-center">{{prod.estoque}}</td>
+                                <td class="col-text-center">{{prod.reserva}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" (click)="close();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="add()">Adicionar</button>
+        </div>
+
+    </div>
+</div>
+<div class="app-modal-background"></div>
