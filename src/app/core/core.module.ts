@@ -31,6 +31,9 @@ import { NaoEncontradoComponent } from './nao-encontrado.component';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from '../home/dashboard/dashboard.component';
 
+import { ChartModule } from 'angular-highcharts';
+import { HighchartsService } from './highcharts.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { DashboardComponent } from '../home/dashboard/dashboard.component';
     HttpClientModule,
     RouterModule,
     SharedModule,
+    ChartModule,
   ],
   declarations: [
     HeaderInnerComponent,
@@ -75,6 +79,7 @@ import { DashboardComponent } from '../home/dashboard/dashboard.component';
     ClienteService,
     UsuariosService,
     HomeService,
+    HighchartsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
