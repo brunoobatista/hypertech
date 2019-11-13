@@ -18,6 +18,7 @@ import { CidadeService } from './../cidades/cidade.service';
 import { ModalService } from './modal.service';
 import { ClienteService } from '../clientes/cliente.service';
 import { UsuariosService } from '../usuarios/usuarios.service';
+import { HomeService } from '../home/home.service';
 
 import { ErrorHandlerService } from './error-handler.service';
 
@@ -28,6 +29,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { NaoEncontradoComponent } from './nao-encontrado.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { DashboardComponent } from '../home/dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,8 @@ import { SharedModule } from '../shared/shared.module';
     SidebarLeftInnerComponent,
     SidebarRightInnerComponent,
     NaoAutorizadoComponent,
-    NaoEncontradoComponent
+    NaoEncontradoComponent,
+    DashboardComponent
   ],
   exports: [
     BoxModule,
@@ -55,6 +58,7 @@ import { SharedModule } from '../shared/shared.module';
     SidebarLeftInnerComponent,
     SidebarRightInnerComponent,
     ToastyModule,
+    DashboardComponent,
   ],
   providers: [
     ErrorHandlerService,
@@ -70,6 +74,7 @@ import { SharedModule } from '../shared/shared.module';
 
     ClienteService,
     UsuariosService,
+    HomeService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
