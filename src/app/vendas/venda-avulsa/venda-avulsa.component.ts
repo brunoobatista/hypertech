@@ -26,6 +26,8 @@ export class VendaAvulsaComponent implements OnInit {
   exclusaoProduto = 'exclusaoProduto';
   produtoModal;
 
+  produtosList = [];
+
   titulo: any;
   produtosPesquisa = [];
 
@@ -233,66 +235,33 @@ export class VendaAvulsaComponent implements OnInit {
     this.closeModal(idModal);
   }
 
-  selecionaProduto(event) {
-    const produto = event.target.parentNode;
-    const divPai = this.render2.parentNode(produto);
-    Array.from(divPai.children).forEach(d => {
-      this.render2.removeClass(d, 'item-selected');
-    });
-    this.render2.addClass(produto, 'item-selected');
-    this.produtoTemp = this.listaTemp.get(  Number(produto.id) );
+  adicionarProduto(produtosList) {
+    if (produtosList.length > 0) {
+      const ids = this.formulario.get('produtos').value.map(att => {
+        return att.produto.id;
+      });
+      
+      if (ids.length > 0) {
+        produtosList.forEach(p => {
+          if (ids.indexOf(p.id) < 0) {
+            this.formulario.get('produtos').value.push({'produto': p, 'quantidade': 0});
+          }
+        });
+      } else {
+        produtosList.forEach(p => {
+          this.formulario.get('produtos').value.push({'produto': p, 'quantidade': 0});
+        });
+      }
+    }
   }
 
-  adicionarProduto(idModal) {
-    if (this.produtoTemp) {
-      const produtos = this.formulario.get('produtos').value;
-      let notExist = true;
-      produtos.forEach(p => {
-        if (p.produto.id === this.produtoTemp.id) {
-          notExist = false;
-        }
-      });
-
-      if (notExist) {
-        this.formulario.get('produtos').value.push({'produto': this.produtoTemp, 'quantidade': 0});
-      } else {
-        this.errorHadler.handle('Produto já incluso na venda!');
-      }
-
-      this.closeModal(idModal);
-    }
+  adicionaProdutosLista(event, idModal) {
+    this.adicionarProduto(event);
+    this.closeModal(idModal);
   }
 
   limparProdutoTemp() {
     this.produtoTemp = null;
-  }
-
-  pesquisarProduto(event, idModal) {
-    const input = this.inputProduto.nativeElement;
-    const value = input.value;
-
-    if (event.keyCode === 27) {
-      this.closeModal(idModal);
-      return;
-    }
-
-    if (event.keyCode === 8 && value.length < 3) {
-      this.removeDivChildren(this.divLiveSearch.nativeElement);
-    }
-
-    if (value.length >= 3) {
-      if (this.tempo) {
-        clearTimeout(this.tempo);
-      }
-      this.tempo = setTimeout(() => {
-        this.produtoService.pesquisarTodos(value)
-        .then(response => {
-          this.produtosPesquisa = response;
-          this.listaProdutosPesquisa(this.produtosPesquisa);
-        })
-        .catch(error => this.errorHadler.handle(error));
-      }, 500);
-    }
   }
 
   pesquisarCliente(event) {
@@ -307,6 +276,21 @@ export class VendaAvulsaComponent implements OnInit {
           this.clienteLoading = false;
         });
       }
+    }
+  }
+
+  searchByNome(value) {
+    if (value.length >= 3) {
+      if (this.tempo) {
+        clearTimeout(this.tempo);
+      }
+      this.tempo = setTimeout(() => {
+        this.produtoService.pesquisarTodos(value)
+        .then(response => {
+          this.produtosList = response;
+        })
+        .catch(error => this.errorHadler.handle(error));
+      }, 500);
     }
   }
 
@@ -327,114 +311,14 @@ export class VendaAvulsaComponent implements OnInit {
     });
 
     this.formularioTemp = this.formulario.value;
-    //console.log('testmp', this.formularioTemp);
-  }
-
-  removeDivChildren(div: any) {
-    Array.from(div.children).forEach(c => {
-      this.render2.removeChild(div, c);
-      this.listaTemp.clear();
-    });
-  }
-
-  listaProdutosPesquisa(produtos = []) {
-    const div = this.divLiveSearch.nativeElement;
-    this.removeDivChildren(div);
-
-    // Cria a div pai para cada produto que vier na pesquisa
-    if (produtos.length > 0) {
-      const ulhead = this.render2.createElement('div');
-      this.render2.setAttribute(ulhead, 'class', 'live-search-list-head');
-      const ulbody = this.render2.createElement('div');
-      this.render2.setAttribute(ulbody, 'class', 'live-search-list');
-
-      const liHead = this.render2.createElement('div');
-      this.render2.setAttribute(liHead, 'class', 'row');
-      const htNome = this.render2.createText('Nome');
-      const htEstoque = this.render2.createText('Estoque');
-      const htReserva = this.render2.createText('Reserva');
-      const htValor = this.render2.createText('Valor R$');
-
-      const hsNome = this.render2.createElement('span');
-      this.render2.setAttribute(hsNome, 'class', 'col-md-6');
-      const hsEstoque = this.render2.createElement('span');
-      this.render2.setAttribute(hsEstoque, 'class', 'col-md-2 text-center');
-      const hsReserva = this.render2.createElement('span');
-      this.render2.setAttribute(hsReserva, 'class', 'col-md-2 text-center');
-      const hsValor = this.render2.createElement('span');
-      this.render2.setAttribute(hsValor, 'class', 'col-md-2 text-center');
-
-      this.render2.appendChild(hsNome, htNome);
-      this.render2.appendChild(hsEstoque, htEstoque);
-      this.render2.appendChild(hsReserva, htReserva);
-      this.render2.appendChild(hsValor, htValor);
-
-      this.render2.appendChild(liHead, hsNome);
-      this.render2.appendChild(liHead, hsEstoque);
-      this.render2.appendChild(liHead, hsReserva);
-      this.render2.appendChild(liHead, hsValor);
-      this.render2.appendChild(ulhead, liHead);
-
-      if (produtos.length > 5) {
-        this.render2.addClass(ulbody, 'scroll-l');
-      }
-
-      // cria uma div para cara produto da pesquisa
-      for (const p of produtos) {
-        this.listaTemp.set(p.id, p);
-        const li = this.render2.createElement('div');
-        this.render2.setAttribute(li, 'id', p.id);
-
-        this.render2.listen(li, 'click', this.selecionaProduto.bind(this));
-
-        this.render2.setAttribute(li, 'class', 'body-live-list row');
-        const nome = this.render2.createText(p.nome);
-        const estoque = this.render2.createText(p.estoque);
-        const reserva = this.render2.createText(p.reserva ? p.reserva : '0');
-        const valor = this.render2.createText(p.valor);
-
-        const spanNome = this.render2.createElement('span');
-        this.render2.setAttribute(spanNome, 'class', 'col-md-6');
-        const spanEstoque = this.render2.createElement('span');
-        this.render2.setAttribute(spanEstoque, 'class', 'col-md-2 text-center acert-padding');
-        const spanReserva = this.render2.createElement('span');
-        this.render2.setAttribute(spanReserva, 'class', 'col-md-2 text-center acert-padding');
-        const spanValor = this.render2.createElement('span');
-        this.render2.setAttribute(spanValor, 'class', 'col-md-2 text-center acert-padding');
-
-        this.render2.appendChild(spanNome, nome);
-        this.render2.appendChild(spanEstoque, estoque);
-        this.render2.appendChild(spanReserva, reserva);
-        this.render2.appendChild(spanValor, valor);
-
-        this.render2.appendChild(li, spanNome);
-        this.render2.appendChild(li, spanEstoque);
-        this.render2.appendChild(li, spanReserva);
-        this.render2.appendChild(li, spanValor);
-        this.render2.appendChild(ulbody, li);
-      }
-
-      // adiciona as divs filhos na div pai
-      this.render2.appendChild(div, ulhead);
-      this.render2.appendChild(div, ulbody);
-    }
-
   }
 
   openModal(id: string) {
     this.modalService.open(id);
-    this.inputProduto.nativeElement.focus();
-  }
-
-  cleanDataModal() {
-    this.removeDivChildren(this.divLiveSearch.nativeElement);
-    this.inputProduto.nativeElement.value = '';
-    this.limparProdutoTemp();
   }
 
   closeModal(id: string) {
     this.modalService.close(id);
-    this.cleanDataModal();
   }
 
 }

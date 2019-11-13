@@ -1,0 +1,27 @@
+.col-text-center {
+    width: 60px;
+    text-align: center;
+}
+
+.col-text-name {
+    width: 350px;
+}
+
+.col-picture {
+    width: 60px;
+}
+
+.product-selected {
+    background-color: #F5F5F5;
+}
+
+tr.product-selected {
+  box-shadow: 
+    1px 0px 1px #9C9C9C, 
+    inset 1px 0px 8px #9C9C9C;
+}
+
+.scrollit {
+    overflow: auto;
+    height:200px;
+}

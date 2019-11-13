@@ -93,7 +93,7 @@ export class ProdutoCadastroComponent implements OnInit {
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
       id: [],
-      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(4)]],
+      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(2)]],
       estoque: [null],
       valor: [null],
       tipo: this.formBuilder.group({
