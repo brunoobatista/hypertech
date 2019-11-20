@@ -13,7 +13,6 @@ import { environment } from './../../../environments/environment';
 import { ClienteService } from 'src/app/clientes/cliente.service';
 
 import { ToastyService } from 'ng2-toasty';
-import { Produto } from 'src/app/model/Produto';
 import { VendaProduto } from 'src/app/model/VendaProduto';
 
 @Component({
@@ -279,7 +278,7 @@ export class VendaAvulsaComponent implements OnInit {
     }
   }
 
-  searchByNome(value) {
+  searchByNome(value, idModal) {
     if (value.length >= 3) {
       if (this.tempo) {
         clearTimeout(this.tempo);
